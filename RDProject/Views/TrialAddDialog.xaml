@@ -1,0 +1,69 @@
+﻿<UserControl xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"  
+             xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:RDProject.ViewModels"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"  x:Class="RDProject.Views.TrialAddDialog"
+             mc:Ignorable="d" 
+             d:DesignHeight="200" d:DesignWidth="600" MinHeight="170" MinWidth="600" Loaded="UserControl_Loaded">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        
+        <dxlc:LayoutControl>
+            <dxlc:LayoutGroup Orientation="Vertical">
+                <dxlc:LayoutGroup>
+                    <dxlc:LayoutItem Label="工单号">
+                        <dxe:TextEdit Text="{Binding TrialEntry.FWorkOrder}"/>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="工序">
+                        <dxe:TextEdit Text="{Binding TrialEntry.FProcessName}"/>
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+                <dxlc:LayoutGroup>
+                    <dxlc:LayoutItem Label="投入时间">
+                        <dxe:DateEdit Text="{Binding TrialEntry.FBeginDate,StringFormat='yyyy/MM/dd HH:mm:ss'}">
+                            <dxe:DateEdit.StyleSettings>
+                                <dxe:DateEditNavigatorWithTimePickerStyleSettings/>
+                            </dxe:DateEdit.StyleSettings>
+                        </dxe:DateEdit>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="投入数量">
+                        <dxe:TextEdit Text="{Binding TrialEntry.FAmount}"/>
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+                <dxlc:LayoutGroup>
+                    <dxlc:LayoutItem Label="结束时间">
+                        <dxe:DateEdit Text="{Binding TrialEntry.FEndDate,StringFormat='yyyy/MM/dd HH:mm:ss'}">
+                            <dxe:DateEdit.StyleSettings>
+                                <dxe:DateEditNavigatorWithTimePickerStyleSettings/>
+                            </dxe:DateEdit.StyleSettings>
+                        </dxe:DateEdit>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="投入人力">
+                        <dxe:TextEdit Text="{Binding TrialEntry.FManPower}"/>
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+                <dxlc:LayoutGroup>
+                    <dxlc:LayoutItem Label="投入工时">
+                        <dxe:TextEdit Text="{Binding TrialEntry.FManHours}"/>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem >
+
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+            </dxlc:LayoutGroup>
+        </dxlc:LayoutControl>
+
+        <DockPanel Grid.Row="1" LastChildFill="False">
+            <dx:SimpleButton Content="返回" Height="25" Width="75" Margin="0,0,20,0" VerticalAlignment="Top" DockPanel.Dock="Right" 
+                             Glyph="{dx:DXImage SvgImages/Icon Builder/Actions_Rollback.svg}" Command="{Binding BackCommand}"/>
+            <dx:SimpleButton Content="保存" Height="25" Width="75" Margin="0,0,20,0" VerticalAlignment="Top" DockPanel.Dock="Right" 
+                             Glyph="{dx:DXImage SvgImages/Business Objects/BO_Validation.svg}" Command="{Binding AddCommand}"/>
+        </DockPanel>
+    </Grid>
+</UserControl>

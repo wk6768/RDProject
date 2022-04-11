@@ -1,0 +1,49 @@
+﻿<dx:ThemedWindow xmlns:dxr="http://schemas.devexpress.com/winfx/2008/xaml/ribbon"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:prism="http://prismlibrary.com/"
+    prism:ViewModelLocator.AutoWireViewModel="True"
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"  
+    x:Class="RDProject.Views.MainView"
+    Title="研发项目试产记录" Height="800" Width="1280">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        
+        <dxr:RibbonControl>
+            <dxr:RibbonPageCategory>
+                <dxr:RibbonPage Caption="开始">
+                    <dxr:RibbonPageGroup Caption="账号">
+                        <dxb:BarButtonItem Content="{Binding User.Name, FallbackValue='登录'}" Command="{Binding OpenLoginDialogCommand}" CommandParameter="LoginDialog" Glyph="{dx:DXImage SvgImages/Business Objects/BO_Person.svg}" RibbonStyle="Large"/>
+                        <dxb:BarSplitButtonItem Content="登录管理" Glyph="{dx:DXImage SvgImages/Business Objects/BO_MyDetails.svg}" RibbonStyle="Large">
+                            <dxb:PopupMenu>
+                                <dxb:BarButtonItem Content="退出登录" Command="{Binding LogoutCommand}" Glyph="{dx:DXImage SvgImages/RichEdit/TrackingChanges_Previous.svg}"></dxb:BarButtonItem>
+                                <dxb:BarButtonItem Content="修改密码" Command="{Binding ChangePwdCommand}" CommandParameter="ChangePwdDialog" Glyph="{dx:DXImage SvgImages/Business Objects/BO_User.svg}" ></dxb:BarButtonItem>
+                            </dxb:PopupMenu>
+                        </dxb:BarSplitButtonItem>
+                    </dxr:RibbonPageGroup>
+                    <dxr:RibbonPageGroup  Caption="表单">
+                        <dxb:BarButtonItem Content="新建表单" Command="{Binding NavigateTrialFormCommand}" CommandParameter="TrialForm" Glyph="{dx:DXImage SvgImages/Dashboards/Edit.svg}" RibbonStyle="Large"></dxb:BarButtonItem>
+                    </dxr:RibbonPageGroup>
+                </dxr:RibbonPage>
+
+                <dxr:RibbonPage Caption="管理">
+                    <dxr:RibbonPageGroup Caption="用户">
+                        <dxb:BarButtonItem Content="账号管理" Command="{Binding NavigateEmployeeControlCommand}" CommandParameter="EmployeeControl" 
+                                           Glyph="{dx:DXImage SvgImages/Spreadsheet/AllowUsersToEditRanges.svg}" RibbonStyle="Large"/>
+                    </dxr:RibbonPageGroup>
+                    <dxr:RibbonPageGroup Caption="表单/流程">
+                        <dxb:BarButtonItem Content="表单管理"/>
+                    </dxr:RibbonPageGroup>
+
+                </dxr:RibbonPage>
+            </dxr:RibbonPageCategory>
+        </dxr:RibbonControl>
+
+        <ContentControl Grid.Row="1" prism:RegionManager.RegionName="MainControl"></ContentControl>
+    </Grid>
+</dx:ThemedWindow>
