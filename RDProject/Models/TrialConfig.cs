@@ -13,6 +13,7 @@ namespace RDProject.Models
         public void Configure(EntityTypeBuilder<Trial> builder)
         {
             builder.ToTable(nameof(Trial));
+            builder.Property(b => b.FCreateDate).HasDefaultValue(DateTime.Now);
         }
     }
 }

@@ -11,6 +11,10 @@ namespace RDProject.Models
     public class Trial : BindableBase
     {
         private long fHeadId;
+        private string fCreateUser;
+        private DateTime fCreateDate;
+        private string fTitle;
+
         private DateTime fDate;
         private string fBillNo;
         private string fRDNo;
@@ -28,7 +32,7 @@ namespace RDProject.Models
         private string fAssemblyFactory;
         private string fInformation;
         private string fRequire;
-        private DateTime fCreateDate;
+        
 
         public long FHeadId { get => fHeadId; set { fHeadId = value; RaisePropertyChanged(); } }
         public DateTime FDate { get => fDate; set { fDate = value; RaisePropertyChanged(); } }
@@ -48,11 +52,13 @@ namespace RDProject.Models
         public string FAssemblyFactory { get => fAssemblyFactory; set { fAssemblyFactory = value;RaisePropertyChanged(); } }
         public string FInformation { get => fInformation; set { fInformation = value;RaisePropertyChanged(); } }
         public string FRequire { get => fRequire; set { fRequire = value;RaisePropertyChanged(); } }
-        public DateTime FCreateDate { get => fCreateDate; set { fCreateDate = value;RaisePropertyChanged(); } }
+        public string FCreateUser { get => fCreateUser; set { fCreateUser = value; RaisePropertyChanged(); } }
+        public DateTime FCreateDate { get => fCreateDate; set { fCreateDate = value; RaisePropertyChanged(); } }
+        public string FTitle { get => fTitle; set { fTitle = value; RaisePropertyChanged(); } }
 
         public override string ToString()
         {
-            return $"{{{nameof(FHeadId)}={FHeadId.ToString()}, {nameof(FDate)}={FDate.ToString()}, {nameof(FBillNo)}={FBillNo}, {nameof(FRDNo)}={FRDNo}, {nameof(FProductName)}={FProductName}, {nameof(FWorkerOrderDescription)}={FWorkerOrderDescription}, {nameof(FCompany)}={FCompany}, {nameof(FHasCNC)}={FHasCNC.ToString()}, {nameof(FHasCoating)}={FHasCoating.ToString()}, {nameof(FHasLaser)}={FHasLaser.ToString()}, {nameof(FHasAssembly)}={FHasAssembly.ToString()}, {nameof(FCNCNPI)}={FCNCNPI}, {nameof(FCoatingNPI)}={FCoatingNPI}, {nameof(FLaserNPI)}={FLaserNPI}, {nameof(FAssemblyNPI)}={FAssemblyNPI}, {nameof(FAssemblyFactory)}={FAssemblyFactory}, {nameof(FInformation)}={FInformation}, {nameof(FRequire)}={FRequire}, {nameof(FCreateDate)}={FCreateDate.ToString()}}}";
+            return $"{{{nameof(FHeadId)}={FHeadId.ToString()}, {nameof(FDate)}={FDate.ToString()}, {nameof(FBillNo)}={FBillNo}, {nameof(FRDNo)}={FRDNo}, {nameof(FProductName)}={FProductName}, {nameof(FWorkerOrderDescription)}={FWorkerOrderDescription}, {nameof(FCompany)}={FCompany}, {nameof(FHasCNC)}={FHasCNC.ToString()}, {nameof(FHasCoating)}={FHasCoating.ToString()}, {nameof(FHasLaser)}={FHasLaser.ToString()}, {nameof(FHasAssembly)}={FHasAssembly.ToString()}, {nameof(FCNCNPI)}={FCNCNPI}, {nameof(FCoatingNPI)}={FCoatingNPI}, {nameof(FLaserNPI)}={FLaserNPI}, {nameof(FAssemblyNPI)}={FAssemblyNPI}, {nameof(FAssemblyFactory)}={FAssemblyFactory}, {nameof(FInformation)}={FInformation}, {nameof(FRequire)}={FRequire}, {nameof(FCreateUser)}={FCreateUser}, {nameof(FCreateDate)}={FCreateDate.ToString()}, {nameof(FTitle)}={FTitle}}}";
         }
     }
 }

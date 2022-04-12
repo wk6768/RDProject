@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using RDProject.Models;
 using RDProject.Services.Interface;
 using RDProject.Common;
+using System.Collections.ObjectModel;
 
 namespace RDProject.Services
 {
@@ -18,7 +19,7 @@ namespace RDProject.Services
             this.ctx = ctx;
         }
 
-        public (long,string) SaveTrialForm(Trial trial, List<TrialEntry> trialEntries)
+        public (long,string) SaveTrialPageAndReturnID(Trial trial, ObservableCollection<TrialEntry> trialEntries)
         {
             using(var tran = ctx.Database.BeginTransaction())
             {
@@ -47,6 +48,34 @@ namespace RDProject.Services
             
         }
 
+        public (Trial, ObservableCollection<TrialEntry>) SaveTrialPageAndReturnFullData(Trial trial, ObservableCollection<TrialEntry> trialEntries)
+        {
+            using (var tran = ctx.Database.BeginTransaction())
+            {
+                try
+                {
+                    ctx.Trials.Add(trial);
+                    ctx.SaveChanges();
+
+                    foreach (TrialEntry trialEntry in trialEntries)
+                    {
+                        trialEntry.FHeadId = trial.FHeadId;
+                    }
+                    ctx.TrialEntries.AddRange(trialEntries);
+                    ctx.SaveChanges();
+
+                    tran.Commit();
+                    return (trial, trialEntries);
+                }
+                catch
+                {
+                    tran.Rollback();
+                    return (null, null);
+                }
+
+            }
+        }
+
         public (Trial, List<TrialEntry>) GetTrialFullData(long fHeadId)
         {
             var trial = ctx.Trials.Where(t => t.FHeadId == fHeadId).FirstOrDefault();
@@ -54,6 +83,9 @@ namespace RDProject.Services
             return (trial, trialEnties);
         }
 
-
+        public List<Trial> GetTrialsByCreateUser(string createUser)
+        {
+            return ctx.Trials.Where(t => t.FCreateUser == createUser).ToList();
+        }
     }
 }

@@ -29,11 +29,14 @@ namespace RDProject
             containerRegistry.RegisterScoped(typeof(MyDbContext), () => new MyDbContext());
             containerRegistry.RegisterScoped<IEmployeeService, EmployeeService>();
             containerRegistry.RegisterScoped<ITrialService, TrialService>();
+            containerRegistry.RegisterScoped<IWFService, WFService>();
             containerRegistry.RegisterDialog<LoginDialog, LoginDialogViewModel>();
             containerRegistry.RegisterDialog<ChangePwdDialog, ChangePwdDialogViewModel>();
             containerRegistry.RegisterDialog<TrialAddDialog, TrialAddDialogViewModel>();
             containerRegistry.RegisterForNavigation<EmployeeControl, EmployeeControlViewModel>();
             containerRegistry.RegisterForNavigation<TrialForm, TrialFormViewModel>();
+            containerRegistry.RegisterForNavigation<MyForm, MyFormViewModel>();
+            containerRegistry.RegisterForNavigation<MyFormShow, MyFormShowViewModel>();
         }
     }
 }

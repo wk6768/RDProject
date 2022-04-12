@@ -42,6 +42,8 @@
     <Reference Include="DevExpress.Data.Desktop.v21.2" />
     <Reference Include="DevExpress.Data.v21.2" />
     <Reference Include="DevExpress.Printing.v21.2.Core" />
+    <Reference Include="DevExpress.Xpf.Accordion.v21.2, Version=21.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Controls.v21.2, Version=21.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Xpf.Core.v21.2" />
     <Reference Include="DevExpress.Xpf.Grid.v21.2, Version=21.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Xpf.Grid.v21.2.Core, Version=21.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
@@ -193,6 +195,7 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="UIAutomationClient" />
     <Reference Include="UIAutomationProvider" />
     <Reference Include="UIAutomationTypes" />
     <Reference Include="WindowsBase" />
@@ -213,14 +216,32 @@
     <Compile Include="Migrations\20220411092846_init_WF.designer.cs">
       <DependentUpon>20220411092846_init_WF.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20220412060530_AddSomeField.cs" />
+    <Compile Include="Migrations\20220412060530_AddSomeField.designer.cs">
+      <DependentUpon>20220412060530_AddSomeField.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20220412060951_AddDefaultDate.cs" />
+    <Compile Include="Migrations\20220412060951_AddDefaultDate.designer.cs">
+      <DependentUpon>20220412060951_AddDefaultDate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\MyDbContextModelSnapshot.cs" />
     <Compile Include="Models\WFInstance.cs" />
     <Compile Include="Models\WFInstanceConfig.cs" />
     <Compile Include="Models\WFStep.cs" />
     <Compile Include="Models\WFStepConfig.cs" />
     <Compile Include="Services\Interface\ITrialService.cs" />
+    <Compile Include="Services\Interface\IWFService.cs" />
     <Compile Include="Services\TrialService.cs" />
+    <Compile Include="Services\WFService.cs" />
+    <Compile Include="ViewModels\MyFormShowViewModel.cs" />
+    <Compile Include="ViewModels\MyFormViewModel.cs" />
     <Compile Include="ViewModels\TrialAddDialogViewModel.cs" />
+    <Compile Include="Views\MyForm.xaml.cs">
+      <DependentUpon>MyForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MyFormShow.xaml.cs">
+      <DependentUpon>MyFormShow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\TrialAddDialog.xaml.cs">
       <DependentUpon>TrialAddDialog.xaml</DependentUpon>
     </Compile>
@@ -228,6 +249,14 @@
     <Compile Include="Views\TrialForm.xaml.cs">
       <DependentUpon>TrialForm.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\MyForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MyFormShow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\TrialAddDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

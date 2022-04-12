@@ -27,7 +27,10 @@
                         </dxb:BarSplitButtonItem>
                     </dxr:RibbonPageGroup>
                     <dxr:RibbonPageGroup  Caption="表单">
-                        <dxb:BarButtonItem Content="新建表单" Command="{Binding NavigateTrialFormCommand}" CommandParameter="TrialForm" Glyph="{dx:DXImage SvgImages/Dashboards/Edit.svg}" RibbonStyle="Large"></dxb:BarButtonItem>
+                        <dxb:BarButtonItem Content="新建表单" Command="{Binding NavigateTrialFormCommand}" CommandParameter="TrialForm" 
+                                           Glyph="{dx:DXImage SvgImages/Dashboards/Edit.svg}" RibbonStyle="Large"></dxb:BarButtonItem>
+                        <dxb:BarButtonItem Content="我的表单" Command="{Binding NavigateMyFormCommand}" CommandParameter="MyForm" 
+                                           Glyph="{dx:DXImage SvgImages/Dashboards/InsertComboBox.svg}" RibbonStyle="Large"></dxb:BarButtonItem>
                     </dxr:RibbonPageGroup>
                 </dxr:RibbonPage>
 

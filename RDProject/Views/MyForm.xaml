@@ -1,0 +1,43 @@
+﻿<UserControl xmlns:dxa="http://schemas.devexpress.com/winfx/2008/xaml/accordion"  xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"  x:Class="RDProject.Views.MyForm"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:prism="http://prismlibrary.com/"
+             xmlns:local="clr-namespace:RDProject.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition MinWidth="220" Width="auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <DockPanel Margin="5,0">
+            <dxe:ComboBoxEdit Height="25" DockPanel.Dock="Top" VerticalAlignment="Top" Margin="0,5">
+                <dxe:ComboBoxEditItem IsSelected="True">全部</dxe:ComboBoxEditItem>
+                <dxe:ComboBoxEditItem>草稿</dxe:ComboBoxEditItem>
+                <dxe:ComboBoxEditItem>已发起</dxe:ComboBoxEditItem>
+            </dxe:ComboBoxEdit>
+            <dxe:TextEdit Height="25" DockPanel.Dock="Top" VerticalAlignment="Top" Margin="0,5" EditValue="搜索标题"></dxe:TextEdit>
+
+            <ListBox ItemsSource="{Binding Trials}" x:Name="MyListBox">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding SelectIndexCommand}" CommandParameter="{Binding ElementName=MyListBox,Path=SelectedItem}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding FTitle}"></TextBlock>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </DockPanel>
+
+        <ContentControl Grid.Column="1" prism:RegionManager.RegionName="FormShowControl" />
+    </Grid>
+</UserControl>

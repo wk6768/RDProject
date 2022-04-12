@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RDProject.Common;
 
 namespace RDProject.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220412060530_AddSomeField")]
+    partial class AddSomeField
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -82,9 +84,7 @@ namespace RDProject.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("FCreateDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 4, 12, 14, 9, 51, 601, DateTimeKind.Local).AddTicks(7368));
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("FCreateUser")
                         .HasColumnType("nvarchar(max)");
@@ -144,9 +144,7 @@ namespace RDProject.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("FCreateDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 4, 12, 14, 9, 51, 602, DateTimeKind.Local).AddTicks(7408));
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("FEndDate")
                         .HasColumnType("datetime2");

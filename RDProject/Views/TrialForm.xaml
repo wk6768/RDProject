@@ -17,9 +17,16 @@
             <dxlc:LayoutGroup Orientation="Vertical">
                 <dxlc:LayoutGroup Header="研发项目试产记录表" View="GroupBox">
                     <dxlc:LayoutGroup Orientation="Vertical">
-                        <dxlc:LayoutItem Label="编号">
-                            <dxe:TextEdit IsEnabled="False" Text="{Binding Trial.FHeadId}"/>
-                        </dxlc:LayoutItem>
+                        <dxlc:LayoutGroup Orientation="Horizontal">
+                            <dxlc:LayoutItem Label="标题">
+                                <dxe:TextEdit IsEnabled="False" Text="{Binding Trial.FTitle}"/>
+                            </dxlc:LayoutItem>
+                        </dxlc:LayoutGroup>
+                        <dxlc:LayoutGroup Orientation="Horizontal">
+                            <dxlc:LayoutItem Label="编号">
+                                <dxe:TextEdit IsEnabled="False" Text="{Binding Trial.FHeadId}"/>
+                            </dxlc:LayoutItem>
+                        </dxlc:LayoutGroup>
                         <dxlc:LayoutGroup >
                             <dxlc:LayoutItem Label="厂别">
                                 <dxe:ComboBoxEdit  EditValue="{Binding Trial.FCompany}">
@@ -152,8 +159,10 @@
                                                            Glyph="{dx:DXImage SvgImages/Icon Builder/Actions_DeleteCircled.svg}"/>
                                     </dxb:ToolBarControl>
                                     <dxb:ToolBarControl>
-                                        <dxb:BarButtonItem Content="保存表单" Command="{Binding SaveCommand}"
+                                        <dxb:BarButtonItem Content="保存" Command="{Binding SaveCommand}"
                                                            Glyph="{dx:DXImage SvgImages/XAF/Action_SaveScript.svg}"></dxb:BarButtonItem>
+                                        <dxb:BarButtonItem Content="保存并提交" Command="{Binding SendCommand}"
+                                                           Glyph="{dx:DXImage SvgImages/Spreadsheet/FillUp.svg}"></dxb:BarButtonItem>
                                     </dxb:ToolBarControl>
                                     <dxb:ToolBarControl>
                                         <dxb:BarButtonItem Content="提交" Command="{Binding SendCommand}"></dxb:BarButtonItem>

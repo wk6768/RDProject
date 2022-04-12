@@ -25,10 +25,11 @@ namespace RDProject.ViewModels
 
             NavigateEmployeeControlCommand = new DelegateCommand<string>(NavigateEmployeeControl);
             NavigateTrialFormCommand = new DelegateCommand<string>(NavigateTrialForm);
-
+            NavigateMyFormCommand = new DelegateCommand<string>(NavigateMyForm);
 
         }
 
+       
 
         private readonly IRegionManager regionManager;
         private readonly IDialogService dialogService;
@@ -47,7 +48,7 @@ namespace RDProject.ViewModels
 
         public DelegateCommand<string> NavigateEmployeeControlCommand { get; private set; }
         public DelegateCommand<string> NavigateTrialFormCommand { get; private set; }
-
+        public DelegateCommand<string> NavigateMyFormCommand { get; private set; }
 
 
         private void OpenLoginDialog(string obj)
@@ -84,6 +85,16 @@ namespace RDProject.ViewModels
         }
 
         private void NavigateTrialForm(string obj)
+        {
+            if (User != null && !string.IsNullOrEmpty(User.Name))
+            {
+                var keys = new NavigationParameters();
+                keys.Add("User", User);
+                regionManager.Regions["MainControl"].RequestNavigate(obj, keys);
+            }
+        }
+
+        private void NavigateMyForm(string obj)
         {
             if (User != null && !string.IsNullOrEmpty(User.Name))
             {

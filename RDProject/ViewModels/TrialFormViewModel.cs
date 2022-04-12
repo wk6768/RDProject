@@ -23,6 +23,7 @@ namespace RDProject.ViewModels
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             User = navigationContext.Parameters["User"] as Employee;
+            InitNewTrialForm();
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
@@ -38,16 +39,17 @@ namespace RDProject.ViewModels
         private readonly IDialogService dialogService;
         private readonly IEmployeeService employeeService;
         private readonly ITrialService trialService;
+        private readonly IWFService wfService;
 
-        public TrialFormViewModel(IDialogService dialogService, IEmployeeService employeeService, ITrialService trialService)
+        public TrialFormViewModel(IDialogService dialogService, IEmployeeService employeeService, ITrialService trialService, IWFService wfService)
         {
             this.dialogService = dialogService;
             this.employeeService = employeeService;
             this.trialService = trialService;
-            Trial = new Trial() { FDate=DateTime.Now, FCompany="一车间" };
+            this.wfService = wfService;
+
             GetEmployeesList();
 
-            TrialEntries = new ObservableCollection<TrialEntry>();
             Employees = new ObservableCollection<Employee>();
 
             AddTrialEntryCommand = new DelegateCommand<string>(AddTrialEntry);
@@ -56,6 +58,23 @@ namespace RDProject.ViewModels
             SaveCommand = new DelegateCommand(Save);
             SendCommand = new DelegateCommand(Send);
             NextStepCommand = new DelegateCommand<string>(NextStep);
+        }
+
+        
+        /// <summary>
+        /// 初始化空白表单
+        /// </summary>
+        void InitNewTrialForm()
+        {
+            Trial = new Trial()
+            {
+                FDate = DateTime.Now,
+                FCompany = "一车间",
+                FCreateUser = User.Name,
+                FTitle = $"研发项目试产记录表-{User.EmpName}-{User.Name}-{DateTime.Now.ToString("D")}"
+            };
+
+            TrialEntries = new ObservableCollection<TrialEntry>();
         }
 
         /// <summary>
@@ -100,6 +119,7 @@ namespace RDProject.ViewModels
         {
             EmployeeList = await employeeService.GetEmployeeList();
         }
+
         /// <summary>
         /// 下拉列表用户信息
         /// </summary>
@@ -148,16 +168,12 @@ namespace RDProject.ViewModels
         private void Save()
         {
             //先检查必填项是否填了
-
+         
+            //如果编号FHeadID为null或者0，则保存；如果FHeadID 大于0，则更新
+            
             //保存
-            (long fHeadId, string message) = trialService.SaveTrialForm(Trial, TrialEntries.ToList());
-            if(message == null)
-            {
-                Debug.WriteLine($"表头ID：{fHeadId}");
-            }
-            List<TrialEntry> list;
-            (Trial, list) = trialService.GetTrialFullData(fHeadId);
-            TrialEntries = new ObservableCollection<TrialEntry>(list);
+            (Trial, TrialEntries) = trialService.SaveTrialPageAndReturnFullData(Trial, TrialEntries);
+
         }
 
 
@@ -181,7 +197,7 @@ namespace RDProject.ViewModels
 
             //保存工作流和审批步骤
             var steps = CreateSteps();
-
+            wfService.SaveWFSteps(steps);
 
         }
 
@@ -215,9 +231,9 @@ namespace RDProject.ViewModels
         /// <summary>
         /// 根据现有条件安排审批节点
         /// </summary>
-        private List<WFStep> CreateSteps()
+        private ObservableCollection<WFStep> CreateSteps()
         {
-            List<WFStep> steps = new List<WFStep>();
+            ObservableCollection<WFStep> steps = new ObservableCollection<WFStep>();
             steps.Add(new WFStep() { BookMark = "提交申请", SubBy = User.Name });
             steps.Add(new WFStep() { BookMark = "附件上传", SubBy = "陆冬夏" });
             steps.Add(new WFStep() { BookMark = "抄送节点", SubBy = "赵鹏" });
