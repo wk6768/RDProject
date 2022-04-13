@@ -26,7 +26,7 @@ namespace RDProject.Common
             modelBuilder.Entity<Employee>().HasIndex(b => b.IsDeleted);
             modelBuilder.Entity<Trial>().HasKey(b => b.FHeadId);
             modelBuilder.Entity<TrialEntry>().HasKey(b => b.FEntryId);
-            modelBuilder.Entity<WFInstance>().HasKey(b => b.HeadId);
+            modelBuilder.Entity<WFInstance>().HasKey(b => b.InstanceId);
             modelBuilder.Entity<WFStep>().HasKey(b => b.StepId);
 
             modelBuilder.ApplyConfigurationsFromAssembly(this.GetType().Assembly);

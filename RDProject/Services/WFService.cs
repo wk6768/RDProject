@@ -19,9 +19,40 @@ namespace RDProject.Services
             this.ctx = ctx;
         }
 
-        public void SaveWFSteps(ObservableCollection<WFStep> steps)
+
+
+        public (WFInstance instance, ObservableCollection<WFStep> steps) SaveInstance(WFInstance instance, ObservableCollection<WFStep> steps)
         {
-            ctx.WFSteps.AddRange(steps);
+            using(var tran = ctx.Database.BeginTransaction())
+            {
+                try
+                {
+                    ctx.WFInstances.Add(instance);
+                    ctx.SaveChanges();
+
+                    foreach(var step in steps)
+                    {
+                        step.InstanceId = instance.InstanceId;
+                    }
+                    ctx.WFSteps.AddRange(steps);
+                    ctx.SaveChanges();
+
+                    tran.Commit();
+                    return (instance, steps);
+                }
+                catch
+                {
+                    return (null, null);
+                }
+            }
+        }
+
+        public (WFInstance instance, ObservableCollection<WFStep> steps) GetInstanceByTableNameAndHeadID(string tableName, long headId)
+        {
+            var instance = ctx.WFInstances.Where(i => i.TableName == tableName && i.HeadId == headId).FirstOrDefault();
+            var list = ctx.WFSteps.Where(s => s.InstanceId == instance.InstanceId).ToList();
+            ObservableCollection<WFStep> steps = new ObservableCollection<WFStep>(list);
+            return (instance, steps);
         }
     }
 }

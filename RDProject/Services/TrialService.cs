@@ -7,6 +7,7 @@ using RDProject.Models;
 using RDProject.Services.Interface;
 using RDProject.Common;
 using System.Collections.ObjectModel;
+using RDProject.Models.VO;
 
 namespace RDProject.Services
 {
@@ -19,9 +20,9 @@ namespace RDProject.Services
             this.ctx = ctx;
         }
 
-        public (long,string) SaveTrialPageAndReturnID(Trial trial, ObservableCollection<TrialEntry> trialEntries)
+        public (long, string) SaveTrialPageAndReturnID(Trial trial, ObservableCollection<TrialEntry> trialEntries)
         {
-            using(var tran = ctx.Database.BeginTransaction())
+            using (var tran = ctx.Database.BeginTransaction())
             {
                 try
                 {
@@ -38,14 +39,14 @@ namespace RDProject.Services
                     tran.Commit();
                     return (trial.FHeadId, null);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     tran.Rollback();
                     return (-1, ex.Message);
                 }
-                
+
             }
-            
+
         }
 
         public (Trial, ObservableCollection<TrialEntry>) SaveTrialPageAndReturnFullData(Trial trial, ObservableCollection<TrialEntry> trialEntries)
@@ -76,6 +77,30 @@ namespace RDProject.Services
             }
         }
 
+        public (Trial, ObservableCollection<TrialEntry>) UpdateTrialPageAndReturnFullData(Trial trial, ObservableCollection<TrialEntry> trialEntries)
+        {
+            using (var tran = ctx.Database.BeginTransaction())
+            {
+                try
+                {
+                    ctx.Trials.Update(trial);
+                    ctx.SaveChanges();
+
+                    ctx.TrialEntries.UpdateRange(trialEntries);
+                    ctx.SaveChanges();
+
+                    tran.Commit();
+                    return (trial, trialEntries);
+                }
+                catch
+                {
+                    tran.Rollback();
+                    return (null, null);
+                }
+
+            }
+        }
+
         public (Trial, List<TrialEntry>) GetTrialFullData(long fHeadId)
         {
             var trial = ctx.Trials.Where(t => t.FHeadId == fHeadId).FirstOrDefault();
@@ -83,9 +108,24 @@ namespace RDProject.Services
             return (trial, trialEnties);
         }
 
+        public List<TrialEntry> GetTrialEntryData(long fHeadId)
+        {
+            var trialEnties = ctx.TrialEntries.Where(t => t.FHeadId == fHeadId).ToList();
+            return trialEnties;
+        }
+
+
         public List<Trial> GetTrialsByCreateUser(string createUser)
         {
             return ctx.Trials.Where(t => t.FCreateUser == createUser).ToList();
         }
+
+        public List<TrialTitle> GetTrialTitleByCreateUser(string createUser)
+        {
+            return ctx.Trials.Where(t => t.FCreateUser == createUser).
+                Select(t => new TrialTitle() { FHeadId = t.FHeadId, FTitle = t.FTitle}).ToList();
+        }
+
+        
     }
 }

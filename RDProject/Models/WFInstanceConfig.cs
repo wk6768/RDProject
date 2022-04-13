@@ -13,6 +13,8 @@ namespace RDProject.Models
         public void Configure(EntityTypeBuilder<WFInstance> builder)
         {
             builder.ToTable(nameof(WFInstance));
+            builder.Property(b => b.SubTime).HasDefaultValue(DateTime.Now);
+            builder.Property(b => b.Status).HasDefaultValue(1);
         }
     }
 }

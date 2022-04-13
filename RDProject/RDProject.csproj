@@ -208,23 +208,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Common\WFHelper.cs" />
-    <Compile Include="Migrations\20220407013100_AddSomeTable.cs" />
-    <Compile Include="Migrations\20220407013100_AddSomeTable.designer.cs">
-      <DependentUpon>20220407013100_AddSomeTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20220411092846_init_WF.cs" />
-    <Compile Include="Migrations\20220411092846_init_WF.designer.cs">
-      <DependentUpon>20220411092846_init_WF.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20220412060530_AddSomeField.cs" />
-    <Compile Include="Migrations\20220412060530_AddSomeField.designer.cs">
-      <DependentUpon>20220412060530_AddSomeField.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20220412060951_AddDefaultDate.cs" />
-    <Compile Include="Migrations\20220412060951_AddDefaultDate.designer.cs">
-      <DependentUpon>20220412060951_AddDefaultDate.cs</DependentUpon>
+    <Compile Include="Migrations\20220413085051_init_table.cs" />
+    <Compile Include="Migrations\20220413085051_init_table.designer.cs">
+      <DependentUpon>20220413085051_init_table.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\MyDbContextModelSnapshot.cs" />
+    <Compile Include="Models\VO\TrialTitle.cs" />
     <Compile Include="Models\WFInstance.cs" />
     <Compile Include="Models\WFInstanceConfig.cs" />
     <Compile Include="Models\WFStep.cs" />
@@ -345,6 +334,7 @@
       <Name>ActivityLibrary</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Data.SqlClient.SNI.1.1.0\build\net46\Microsoft.Data.SqlClient.SNI.targets" Condition="Exists('..\packages\Microsoft.Data.SqlClient.SNI.1.1.0\build\net46\Microsoft.Data.SqlClient.SNI.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

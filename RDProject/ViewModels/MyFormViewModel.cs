@@ -8,6 +8,7 @@ using Prism.Mvvm;
 using Prism.Commands;
 using Prism.Regions;
 using RDProject.Models;
+using RDProject.Models.VO;
 using RDProject.Services.Interface;
 using System.Diagnostics;
 
@@ -29,10 +30,17 @@ namespace RDProject.ViewModels
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
-            
+
         }
 
-        public MyFormViewModel(IRegionManager regionManager, ITrialService trialService )
+        //获取当前用户所有表单
+        void GetData()
+        {
+            var list = trialService.GetTrialTitleByCreateUser(User.Name);
+            TrialTitles = new ObservableCollection<TrialTitle>(list);
+        }
+
+        public MyFormViewModel(IRegionManager regionManager, ITrialService trialService)
         {
             this.regionManager = regionManager;
             this.trialService = trialService;
@@ -42,10 +50,14 @@ namespace RDProject.ViewModels
 
         private void SelectIndex(object obj)
         {
+            if(obj == null)
+            {
+                return;
+            }
             Debug.WriteLine(obj);
-            var trial = (Trial)obj;
+            var trialTitle = (TrialTitle)obj;
             var keys = new NavigationParameters();
-            keys.Add("Trial", trial);
+            keys.Add("FHeadId", trialTitle.FHeadId);
             regionManager.Regions["FormShowControl"].RequestNavigate("MyFormShow", keys);
         }
 
@@ -67,20 +79,16 @@ namespace RDProject.ViewModels
             set { user = value; RaisePropertyChanged(); }
         }
 
-        private ObservableCollection<Trial> trials;
-        public ObservableCollection<Trial> Trials
+        //右侧列表
+        private ObservableCollection<TrialTitle> trialTitles;
+
+        public ObservableCollection<TrialTitle> TrialTitles
         {
-            get { return trials; }
-            set { trials = value; RaisePropertyChanged(); }
+            get { return trialTitles; }
+            set { trialTitles = value; RaisePropertyChanged(); }
         }
 
-        void GetData()
-        {
-            var list = trialService.GetTrialsByCreateUser(User.Name);
-            Trials = new ObservableCollection<Trial>(list);
-        }
-
-        
-        
     }
+
+    
 }

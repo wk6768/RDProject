@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RDProject.Models;
+using RDProject.Models.VO;
 
 namespace RDProject.Services.Interface
 {
@@ -27,6 +28,14 @@ namespace RDProject.Services.Interface
         (Trial, ObservableCollection<TrialEntry>) SaveTrialPageAndReturnFullData(Trial trial, ObservableCollection<TrialEntry> trialEntries);
 
         /// <summary>
+        /// 更新Trial表单和对应的明细,返回表单和对应的明细
+        /// </summary>
+        /// <param name="trial"></param>
+        /// <param name="trialEntries"></param>
+        /// <returns></returns>
+        (Trial, ObservableCollection<TrialEntry>) UpdateTrialPageAndReturnFullData(Trial trial, ObservableCollection<TrialEntry> trialEntries);
+
+        /// <summary>
         /// 通过Trial的表头ID获取该表单完整内容
         /// </summary>
         /// <param name="fHeadId"></param>
@@ -34,10 +43,24 @@ namespace RDProject.Services.Interface
         (Trial, List<TrialEntry>) GetTrialFullData(long fHeadId);
 
         /// <summary>
+        /// 通过Trial的表头ID获取该表单明细
+        /// </summary>
+        /// <param name="fHeadId"></param>
+        /// <returns></returns>
+        List<TrialEntry> GetTrialEntryData(long fHeadId);
+
+        /// <summary>
         /// 通过用户名获取该用户所有表单
         /// </summary>
         /// <param name="createUser"></param>
         /// <returns></returns>
         List<Trial> GetTrialsByCreateUser(string createUser);
+
+        /// <summary>
+        /// 通过用户名获取该用户所有表单的ID和标题
+        /// </summary>
+        /// <param name="createUser"></param>
+        /// <returns></returns>
+        List<TrialTitle> GetTrialTitleByCreateUser(string createUser);
     }
 }

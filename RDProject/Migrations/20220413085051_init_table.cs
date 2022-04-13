@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RDProject.Migrations
 {
-    public partial class AddSomeTable : Migration
+    public partial class init_table : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -34,6 +34,7 @@ namespace RDProject.Migrations
                     FRDNo = table.Column<string>(nullable: true),
                     FProductName = table.Column<string>(nullable: true),
                     FWorkerOrderDescription = table.Column<string>(nullable: true),
+                    FCompany = table.Column<string>(nullable: true),
                     FHasCNC = table.Column<bool>(nullable: false),
                     FHasCoating = table.Column<bool>(nullable: false),
                     FHasLaser = table.Column<bool>(nullable: false),
@@ -45,7 +46,9 @@ namespace RDProject.Migrations
                     FAssemblyFactory = table.Column<string>(nullable: true),
                     FInformation = table.Column<string>(nullable: true),
                     FRequire = table.Column<string>(nullable: true),
-                    FCreateDate = table.Column<DateTime>(nullable: false)
+                    FCreateUser = table.Column<string>(nullable: true),
+                    FCreateDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2022, 4, 13, 16, 50, 51, 668, DateTimeKind.Local).AddTicks(2856)),
+                    FTitle = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -66,11 +69,47 @@ namespace RDProject.Migrations
                     FAmount = table.Column<int>(nullable: false),
                     FManPower = table.Column<decimal>(nullable: false),
                     FManHours = table.Column<decimal>(nullable: false),
-                    FCreateDate = table.Column<DateTime>(nullable: false)
+                    FCreateDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2022, 4, 13, 16, 50, 51, 668, DateTimeKind.Local).AddTicks(2856))
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TrialEntry", x => x.FEntryId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "WFInstance",
+                columns: table => new
+                {
+                    InstanceId = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TableName = table.Column<string>(nullable: true),
+                    InstanceGuid = table.Column<string>(nullable: true),
+                    Status = table.Column<int>(nullable: false, defaultValue: 1),
+                    HeadId = table.Column<long>(nullable: false),
+                    SubBy = table.Column<string>(nullable: true),
+                    SubTime = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2022, 4, 13, 16, 50, 51, 658, DateTimeKind.Local).AddTicks(3142))
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WFInstance", x => x.InstanceId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "WFStep",
+                columns: table => new
+                {
+                    StepId = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    InstanceId = table.Column<long>(nullable: false),
+                    BookMark = table.Column<string>(nullable: true),
+                    Remark = table.Column<string>(nullable: true),
+                    SubBy = table.Column<string>(nullable: true),
+                    SubTime = table.Column<DateTime>(nullable: true),
+                    Status = table.Column<int>(nullable: false, defaultValue: 1)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WFStep", x => x.StepId);
                 });
 
             migrationBuilder.CreateIndex(
@@ -89,6 +128,12 @@ namespace RDProject.Migrations
 
             migrationBuilder.DropTable(
                 name: "TrialEntry");
+
+            migrationBuilder.DropTable(
+                name: "WFInstance");
+
+            migrationBuilder.DropTable(
+                name: "WFStep");
         }
     }
 }

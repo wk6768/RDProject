@@ -14,7 +14,9 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Activities;
 using ActivityLibrary.Activities.RDTrial;
-
+using DevExpress.Xpf.Core;
+using DevExpress.Xpf.WindowsUI;
+using System.Windows;
 
 namespace RDProject.ViewModels
 {
@@ -167,13 +169,57 @@ namespace RDProject.ViewModels
 
         private void Save()
         {
+            #region 检查必填项
             //先检查必填项是否填了
-         
-            //如果编号FHeadID为null或者0，则保存；如果FHeadID 大于0，则更新
-            
-            //保存
-            (Trial, TrialEntries) = trialService.SaveTrialPageAndReturnFullData(Trial, TrialEntries);
+            if (string.IsNullOrWhiteSpace(Trial.FRDNo) || string.IsNullOrWhiteSpace(Trial.FProductName) || string.IsNullOrWhiteSpace(Trial.FCompany))
+            {
+                WinUIMessageBox.Show("研发项目编号，产品名称，厂别 为必填项", "提示",  MessageBoxButton.OK, MessageBoxImage.Warning,MessageBoxResult.None, MessageBoxOptions.None);
+                return;
+            }
+            if (Trial.FHasCNC == true && string.IsNullOrWhiteSpace(Trial.FCNCNPI))
+            {
+                WinUIMessageBox.Show("CNC工序NPI为 必填项", "提示", MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.None, MessageBoxOptions.None);
+                return;
+            }
+            if (Trial.FHasCoating == true && string.IsNullOrWhiteSpace(Trial.FCoatingNPI))
+            {
+                WinUIMessageBox.Show("喷涂工序NPI 为必填项", "提示", MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.None, MessageBoxOptions.None);
+                return;
+            }
+            if (Trial.FHasLaser == true && string.IsNullOrWhiteSpace(Trial.FLaserNPI))
+            {
+                WinUIMessageBox.Show("激光切割工序NPI 为必填项", "提示", MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.None, MessageBoxOptions.None);
+                return;
+            }
+            if (Trial.FHasAssembly == true && string.IsNullOrWhiteSpace(Trial.FAssemblyNPI))
+            {
+                WinUIMessageBox.Show("组装工序NPI 为必填项", "提示", MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.None, MessageBoxOptions.None);
+                return;
+            }
+            #endregion
 
+
+            //如果编号FHeadID为null或者0，则保存；如果FHeadID 大于0，则更新
+            //保存
+            switch (Trial.FHeadId)
+            {
+                case 0:
+                    Debug.WriteLine("新增表单");
+                    (Trial, TrialEntries) = trialService.SaveTrialPageAndReturnFullData(Trial, TrialEntries);
+                    if (Trial.FHeadId > 0)
+                    {
+                        WinUIMessageBox.Show("保存成功", "提示", MessageBoxButton.OK, MessageBoxImage.Asterisk, MessageBoxResult.None, MessageBoxOptions.None);
+                    }
+                    break;
+                default:
+                    Debug.WriteLine("更新表单");
+                    (Trial, TrialEntries) = trialService.UpdateTrialPageAndReturnFullData(Trial, TrialEntries);
+                    WinUIMessageBox.Show("修改成功", "提示", MessageBoxButton.OK, MessageBoxImage.Asterisk, MessageBoxResult.None, MessageBoxOptions.None);
+                    break;
+            }
+
+
+            //Steps = CreateSteps();
         }
 
 
@@ -192,13 +238,25 @@ namespace RDProject.ViewModels
             //Debug.WriteLine(app.Id.ToString());
 
             //开启一个工作流，获取工作流ID
-            var instanceId = WFHelper.Run(activity, keys);
-            Debug.WriteLine(instanceId);
+            var guid = WFHelper.Run(activity, keys);
+            Debug.WriteLine(guid);
 
-            //保存工作流和审批步骤
-            var steps = CreateSteps();
-            wfService.SaveWFSteps(steps);
 
+            //构建审批表
+            WFInstance instance = new WFInstance()
+            {
+                TableName = "Trial",
+                InstanceGuid = guid,
+                HeadId = Trial.FHeadId,
+                SubBy = Trial.FCreateUser,
+            };
+            //构建审批步骤
+            Steps = CreateSteps();
+            //保存
+            (instance, Steps) = wfService.SaveInstance(instance, Steps);
+
+            //提交后清空
+            InitNewTrialForm();
         }
 
         private void NextStep(string obj)
@@ -227,6 +285,15 @@ namespace RDProject.ViewModels
             get { return answer; }
             set { answer = value; RaisePropertyChanged();}
         }
+
+        private ObservableCollection<WFStep> steps;
+
+        public ObservableCollection<WFStep> Steps
+        {
+            get { return steps; }
+            set { steps = value; RaisePropertyChanged(); }
+        }
+
 
         /// <summary>
         /// 根据现有条件安排审批节点

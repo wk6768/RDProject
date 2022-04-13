@@ -10,8 +10,8 @@ using RDProject.Common;
 namespace RDProject.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20220411092846_init_WF")]
-    partial class init_WF
+    [Migration("20220413085051_init_table")]
+    partial class init_table
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -84,7 +84,12 @@ namespace RDProject.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("FCreateDate")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2022, 4, 13, 16, 50, 51, 668, DateTimeKind.Local).AddTicks(2856));
+
+                    b.Property<string>("FCreateUser")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("FDate")
                         .HasColumnType("datetime2");
@@ -116,6 +121,9 @@ namespace RDProject.Migrations
                     b.Property<string>("FRequire")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("FTitle")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("FWorkerOrderDescription")
                         .HasColumnType("nvarchar(max)");
 
@@ -138,7 +146,9 @@ namespace RDProject.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("FCreateDate")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2022, 4, 13, 16, 50, 51, 668, DateTimeKind.Local).AddTicks(2856));
 
                     b.Property<DateTime>("FEndDate")
                         .HasColumnType("datetime2");
@@ -165,30 +175,34 @@ namespace RDProject.Migrations
 
             modelBuilder.Entity("RDProject.Models.WFInstance", b =>
                 {
-                    b.Property<long>("HeadId")
+                    b.Property<long>("InstanceId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<long>("HeadId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("InstanceGuid")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("InstanceId")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("InstanceStatus")
-                        .HasColumnType("bit");
+                    b.Property<int>("Status")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(1);
 
                     b.Property<string>("SubBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("SubTime")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2022, 4, 13, 16, 50, 51, 658, DateTimeKind.Local).AddTicks(3142));
 
                     b.Property<string>("TableName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("HeadId");
+                    b.HasKey("InstanceId");
 
                     b.ToTable("WFInstance");
                 });
@@ -209,10 +223,15 @@ namespace RDProject.Migrations
                     b.Property<string>("Remark")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Status")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(1);
+
                     b.Property<string>("SubBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("SubTime")
+                    b.Property<DateTime?>("SubTime")
                         .HasColumnType("datetime2");
 
                     b.HasKey("StepId");

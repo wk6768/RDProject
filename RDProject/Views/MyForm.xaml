@@ -22,7 +22,7 @@
             </dxe:ComboBoxEdit>
             <dxe:TextEdit Height="25" DockPanel.Dock="Top" VerticalAlignment="Top" Margin="0,5" EditValue="搜索标题"></dxe:TextEdit>
 
-            <ListBox ItemsSource="{Binding Trials}" x:Name="MyListBox">
+            <ListBox ItemsSource="{Binding TrialTitles}" x:Name="MyListBox">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectionChanged">
                         <i:InvokeCommandAction Command="{Binding SelectIndexCommand}" CommandParameter="{Binding ElementName=MyListBox,Path=SelectedItem}" />

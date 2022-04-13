@@ -12,16 +12,19 @@ namespace RDProject.Models
         private long stepId;
         private long instanceId;
         private string bookMark;
-        private string remark;
         private string subBy;
-        private DateTime subTime;
+        private DateTime? subTime;
+        private string remark;
+        private int status;
+        
 
         public long StepId { get => stepId; set { stepId = value; RaisePropertyChanged(); } }
         public long InstanceId { get => instanceId; set { instanceId = value; RaisePropertyChanged(); } }
         public string BookMark { get => bookMark; set { bookMark = value; RaisePropertyChanged(); } }
         public string Remark { get => remark; set { remark = value; RaisePropertyChanged(); } }
         public string SubBy { get => subBy; set { subBy = value; RaisePropertyChanged(); } }
-        public DateTime SubTime { get => subTime; set { subTime = value; RaisePropertyChanged(); } }
+        public DateTime? SubTime { get => subTime; set { subTime = value; RaisePropertyChanged(); } }
+        public int Status { get => status; set { status = value; RaisePropertyChanged(); } }
 
         public override string ToString()
         {
