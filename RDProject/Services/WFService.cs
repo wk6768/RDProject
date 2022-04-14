@@ -47,11 +47,10 @@ namespace RDProject.Services
             }
         }
 
-        public (WFInstance instance, ObservableCollection<WFStep> steps) GetInstanceByTableNameAndHeadID(string tableName, long headId)
+        public (WFInstance instance, List<WFStep> steps) GetInstanceByTableNameAndHeadID(string tableName, long headId)
         {
             var instance = ctx.WFInstances.Where(i => i.TableName == tableName && i.HeadId == headId).FirstOrDefault();
-            var list = ctx.WFSteps.Where(s => s.InstanceId == instance.InstanceId).ToList();
-            ObservableCollection<WFStep> steps = new ObservableCollection<WFStep>(list);
+            var steps = ctx.WFSteps.Where(s => s.InstanceId == instance.InstanceId).ToList();
             return (instance, steps);
         }
     }

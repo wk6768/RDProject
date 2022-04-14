@@ -222,14 +222,14 @@
     <Compile Include="Services\Interface\IWFService.cs" />
     <Compile Include="Services\TrialService.cs" />
     <Compile Include="Services\WFService.cs" />
-    <Compile Include="ViewModels\MyFormShowViewModel.cs" />
+    <Compile Include="ViewModels\CheckDialogViewModel.cs" />
     <Compile Include="ViewModels\MyFormViewModel.cs" />
     <Compile Include="ViewModels\TrialAddDialogViewModel.cs" />
+    <Compile Include="Views\CheckDialog.xaml.cs">
+      <DependentUpon>CheckDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MyForm.xaml.cs">
       <DependentUpon>MyForm.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\MyFormShow.xaml.cs">
-      <DependentUpon>MyFormShow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TrialAddDialog.xaml.cs">
       <DependentUpon>TrialAddDialog.xaml</DependentUpon>
@@ -238,11 +238,11 @@
     <Compile Include="Views\TrialForm.xaml.cs">
       <DependentUpon>TrialForm.xaml</DependentUpon>
     </Compile>
-    <Page Include="Views\MyForm.xaml">
+    <Page Include="Views\CheckDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\MyFormShow.xaml">
+    <Page Include="Views\MyForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

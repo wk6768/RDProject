@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace RDProject.Views
 {
     /// <summary>
-    /// MyFormShow.xaml 的交互逻辑
+    /// CheckDialog.xaml 的交互逻辑
     /// </summary>
-    public partial class MyFormShow : UserControl
+    public partial class CheckDialog : UserControl
     {
-        public MyFormShow()
+        public CheckDialog()
         {
             InitializeComponent();
         }

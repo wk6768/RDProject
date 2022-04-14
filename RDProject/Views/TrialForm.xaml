@@ -16,6 +16,46 @@
         <ScrollViewer>
             <dxlc:LayoutControl MaxHeight="2000">
                 <dxlc:LayoutGroup Orientation="Vertical">
+                    
+                    <dxlc:LayoutGroup Orientation="Horizontal">
+                        <dxlc:LayoutItem>
+                            <dxb:BarContainerControl>
+                                <dxb:ToolBarControl>
+                                    <dxb:BarButtonItem Content="新增明细" Command="{Binding AddTrialEntryCommand}" CommandParameter="TrialAddDialog" 
+                                                           Glyph="{dx:DXImage SvgImages/Icon Builder/Actions_AddCircled.svg}"/>
+                                    <dxb:BarButtonItem Content="删除明细" Command="{Binding DeleteTrialEntryCommand}" 
+                                                           Glyph="{dx:DXImage SvgImages/Icon Builder/Actions_DeleteCircled.svg}"/>
+                                </dxb:ToolBarControl>
+                                <dxb:ToolBarControl>
+                                    <dxb:BarButtonItem Content="保存表单" Command="{Binding SaveCommand}"
+                                                           Glyph="{dx:DXImage SvgImages/XAF/Action_SaveScript.svg}"></dxb:BarButtonItem>
+                                    <dxb:BarButtonItem Content="发起流程" Command="{Binding SendCommand}"
+                                                           Glyph="{dx:DXImage SvgImages/Spreadsheet/FillUp.svg}"></dxb:BarButtonItem>
+                                </dxb:ToolBarControl>
+                                <dxb:ToolBarControl>
+                                    <dxb:BarButtonItem Content="审批" Command="{Binding CheckCommand}"
+                                                       Glyph="{dx:DXImage SvgImages/Dashboards/RenameDataSource.svg}"></dxb:BarButtonItem>
+                                    <dxb:BarEditItem EditWidth="100" x:Name="guid">
+                                        <dxb:BarEditItem.EditSettings>
+                                            <dxe:TextEditSettings></dxe:TextEditSettings>
+                                        </dxb:BarEditItem.EditSettings>
+                                    </dxb:BarEditItem>
+                                    <dxb:BarEditItem EditWidth="100" EditValue="{Binding BookmarkName}">
+                                        <dxb:BarEditItem.EditSettings>
+                                            <dxe:TextEditSettings></dxe:TextEditSettings>
+                                        </dxb:BarEditItem.EditSettings>
+                                    </dxb:BarEditItem>
+                                    <dxb:BarEditItem EditWidth="100" EditValue="{Binding Answer}">
+                                        <dxb:BarEditItem.EditSettings>
+                                            <dxe:TextEditSettings></dxe:TextEditSettings>
+                                        </dxb:BarEditItem.EditSettings>
+                                    </dxb:BarEditItem>
+                                    <dxb:BarButtonItem Content="审批" Command="{Binding NextStepCommand}" CommandParameter="{Binding ElementName=guid,Path=EditValue}"></dxb:BarButtonItem>
+                                </dxb:ToolBarControl>
+                            </dxb:BarContainerControl>
+                        </dxlc:LayoutItem>
+                    </dxlc:LayoutGroup>
+
                     <dxlc:LayoutGroup Header="研发项目试产记录表" View="GroupBox">
                         <dxlc:LayoutGroup Orientation="Vertical">
                             <dxlc:LayoutGroup Orientation="Horizontal">
@@ -147,47 +187,8 @@
                         </dxlc:LayoutGroup>
                     </dxlc:LayoutGroup>
 
-                    <dxlc:LayoutGroup Header="LayoutGroup" View="Group" MinHeight="200">
+                    <dxlc:LayoutGroup Header="研发项目试产记录表明细" View="Group" MinHeight="200">
                         <dxlc:LayoutGroup Orientation="Vertical">
-
-                            <dxlc:LayoutGroup Orientation="Horizontal">
-                                <dxlc:LayoutItem>
-                                    <dxb:BarContainerControl>
-                                        <dxb:ToolBarControl>
-                                            <dxb:BarButtonItem Content="新增明细" Command="{Binding AddTrialEntryCommand}" CommandParameter="TrialAddDialog" 
-                                                           Glyph="{dx:DXImage SvgImages/Icon Builder/Actions_AddCircled.svg}"/>
-                                            <dxb:BarButtonItem Content="删除明细" Command="{Binding DeleteTrialEntryCommand}" 
-                                                           Glyph="{dx:DXImage SvgImages/Icon Builder/Actions_DeleteCircled.svg}"/>
-                                        </dxb:ToolBarControl>
-                                        <dxb:ToolBarControl>
-                                            <dxb:BarButtonItem Content="保存表单" Command="{Binding SaveCommand}"
-                                                           Glyph="{dx:DXImage SvgImages/XAF/Action_SaveScript.svg}"></dxb:BarButtonItem>
-                                            <dxb:BarButtonItem Content="发起流程" Command="{Binding SendCommand}"
-                                                           Glyph="{dx:DXImage SvgImages/Spreadsheet/FillUp.svg}"></dxb:BarButtonItem>
-                                        </dxb:ToolBarControl>
-                                        <dxb:ToolBarControl>
-                                            <dxb:BarButtonItem Content="提交" Command="{Binding SendCommand}"></dxb:BarButtonItem>
-                                            <dxb:BarEditItem EditWidth="100" x:Name="guid">
-                                                <dxb:BarEditItem.EditSettings>
-                                                    <dxe:TextEditSettings></dxe:TextEditSettings>
-                                                </dxb:BarEditItem.EditSettings>
-                                            </dxb:BarEditItem>
-                                            <dxb:BarEditItem EditWidth="100" EditValue="{Binding BookmarkName}">
-                                                <dxb:BarEditItem.EditSettings>
-                                                    <dxe:TextEditSettings></dxe:TextEditSettings>
-                                                </dxb:BarEditItem.EditSettings>
-                                            </dxb:BarEditItem>
-                                            <dxb:BarEditItem EditWidth="100" EditValue="{Binding Answer}">
-                                                <dxb:BarEditItem.EditSettings>
-                                                    <dxe:TextEditSettings></dxe:TextEditSettings>
-                                                </dxb:BarEditItem.EditSettings>
-                                            </dxb:BarEditItem>
-                                            <dxb:BarButtonItem Content="审批" Command="{Binding NextStepCommand}" CommandParameter="{Binding ElementName=guid,Path=EditValue}"></dxb:BarButtonItem>
-                                        </dxb:ToolBarControl>
-                                    </dxb:BarContainerControl>
-                                </dxlc:LayoutItem>
-                            </dxlc:LayoutGroup>
-
                             <dxlc:LayoutGroup>
                                 <dxg:GridControl ItemsSource="{Binding TrialEntries}">
                                     <dxg:GridControl.View>

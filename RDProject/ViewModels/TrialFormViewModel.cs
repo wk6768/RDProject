@@ -25,7 +25,17 @@ namespace RDProject.ViewModels
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             User = navigationContext.Parameters["User"] as Employee;
-            InitNewTrialForm();
+            var fHeadID = (long)navigationContext.Parameters["FHeadID"];
+            if (fHeadID <= 0)
+            {
+                //如果小于0，则是新增表单
+                InitNewTrialForm();
+            } else if (fHeadID > 0)
+            {
+                //如果大于0，则是浏览表单
+                InitOldTrialForm(fHeadID);
+            }
+            GetEmployeesList();
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
@@ -49,8 +59,6 @@ namespace RDProject.ViewModels
             this.employeeService = employeeService;
             this.trialService = trialService;
             this.wfService = wfService;
-
-            GetEmployeesList();
 
             Employees = new ObservableCollection<Employee>();
 
@@ -77,6 +85,21 @@ namespace RDProject.ViewModels
             };
 
             TrialEntries = new ObservableCollection<TrialEntry>();
+
+            Instance = new WFInstance();
+
+            Steps = new ObservableCollection<WFStep>();
+        }
+
+        void InitOldTrialForm(long fHeadID)
+        {
+            List<TrialEntry> list;
+            (Trial, list) = trialService.GetTrialFullData(fHeadID);
+            TrialEntries = new ObservableCollection<TrialEntry>(list);
+
+            List<WFStep> list2;
+            (Instance, list2) = wfService.GetInstanceByTableNameAndHeadID("Trial", fHeadID);
+            Steps = new ObservableCollection<WFStep>(list2);
         }
 
         /// <summary>
@@ -117,6 +140,7 @@ namespace RDProject.ViewModels
         /// 后台获取的用户名
         /// </summary>
         private List<Employee> EmployeeList { get; set; }
+
         public async void GetEmployeesList()
         {
             EmployeeList = await employeeService.GetEmployeeList();
@@ -126,10 +150,55 @@ namespace RDProject.ViewModels
         /// 下拉列表用户信息
         /// </summary>
         private ObservableCollection<Employee> employees;
+
         public ObservableCollection<Employee> Employees
         {
             get { return employees; }
             set { employees = value; RaisePropertyChanged(); }
+        }
+
+        /// <summary>
+        /// 流程
+        /// </summary>
+        private WFInstance instance;
+
+        public WFInstance Instance
+        {
+            get { return instance; }
+            set { instance = value; RaisePropertyChanged(); }
+        }
+
+        /// <summary>
+        /// 步骤
+        /// </summary>
+        private ObservableCollection<WFStep> steps;
+
+        public ObservableCollection<WFStep> Steps
+        {
+            get { return steps; }
+            set { steps = value; RaisePropertyChanged(); }
+        }
+
+        /// <summary>
+        /// 节点名称
+        /// </summary>
+        private string bookmarkName;
+
+        public string BookmarkName
+        {
+            get { return bookmarkName; }
+            set { bookmarkName = value; RaisePropertyChanged(); }
+        }
+
+        /// <summary>
+        /// 是否通过
+        /// </summary>
+        private string answer;
+
+        public string Answer
+        {
+            get { return answer; }
+            set { answer = value; RaisePropertyChanged(); }
         }
 
         public DelegateCommand<string> AddTrialEntryCommand { get; private set; }
@@ -255,6 +324,9 @@ namespace RDProject.ViewModels
             //保存
             (instance, Steps) = wfService.SaveInstance(instance, Steps);
 
+            //发送邮件
+
+
             //提交后清空
             InitNewTrialForm();
         }
@@ -270,38 +342,13 @@ namespace RDProject.ViewModels
         }
 
 
-        private string bookmarkName;
-
-        public string BookmarkName
-        {
-            get { return bookmarkName; }
-            set { bookmarkName = value; RaisePropertyChanged(); }
-        }
-
-        private string answer;
-
-        public string Answer
-        {
-            get { return answer; }
-            set { answer = value; RaisePropertyChanged();}
-        }
-
-        private ObservableCollection<WFStep> steps;
-
-        public ObservableCollection<WFStep> Steps
-        {
-            get { return steps; }
-            set { steps = value; RaisePropertyChanged(); }
-        }
-
-
         /// <summary>
         /// 根据现有条件安排审批节点
         /// </summary>
         private ObservableCollection<WFStep> CreateSteps()
         {
             ObservableCollection<WFStep> steps = new ObservableCollection<WFStep>();
-            steps.Add(new WFStep() { BookMark = "提交申请", SubBy = User.Name });
+            steps.Add(new WFStep() { BookMark = "提交申请", SubBy = User.Name , SubTime = DateTime.Now});
             steps.Add(new WFStep() { BookMark = "附件上传", SubBy = "陆冬夏" });
             steps.Add(new WFStep() { BookMark = "抄送节点", SubBy = "赵鹏" });
 
@@ -324,6 +371,16 @@ namespace RDProject.ViewModels
             return steps;
         }
 
-        
+        /// <summary>
+        /// 发送邮件
+        /// </summary>
+        private void SendMail()
+        {
+            //取不是该用户的第一个步骤（该用户下一位）
+            var step = Steps.OrderBy(s => s.StepId).Where(s => s.SubBy != User.Name).First();
+            //获取下一步骤后，就可以发邮件给他了
+
+        }
+
     }
 }

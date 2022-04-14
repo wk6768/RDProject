@@ -57,8 +57,9 @@ namespace RDProject.ViewModels
             Debug.WriteLine(obj);
             var trialTitle = (TrialTitle)obj;
             var keys = new NavigationParameters();
-            keys.Add("FHeadId", trialTitle.FHeadId);
-            regionManager.Regions["FormShowControl"].RequestNavigate("MyFormShow", keys);
+            keys.Add("User", User);
+            keys.Add("FHeadID", trialTitle.FHeadId);
+            regionManager.Regions["FormShowControl"].RequestNavigate("TrialForm", keys);
         }
 
         private readonly IRegionManager regionManager;

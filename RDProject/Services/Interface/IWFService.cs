@@ -22,6 +22,6 @@ namespace RDProject.Services.Interface
         /// <param name="tableName"></param>
         /// <param name="HeadId"></param>
         /// <returns></returns>
-        (WFInstance instance, ObservableCollection<WFStep> steps) GetInstanceByTableNameAndHeadID(string tableName, long HeadId);
+        (WFInstance instance, List<WFStep> steps) GetInstanceByTableNameAndHeadID(string tableName, long HeadId);
     }
 }

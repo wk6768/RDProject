@@ -90,6 +90,7 @@ namespace RDProject.ViewModels
             {
                 var keys = new NavigationParameters();
                 keys.Add("User", User);
+                keys.Add("FHeadID", (long)-1);
                 regionManager.Regions["MainControl"].RequestNavigate(obj, keys);
             }
         }
