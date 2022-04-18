@@ -68,9 +68,12 @@ namespace RDProject.ViewModels
             SaveCommand = new DelegateCommand(Save);
             SendCommand = new DelegateCommand(Send);
             NextStepCommand = new DelegateCommand<string>(NextStep);
+            CheckCommand = new DelegateCommand(Check);
         }
 
-        
+       
+
+
         /// <summary>
         /// 初始化空白表单
         /// </summary>
@@ -208,6 +211,8 @@ namespace RDProject.ViewModels
         public DelegateCommand SendCommand { get; private set; }
         public DelegateCommand<string> NextStepCommand { get; private set; }
 
+        public DelegateCommand CheckCommand { get; private set; }
+
         private void AddTrialEntry(string obj)
         {
             dialogService.ShowDialog(obj, callback =>
@@ -341,6 +346,65 @@ namespace RDProject.ViewModels
             //app.ResumeBookmark(BookmarkName, keys);
         }
 
+        private void Check()
+        {
+            //查找当前由谁审批
+            var step = Steps.Where(s => s.Status == 0).FirstOrDefault();
+            //名字对不上，则提示
+            if (!User.Name.Equals(step.SubBy))
+            {
+                WinUIMessageBox.Show($"账号不正确,当前节点审批人是 {step.SubBy}", "提示", MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.None, MessageBoxOptions.None);
+                return;
+            }
+
+            bool CheckResult = false;
+            string Reason = null;
+            dialogService.ShowDialog("CheckDialog", callback =>
+            {
+                CheckResult = callback.Parameters.GetValue<bool>("CheckResult");
+                Reason = callback.Parameters.GetValue<string>("Reason");
+            });
+
+            //审批，就是 调用Instance，并更新Steps
+            //如果审批通过
+            if (CheckResult == true)
+            {
+                //执行工作流
+                Dictionary<string, object> keys = new Dictionary<string, object>();
+                keys.Add("IsPass", CheckResult);
+                keys.Add("BookMarkName", step.BookMark);
+                //WFHelper.Resume(
+                //        new 研发项目试产记录表(),
+                //        Instance.InstanceGuid,
+                //        step.BookMark,
+                //        keys
+                //    );
+                //更新审批和审批步骤
+                step.Status = 1;
+                step.SubTime = DateTime.Now;
+                step.Remark = Reason;
+
+                //如果下一步骤为抄送节点，则直接更新下一节点
+                var flag = true;
+                while (flag)
+                {
+                    var step2 = Steps.Where(s => s.Status == 0).FirstOrDefault();
+                    if (step2.BookMark.Contains("抄送"))
+                    {
+                        step2.Status = 1;
+                        step2.SubTime = DateTime.Now;
+                        step2.Remark = "抄送";
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+
+                (Instance, Steps) = wfService.UpdateInstance(Instance, Steps);
+            }
+        }
+
 
         /// <summary>
         /// 根据现有条件安排审批节点
@@ -348,7 +412,7 @@ namespace RDProject.ViewModels
         private ObservableCollection<WFStep> CreateSteps()
         {
             ObservableCollection<WFStep> steps = new ObservableCollection<WFStep>();
-            steps.Add(new WFStep() { BookMark = "提交申请", SubBy = User.Name , SubTime = DateTime.Now});
+            steps.Add(new WFStep() { BookMark = "提交申请", SubBy = User.Name , SubTime = DateTime.Now, Status = 1});
             steps.Add(new WFStep() { BookMark = "附件上传", SubBy = "陆冬夏" });
             steps.Add(new WFStep() { BookMark = "抄送节点", SubBy = "赵鹏" });
 

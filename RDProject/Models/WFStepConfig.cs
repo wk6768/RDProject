@@ -13,7 +13,7 @@ namespace RDProject.Models
         public void Configure(EntityTypeBuilder<WFStep> builder)
         {
             builder.ToTable(nameof(WFStep));
-            builder.Property(b => b.Status).HasDefaultValue(1);
+            builder.Property(b => b.Status).HasDefaultValue(0);//0未审批，1已审批，2已驳回
         }
     }
 }

@@ -33,6 +33,7 @@ namespace RDProject
             containerRegistry.RegisterDialog<LoginDialog, LoginDialogViewModel>();
             containerRegistry.RegisterDialog<ChangePwdDialog, ChangePwdDialogViewModel>();
             containerRegistry.RegisterDialog<TrialAddDialog, TrialAddDialogViewModel>();
+            containerRegistry.RegisterDialog<CheckDialog, CheckDialogViewModel>();
             containerRegistry.RegisterForNavigation<EmployeeControl, EmployeeControlViewModel>();
             containerRegistry.RegisterForNavigation<TrialForm, TrialFormViewModel>();
             containerRegistry.RegisterForNavigation<MyForm, MyFormViewModel>();

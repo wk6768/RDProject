@@ -208,9 +208,14 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Common\WFHelper.cs" />
+    <Compile Include="Converters\CheckDialogConverter.cs" />
     <Compile Include="Migrations\20220413085051_init_table.cs" />
     <Compile Include="Migrations\20220413085051_init_table.designer.cs">
       <DependentUpon>20220413085051_init_table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20220418073403_change_WFSteps_defaultdata.cs" />
+    <Compile Include="Migrations\20220418073403_change_WFSteps_defaultdata.designer.cs">
+      <DependentUpon>20220418073403_change_WFSteps_defaultdata.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\MyDbContextModelSnapshot.cs" />
     <Compile Include="Models\VO\TrialTitle.cs" />

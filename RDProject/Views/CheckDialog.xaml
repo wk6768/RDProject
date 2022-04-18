@@ -1,12 +1,27 @@
-﻿<UserControl x:Class="RDProject.Views.CheckDialog"
+﻿<UserControl xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"  x:Class="RDProject.Views.CheckDialog"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RDProject.Views"
+             xmlns:converters="clr-namespace:RDProject.Converters"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="250" d:DesignWidth="400" Width="400" Height="250">
+    <UserControl.Resources>
+        <converters:CheckDialogConverter x:Key="checkDialogConverter"/>
+    </UserControl.Resources>
     <Grid>
-            
+        <DockPanel LastChildFill="False">
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+                <RadioButton Content="通过" GroupName="审批" IsChecked="{Binding CheckResultPass}" ></RadioButton>
+                <RadioButton Content="驳回" GroupName="审批" IsChecked="{Binding CheckResultReject}"></RadioButton>
+            </StackPanel>
+            <GroupBox Header="审批意见" DockPanel.Dock="Top">
+                <TextBox Height="150" Text="{Binding Reason}" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"/>
+            </GroupBox>
+            <StackPanel DockPanel.Dock="Right">
+                <dx:SimpleButton Content="确定" Command="{Binding OkCommand}" Width="75" Height="25" Margin="10"/>
+            </StackPanel>
+        </DockPanel>
     </Grid>
 </UserControl>

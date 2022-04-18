@@ -53,5 +53,27 @@ namespace RDProject.Services
             var steps = ctx.WFSteps.Where(s => s.InstanceId == instance.InstanceId).ToList();
             return (instance, steps);
         }
+
+        public (WFInstance instance, ObservableCollection<WFStep> steps) UpdateInstance(WFInstance instance, ObservableCollection<WFStep> steps)
+        {
+            using (var tran = ctx.Database.BeginTransaction())
+            {
+                try
+                {
+                    ctx.WFInstances.Update(instance);
+                    ctx.SaveChanges();
+
+                    ctx.WFSteps.UpdateRange(steps);
+                    ctx.SaveChanges();
+
+                    tran.Commit();
+                    return (instance, steps);
+                }
+                catch
+                {
+                    return (null, null);
+                }
+            }
+        }
     }
 }

@@ -15,7 +15,7 @@ namespace RDProject.Models
         private string subBy;
         private DateTime? subTime;
         private string remark;
-        private int status;
+        private int status;         //0未审批，1已审批，2已驳回
         
 
         public long StepId { get => stepId; set { stepId = value; RaisePropertyChanged(); } }

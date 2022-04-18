@@ -120,12 +120,21 @@ namespace RDProject.Services
             return ctx.Trials.Where(t => t.FCreateUser == createUser).ToList();
         }
 
+        public List<Trial> GetTrialsByTitle(string title)
+        {
+            return ctx.Trials.Where(t => t.FTitle.Contains(title)).ToList();
+        }
+
         public List<TrialTitle> GetTrialTitleByCreateUser(string createUser)
         {
             return ctx.Trials.Where(t => t.FCreateUser == createUser).
                 Select(t => new TrialTitle() { FHeadId = t.FHeadId, FTitle = t.FTitle}).ToList();
         }
 
-        
+        public List<TrialTitle> GetTrialTitleByTitle(string title)
+        {
+            return ctx.Trials.Where(t => t.FTitle.Contains(title)).
+                Select(t => new TrialTitle() { FHeadId = t.FHeadId, FTitle = t.FTitle }).ToList();
+        }
     }
 }

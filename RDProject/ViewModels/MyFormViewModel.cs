@@ -46,28 +46,11 @@ namespace RDProject.ViewModels
             this.trialService = trialService;
 
             SelectIndexCommand = new DelegateCommand<object>(SelectIndex);
-        }
-
-        private void SelectIndex(object obj)
-        {
-            if(obj == null)
-            {
-                return;
-            }
-            Debug.WriteLine(obj);
-            var trialTitle = (TrialTitle)obj;
-            var keys = new NavigationParameters();
-            keys.Add("User", User);
-            keys.Add("FHeadID", trialTitle.FHeadId);
-            regionManager.Regions["FormShowControl"].RequestNavigate("TrialForm", keys);
+            SearchCommand = new DelegateCommand<string>(Search);
         }
 
         private readonly IRegionManager regionManager;
         private readonly ITrialService trialService;
-
-
-        public DelegateCommand<object> SelectIndexCommand { get; private set; }
-
 
         /// <summary>
         /// 该用户
@@ -89,6 +72,31 @@ namespace RDProject.ViewModels
             set { trialTitles = value; RaisePropertyChanged(); }
         }
 
+
+        public DelegateCommand<object> SelectIndexCommand { get; private set; }
+        public DelegateCommand<string> SearchCommand { get; private set; }
+
+
+        private void SelectIndex(object obj)
+        {
+            if (obj == null)
+            {
+                return;
+            }
+            Debug.WriteLine(obj);
+            var trialTitle = (TrialTitle)obj;
+            var keys = new NavigationParameters();
+            keys.Add("User", User);
+            keys.Add("FHeadID", trialTitle.FHeadId);
+            regionManager.Regions["FormShowControl"].RequestNavigate("TrialForm", keys);
+        }
+
+        private void Search(string obj)
+        {
+            Debug.WriteLine(obj);
+            var list = trialService.GetTrialTitleByTitle(obj);
+            TrialTitles = new ObservableCollection<TrialTitle>(list);
+        }
     }
 
     

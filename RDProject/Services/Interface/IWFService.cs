@@ -23,5 +23,13 @@ namespace RDProject.Services.Interface
         /// <param name="HeadId"></param>
         /// <returns></returns>
         (WFInstance instance, List<WFStep> steps) GetInstanceByTableNameAndHeadID(string tableName, long HeadId);
+
+        /// <summary>
+        /// 更新审批和审批步骤
+        /// </summary>
+        /// <param name="instance"></param>
+        /// <param name="steps"></param>
+        /// <returns></returns>
+        (WFInstance instance, ObservableCollection<WFStep> steps) UpdateInstance(WFInstance instance, ObservableCollection<WFStep> steps);
     }
 }

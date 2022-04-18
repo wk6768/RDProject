@@ -37,7 +37,7 @@ namespace RDProject.ViewModels
         public LoginDialogViewModel(IEmployeeService employeeService)
         {
             this.employeeService = employeeService;
-            Employee = new Employee();
+            Employee = new Employee() { Id = "14121", Pwd="123"};
             LoginCommand = new DelegateCommand(Login);
         }
 

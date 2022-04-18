@@ -57,10 +57,24 @@ namespace RDProject.Services.Interface
         List<Trial> GetTrialsByCreateUser(string createUser);
 
         /// <summary>
+        /// 通过标题模糊查询表单
+        /// </summary>
+        /// <param name="title"></param>
+        /// <returns></returns>
+        List<Trial> GetTrialsByTitle(string title);
+
+        /// <summary>
         /// 通过用户名获取该用户所有表单的ID和标题
         /// </summary>
         /// <param name="createUser"></param>
         /// <returns></returns>
         List<TrialTitle> GetTrialTitleByCreateUser(string createUser);
+
+        /// <summary>
+        /// 通过标题获取所有复符合条件的表单的ID和标题
+        /// </summary>
+        /// <param name="title"></param>
+        /// <returns></returns>
+        List<TrialTitle> GetTrialTitleByTitle(string title);
     }
 }
