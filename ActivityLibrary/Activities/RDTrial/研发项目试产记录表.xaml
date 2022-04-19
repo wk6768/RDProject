@@ -121,20 +121,20 @@
               </local:附件上传.BookMarkName>
             </local:附件上传>
             <FlowStep.Next>
-              <FlowDecision x:Name="__ReferenceID6" sap2010:WorkflowViewState.IdRef="FlowDecision_4">
+              <FlowDecision x:Name="__ReferenceID16" sap2010:WorkflowViewState.IdRef="FlowDecision_4">
                 <FlowDecision.Condition>
                   <mca:CSharpValue x:TypeArguments="x:Boolean">Answer_附件上传</mca:CSharpValue>
                 </FlowDecision.Condition>
                 <FlowDecision.True>
-                  <FlowStep x:Name="__ReferenceID3" sap2010:WorkflowViewState.IdRef="FlowStep_3">
+                  <FlowStep x:Name="__ReferenceID15" sap2010:WorkflowViewState.IdRef="FlowStep_3">
                     <local:抄送节点 sap2010:WorkflowViewState.IdRef="抄送节点_1" />
                     <FlowStep.Next>
-                      <FlowDecision x:Name="__ReferenceID7" sap2010:WorkflowViewState.IdRef="FlowDecision_3">
+                      <FlowDecision x:Name="__ReferenceID17" sap2010:WorkflowViewState.IdRef="FlowDecision_3">
                         <FlowDecision.Condition>
                           <mca:CSharpValue x:TypeArguments="x:Boolean">VarHasCNC</mca:CSharpValue>
                         </FlowDecision.Condition>
                         <FlowDecision.True>
-                          <FlowStep x:Name="__ReferenceID4" sap2010:WorkflowViewState.IdRef="FlowStep_4">
+                          <FlowStep x:Name="__ReferenceID10" sap2010:WorkflowViewState.IdRef="FlowStep_4">
                             <local:CNC工序NPI sap2010:WorkflowViewState.IdRef="CNC工序NPI_1">
                               <local:CNC工序NPI.Answer_CNC工序NPI>
                                 <OutArgument x:TypeArguments="x:Boolean">
@@ -148,36 +148,276 @@
                               </local:CNC工序NPI.BookMarkName>
                             </local:CNC工序NPI>
                             <FlowStep.Next>
-                              <FlowDecision x:Name="__ReferenceID8" sap2010:WorkflowViewState.IdRef="FlowDecision_2">
+                              <FlowDecision x:Name="__ReferenceID18" sap2010:WorkflowViewState.IdRef="FlowDecision_2">
                                 <FlowDecision.Condition>
                                   <mca:CSharpValue x:TypeArguments="x:Boolean">Answer_CNC工序NPI</mca:CSharpValue>
                                 </FlowDecision.Condition>
                                 <FlowDecision.True>
-                                  <FlowDecision x:Name="__ReferenceID2" sap2010:WorkflowViewState.IdRef="FlowDecision_1">
+                                  <FlowDecision x:Name="__ReferenceID14" sap2010:WorkflowViewState.IdRef="FlowDecision_1">
                                     <FlowDecision.Condition>
                                       <mca:CSharpValue x:TypeArguments="x:Boolean">VarHasCoating</mca:CSharpValue>
                                     </FlowDecision.Condition>
                                     <FlowDecision.True>
-                                      <FlowStep x:Name="__ReferenceID5" sap2010:WorkflowViewState.IdRef="FlowStep_5">
-                                        <local:喷涂工序NPI Answer_喷涂工序NPI="{x:Null}" sap2010:WorkflowViewState.IdRef="喷涂工序NPI_1" />
+                                      <FlowStep x:Name="__ReferenceID2" sap2010:WorkflowViewState.IdRef="FlowStep_5">
+                                        <local:喷涂工序NPI sap2010:WorkflowViewState.IdRef="喷涂工序NPI_1">
+                                          <local:喷涂工序NPI.Answer_喷涂工序NPI>
+                                            <OutArgument x:TypeArguments="x:Boolean">
+                                              <mca:CSharpReference x:TypeArguments="x:Boolean">Answer_喷涂工序NPI</mca:CSharpReference>
+                                            </OutArgument>
+                                          </local:喷涂工序NPI.Answer_喷涂工序NPI>
+                                          <local:喷涂工序NPI.BookMarkName>
+                                            <OutArgument x:TypeArguments="x:String">
+                                              <mca:CSharpReference x:TypeArguments="x:String">BookMarkName</mca:CSharpReference>
+                                            </OutArgument>
+                                          </local:喷涂工序NPI.BookMarkName>
+                                        </local:喷涂工序NPI>
+                                        <FlowStep.Next>
+                                          <FlowDecision x:Name="__ReferenceID19" sap2010:WorkflowViewState.IdRef="FlowDecision_14">
+                                            <FlowDecision.Condition>
+                                              <mca:CSharpValue x:TypeArguments="x:Boolean">Answer_喷涂工序NPI</mca:CSharpValue>
+                                            </FlowDecision.Condition>
+                                            <FlowDecision.True>
+                                              <FlowDecision x:Name="__ReferenceID13" sap2010:WorkflowViewState.IdRef="FlowDecision_13">
+                                                <FlowDecision.Condition>
+                                                  <mca:CSharpValue x:TypeArguments="x:Boolean">VarHasLaser</mca:CSharpValue>
+                                                </FlowDecision.Condition>
+                                                <FlowDecision.True>
+                                                  <FlowStep x:Name="__ReferenceID3" sap2010:WorkflowViewState.IdRef="FlowStep_13">
+                                                    <local:激光切割工序NPI sap2010:WorkflowViewState.IdRef="激光切割工序NPI_1">
+                                                      <local:激光切割工序NPI.Answer_激光切割工序NPI>
+                                                        <OutArgument x:TypeArguments="x:Boolean">
+                                                          <mca:CSharpReference x:TypeArguments="x:Boolean">Answer_激光切割工序NPI</mca:CSharpReference>
+                                                        </OutArgument>
+                                                      </local:激光切割工序NPI.Answer_激光切割工序NPI>
+                                                      <local:激光切割工序NPI.BookMarkName>
+                                                        <OutArgument x:TypeArguments="x:String">
+                                                          <mca:CSharpReference x:TypeArguments="x:String">BookMarkName</mca:CSharpReference>
+                                                        </OutArgument>
+                                                      </local:激光切割工序NPI.BookMarkName>
+                                                    </local:激光切割工序NPI>
+                                                    <FlowStep.Next>
+                                                      <FlowDecision x:Name="__ReferenceID20" sap2010:WorkflowViewState.IdRef="FlowDecision_12">
+                                                        <FlowDecision.Condition>
+                                                          <mca:CSharpValue x:TypeArguments="x:Boolean">Answer_激光切割工序NPI</mca:CSharpValue>
+                                                        </FlowDecision.Condition>
+                                                        <FlowDecision.True>
+                                                          <FlowDecision x:Name="__ReferenceID12" sap2010:WorkflowViewState.IdRef="FlowDecision_11">
+                                                            <FlowDecision.Condition>
+                                                              <mca:CSharpValue x:TypeArguments="x:Boolean">VarHasAssembly</mca:CSharpValue>
+                                                            </FlowDecision.Condition>
+                                                            <FlowDecision.True>
+                                                              <FlowStep x:Name="__ReferenceID4" sap2010:WorkflowViewState.IdRef="FlowStep_12">
+                                                                <local:组装工序NPI sap2010:WorkflowViewState.IdRef="组装工序NPI_1">
+                                                                  <local:组装工序NPI.Answer_组装工序NPI>
+                                                                    <OutArgument x:TypeArguments="x:Boolean">
+                                                                      <mca:CSharpReference x:TypeArguments="x:Boolean">Answer_组装工序NPI</mca:CSharpReference>
+                                                                    </OutArgument>
+                                                                  </local:组装工序NPI.Answer_组装工序NPI>
+                                                                  <local:组装工序NPI.BookMarkName>
+                                                                    <OutArgument x:TypeArguments="x:String">
+                                                                      <mca:CSharpReference x:TypeArguments="x:String">BookMarkName</mca:CSharpReference>
+                                                                    </OutArgument>
+                                                                  </local:组装工序NPI.BookMarkName>
+                                                                </local:组装工序NPI>
+                                                                <FlowStep.Next>
+                                                                  <FlowDecision x:Name="__ReferenceID21" sap2010:WorkflowViewState.IdRef="FlowDecision_10">
+                                                                    <FlowDecision.Condition>
+                                                                      <mca:CSharpValue x:TypeArguments="x:Boolean">Answer_组装工序NPI</mca:CSharpValue>
+                                                                    </FlowDecision.Condition>
+                                                                    <FlowDecision.True>
+                                                                      <FlowStep x:Name="__ReferenceID5" sap2010:WorkflowViewState.IdRef="FlowStep_11">
+                                                                        <local:生产部负责人 sap2010:WorkflowViewState.IdRef="生产部负责人_1">
+                                                                          <local:生产部负责人.Answer_生产部负责人>
+                                                                            <OutArgument x:TypeArguments="x:Boolean">
+                                                                              <mca:CSharpReference x:TypeArguments="x:Boolean">Answer_生产部负责人</mca:CSharpReference>
+                                                                            </OutArgument>
+                                                                          </local:生产部负责人.Answer_生产部负责人>
+                                                                          <local:生产部负责人.BookMarkName>
+                                                                            <OutArgument x:TypeArguments="x:String">
+                                                                              <mca:CSharpReference x:TypeArguments="x:String">BookMarkName</mca:CSharpReference>
+                                                                            </OutArgument>
+                                                                          </local:生产部负责人.BookMarkName>
+                                                                        </local:生产部负责人>
+                                                                        <FlowStep.Next>
+                                                                          <FlowDecision x:Name="__ReferenceID22" sap2010:WorkflowViewState.IdRef="FlowDecision_9">
+                                                                            <FlowDecision.Condition>
+                                                                              <mca:CSharpValue x:TypeArguments="x:Boolean">Answer_生产部负责人</mca:CSharpValue>
+                                                                            </FlowDecision.Condition>
+                                                                            <FlowDecision.True>
+                                                                              <FlowStep x:Name="__ReferenceID6" sap2010:WorkflowViewState.IdRef="FlowStep_10">
+                                                                                <local:品保部负责人 sap2010:WorkflowViewState.IdRef="品保部负责人_1">
+                                                                                  <local:品保部负责人.Answer_品保部负责人>
+                                                                                    <OutArgument x:TypeArguments="x:Boolean">
+                                                                                      <mca:CSharpReference x:TypeArguments="x:Boolean">Answer_品保部负责人</mca:CSharpReference>
+                                                                                    </OutArgument>
+                                                                                  </local:品保部负责人.Answer_品保部负责人>
+                                                                                  <local:品保部负责人.BookMarkName>
+                                                                                    <OutArgument x:TypeArguments="x:String">
+                                                                                      <mca:CSharpReference x:TypeArguments="x:String">BookMarkName</mca:CSharpReference>
+                                                                                    </OutArgument>
+                                                                                  </local:品保部负责人.BookMarkName>
+                                                                                </local:品保部负责人>
+                                                                                <FlowStep.Next>
+                                                                                  <FlowDecision x:Name="__ReferenceID24" sap2010:WorkflowViewState.IdRef="FlowDecision_8">
+                                                                                    <FlowDecision.Condition>
+                                                                                      <mca:CSharpValue x:TypeArguments="x:Boolean">Answer_品保部负责人</mca:CSharpValue>
+                                                                                    </FlowDecision.Condition>
+                                                                                    <FlowDecision.True>
+                                                                                      <FlowStep x:Name="__ReferenceID7" sap2010:WorkflowViewState.IdRef="FlowStep_9">
+                                                                                        <local:项目确认 sap2010:WorkflowViewState.IdRef="项目确认_1">
+                                                                                          <local:项目确认.Answer_项目确认>
+                                                                                            <OutArgument x:TypeArguments="x:Boolean">
+                                                                                              <mca:CSharpReference x:TypeArguments="x:Boolean">Answer_项目确认</mca:CSharpReference>
+                                                                                            </OutArgument>
+                                                                                          </local:项目确认.Answer_项目确认>
+                                                                                          <local:项目确认.BookMarkName>
+                                                                                            <OutArgument x:TypeArguments="x:String">
+                                                                                              <mca:CSharpReference x:TypeArguments="x:String">BookMarkName</mca:CSharpReference>
+                                                                                            </OutArgument>
+                                                                                          </local:项目确认.BookMarkName>
+                                                                                        </local:项目确认>
+                                                                                        <FlowStep.Next>
+                                                                                          <FlowDecision x:Name="__ReferenceID25" sap2010:WorkflowViewState.IdRef="FlowDecision_7">
+                                                                                            <FlowDecision.Condition>
+                                                                                              <mca:CSharpValue x:TypeArguments="x:Boolean">Answer_项目确认</mca:CSharpValue>
+                                                                                            </FlowDecision.Condition>
+                                                                                            <FlowDecision.True>
+                                                                                              <FlowStep x:Name="__ReferenceID8" sap2010:WorkflowViewState.IdRef="FlowStep_8">
+                                                                                                <local:审批节点 sap2010:WorkflowViewState.IdRef="审批节点_1">
+                                                                                                  <local:审批节点.Answer_审批节点>
+                                                                                                    <OutArgument x:TypeArguments="x:Boolean">
+                                                                                                      <mca:CSharpReference x:TypeArguments="x:Boolean">Answer_审批节点</mca:CSharpReference>
+                                                                                                    </OutArgument>
+                                                                                                  </local:审批节点.Answer_审批节点>
+                                                                                                  <local:审批节点.BookMarkName>
+                                                                                                    <OutArgument x:TypeArguments="x:String">
+                                                                                                      <mca:CSharpReference x:TypeArguments="x:String">BookMarkName</mca:CSharpReference>
+                                                                                                    </OutArgument>
+                                                                                                  </local:审批节点.BookMarkName>
+                                                                                                </local:审批节点>
+                                                                                                <FlowStep.Next>
+                                                                                                  <FlowDecision x:Name="__ReferenceID26" sap2010:WorkflowViewState.IdRef="FlowDecision_6">
+                                                                                                    <FlowDecision.Condition>
+                                                                                                      <mca:CSharpValue x:TypeArguments="x:Boolean">Answer_审批节点</mca:CSharpValue>
+                                                                                                    </FlowDecision.Condition>
+                                                                                                    <FlowDecision.True>
+                                                                                                      <FlowStep x:Name="__ReferenceID9" sap2010:WorkflowViewState.IdRef="FlowStep_7">
+                                                                                                        <local:研发部负责人 sap2010:WorkflowViewState.IdRef="研发部负责人_1">
+                                                                                                          <local:研发部负责人.Answer_研发部负责人>
+                                                                                                            <OutArgument x:TypeArguments="x:Boolean">
+                                                                                                              <mca:CSharpReference x:TypeArguments="x:Boolean">Answer_研发部负责人</mca:CSharpReference>
+                                                                                                            </OutArgument>
+                                                                                                          </local:研发部负责人.Answer_研发部负责人>
+                                                                                                          <local:研发部负责人.BookMarkName>
+                                                                                                            <OutArgument x:TypeArguments="x:String">
+                                                                                                              <mca:CSharpReference x:TypeArguments="x:String">BookMarkName</mca:CSharpReference>
+                                                                                                            </OutArgument>
+                                                                                                          </local:研发部负责人.BookMarkName>
+                                                                                                        </local:研发部负责人>
+                                                                                                        <FlowStep.Next>
+                                                                                                          <FlowDecision x:Name="__ReferenceID27" sap2010:WorkflowViewState.IdRef="FlowDecision_5">
+                                                                                                            <FlowDecision.Condition>
+                                                                                                              <mca:CSharpValue x:TypeArguments="x:Boolean">Answer_研发部负责人</mca:CSharpValue>
+                                                                                                            </FlowDecision.Condition>
+                                                                                                            <FlowDecision.True>
+                                                                                                              <FlowStep x:Name="__ReferenceID23" sap2010:WorkflowViewState.IdRef="FlowStep_6">
+                                                                                                                <local:抄送财务 sap2010:WorkflowViewState.IdRef="抄送财务_1" />
+                                                                                                              </FlowStep>
+                                                                                                            </FlowDecision.True>
+                                                                                                            <FlowDecision.False>
+                                                                                                              <FlowSwitch x:TypeArguments="x:String" Default="{x:Reference __ReferenceID0}" x:Name="__ReferenceID11" sap2010:WorkflowViewState.IdRef="FlowSwitch`1_1">
+                                                                                                                <FlowSwitch.Expression>
+                                                                                                                  <mca:CSharpValue x:TypeArguments="x:String">BookMarkName</mca:CSharpValue>
+                                                                                                                </FlowSwitch.Expression>
+                                                                                                                <x:Reference>__ReferenceID1<x:Key>附件上传</x:Key></x:Reference>
+                                                                                                                <x:Reference>__ReferenceID2<x:Key>喷涂工序NPI</x:Key></x:Reference>
+                                                                                                                <x:Reference>__ReferenceID3<x:Key>激光切割工序NPI</x:Key></x:Reference>
+                                                                                                                <x:Reference>__ReferenceID4<x:Key>组装工序NPI</x:Key></x:Reference>
+                                                                                                                <x:Reference>__ReferenceID5<x:Key>生产部负责人</x:Key></x:Reference>
+                                                                                                                <x:Reference>__ReferenceID6<x:Key>品保部负责人</x:Key></x:Reference>
+                                                                                                                <x:Reference>__ReferenceID7<x:Key>项目确认</x:Key></x:Reference>
+                                                                                                                <x:Reference>__ReferenceID8<x:Key>审批节点</x:Key></x:Reference>
+                                                                                                                <x:Reference>__ReferenceID9<x:Key>研发部负责人</x:Key></x:Reference>
+                                                                                                                <x:Reference>__ReferenceID10<x:Key>CNC工序NPI</x:Key></x:Reference>
+                                                                                                              </FlowSwitch>
+                                                                                                            </FlowDecision.False>
+                                                                                                          </FlowDecision>
+                                                                                                        </FlowStep.Next>
+                                                                                                      </FlowStep>
+                                                                                                    </FlowDecision.True>
+                                                                                                    <FlowDecision.False>
+                                                                                                      <x:Reference>__ReferenceID11</x:Reference>
+                                                                                                    </FlowDecision.False>
+                                                                                                  </FlowDecision>
+                                                                                                </FlowStep.Next>
+                                                                                              </FlowStep>
+                                                                                            </FlowDecision.True>
+                                                                                            <FlowDecision.False>
+                                                                                              <x:Reference>__ReferenceID11</x:Reference>
+                                                                                            </FlowDecision.False>
+                                                                                          </FlowDecision>
+                                                                                        </FlowStep.Next>
+                                                                                      </FlowStep>
+                                                                                    </FlowDecision.True>
+                                                                                    <FlowDecision.False>
+                                                                                      <x:Reference>__ReferenceID11</x:Reference>
+                                                                                    </FlowDecision.False>
+                                                                                  </FlowDecision>
+                                                                                </FlowStep.Next>
+                                                                              </FlowStep>
+                                                                            </FlowDecision.True>
+                                                                            <FlowDecision.False>
+                                                                              <x:Reference>__ReferenceID11</x:Reference>
+                                                                            </FlowDecision.False>
+                                                                          </FlowDecision>
+                                                                        </FlowStep.Next>
+                                                                      </FlowStep>
+                                                                    </FlowDecision.True>
+                                                                    <FlowDecision.False>
+                                                                      <x:Reference>__ReferenceID11</x:Reference>
+                                                                    </FlowDecision.False>
+                                                                  </FlowDecision>
+                                                                </FlowStep.Next>
+                                                              </FlowStep>
+                                                            </FlowDecision.True>
+                                                            <FlowDecision.False>
+                                                              <x:Reference>__ReferenceID5</x:Reference>
+                                                            </FlowDecision.False>
+                                                          </FlowDecision>
+                                                        </FlowDecision.True>
+                                                        <FlowDecision.False>
+                                                          <x:Reference>__ReferenceID11</x:Reference>
+                                                        </FlowDecision.False>
+                                                      </FlowDecision>
+                                                    </FlowStep.Next>
+                                                  </FlowStep>
+                                                </FlowDecision.True>
+                                                <FlowDecision.False>
+                                                  <x:Reference>__ReferenceID12</x:Reference>
+                                                </FlowDecision.False>
+                                              </FlowDecision>
+                                            </FlowDecision.True>
+                                            <FlowDecision.False>
+                                              <x:Reference>__ReferenceID11</x:Reference>
+                                            </FlowDecision.False>
+                                          </FlowDecision>
+                                        </FlowStep.Next>
                                       </FlowStep>
                                     </FlowDecision.True>
+                                    <FlowDecision.False>
+                                      <x:Reference>__ReferenceID13</x:Reference>
+                                    </FlowDecision.False>
                                   </FlowDecision>
                                 </FlowDecision.True>
                                 <FlowDecision.False>
-                                  <FlowSwitch x:TypeArguments="x:String" Default="{x:Reference __ReferenceID0}" x:Name="__ReferenceID9" sap2010:WorkflowViewState.IdRef="FlowSwitch`1_1">
-                                    <FlowSwitch.Expression>
-                                      <mca:CSharpValue x:TypeArguments="x:String">BookMarkName</mca:CSharpValue>
-                                    </FlowSwitch.Expression>
-                                    <x:Reference>__ReferenceID1<x:Key>附件上传</x:Key></x:Reference>
-                                  </FlowSwitch>
+                                  <x:Reference>__ReferenceID11</x:Reference>
                                 </FlowDecision.False>
                               </FlowDecision>
                             </FlowStep.Next>
                           </FlowStep>
                         </FlowDecision.True>
                         <FlowDecision.False>
-                          <x:Reference>__ReferenceID2</x:Reference>
+                          <x:Reference>__ReferenceID14</x:Reference>
                         </FlowDecision.False>
                       </FlowDecision>
                     </FlowStep.Next>
@@ -194,15 +434,33 @@
     </Flowchart.StartNode>
     <x:Reference>__ReferenceID0</x:Reference>
     <x:Reference>__ReferenceID1</x:Reference>
+    <x:Reference>__ReferenceID15</x:Reference>
+    <x:Reference>__ReferenceID10</x:Reference>
+    <x:Reference>__ReferenceID2</x:Reference>
+    <x:Reference>__ReferenceID16</x:Reference>
+    <x:Reference>__ReferenceID17</x:Reference>
+    <x:Reference>__ReferenceID18</x:Reference>
+    <x:Reference>__ReferenceID14</x:Reference>
+    <x:Reference>__ReferenceID11</x:Reference>
     <x:Reference>__ReferenceID3</x:Reference>
+    <x:Reference>__ReferenceID19</x:Reference>
+    <x:Reference>__ReferenceID13</x:Reference>
     <x:Reference>__ReferenceID4</x:Reference>
+    <x:Reference>__ReferenceID20</x:Reference>
+    <x:Reference>__ReferenceID12</x:Reference>
+    <x:Reference>__ReferenceID21</x:Reference>
+    <x:Reference>__ReferenceID22</x:Reference>
     <x:Reference>__ReferenceID5</x:Reference>
     <x:Reference>__ReferenceID6</x:Reference>
     <x:Reference>__ReferenceID7</x:Reference>
     <x:Reference>__ReferenceID8</x:Reference>
-    <x:Reference>__ReferenceID2</x:Reference>
     <x:Reference>__ReferenceID9</x:Reference>
-    <sads:DebugSymbol.Symbol>d2VDOlxjb2RlXOeglOWPkemhueebrlznoJTlj5Hpobnnm65cQWN0aXZpdHlMaWJyYXJ5XEFjdGl2aXRpZXNcUkRUcmlhbFznoJTlj5Hpobnnm67or5XkuqforrDlvZXooagueGFtbBcvA84BDwIBAUMJbBYDAboBbw16GgMBkQF+E35dAgF9ggEVggFMAgF8hgEbhgFjAgFongEnngFzAgFUogEpogGAAQIBU4oBHZUBLgIBKpkBI5kBcQIBFqoBJ6oBcQIBAkYPRl4DAccCVQ9VWwMBswJfD19fAwGfAmQPZGMDAYsCUA9QXQMB9wFLD0tZAwHjAVoPWmQDAc8BaQ9pYQMBuwF3E3dlAwGmAXITcmUDAZIBkgEjkgF1AgE/jQEjjQF5AgEr</sads:DebugSymbol.Symbol>
+    <x:Reference>__ReferenceID23</x:Reference>
+    <x:Reference>__ReferenceID24</x:Reference>
+    <x:Reference>__ReferenceID25</x:Reference>
+    <x:Reference>__ReferenceID26</x:Reference>
+    <x:Reference>__ReferenceID27</x:Reference>
+    <sads:DebugSymbol.Symbol>d2VDOlxjb2RlXOeglOWPkemhueebrlznoJTlj5Hpobnnm65cQWN0aXZpdHlMaWJyYXJ5XEFjdGl2aXRpZXNcUkRUcmlhbFznoJTlj5Hpobnnm67or5XkuqforrDlvZXooagueGFtbDkvA9ADDwIBAUMJbBYDAcoFbw16GgMBoQV+E35dAwGNBYIBFYIBTAMBjAWGARuGAWMDAfgEngEnngFzAwHkBLYBM7YBfQMB0ATOAT/OAYwBAwG8BOUBSfABWAMBkwT0AU/0AZsBAwH/A8oCc8oCvQEDAesDigEdlQEuAwHCA5kBI5kBcQMBrgOxAmm8AngDAYUDwAJvwAK7AQMB8QLEAnHEAqgBAwHwAp4CYakCbgMBxwKtAmetArEBAwGzAosCWZYCZgMBigKaAl+aAqkBAwH2AfgBUYMCYAMBzQGHAleHAqMBAwG5AdIBQd0BUQMBkAHhAUfhAZQBAgF8ugE1xQFHAgFTyQE7yQGKAQIBP6IBKa0BOQIBFrEBL7EBfAIBAkYPRl4DAdcGVQ9VWwMBwwZfD19fAwGvBmQPZGMDAZsGUA9QXQMBhwZLD0tZAwHzBVoPWmQDAd8FaQ9pYQMBywV3E3dlAwG2BXITcmUDAaIF7QFP7QGhAQMBqAToAU/oAaMBAwGUBJIBI5IBdQMB1wONASONAXkDAcMDuQJvuQLBAQMBmgO0Am+0AsMBAwGGA6YCZ6YCuQEDAdwCoQJnoQK5AQMByAKTAl+TArEBAwGfAo4CX44CsQEDAYsCgAJXgAKpAQMB4gH7AVf7AasBAwHOAdoBR9oBmQEDAaUB1QFH1QGcAQMBkQHCATvCAY0BAgFovQE7vQGSAQIBVKoBL6oBgQECASulAS+lAYQBAgEX</sads:DebugSymbol.Symbol>
   </Flowchart>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
@@ -241,21 +499,67 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="FlowStep_5">
-        <sap:WorkflowViewStateService.ViewState>
-          <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <av:Point x:Key="ShapeLocation">210,1019</av:Point>
-            <av:Size x:Key="ShapeSize">200,22</av:Size>
-          </scg:Dictionary>
-        </sap:WorkflowViewStateService.ViewState>
-      </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="FlowDecision_1" sap:VirtualizedContainerService.HintSize="70,87">
+      <sap2010:ViewStateData Id="激光切割工序NPI_1" sap:VirtualizedContainerService.HintSize="200,22">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-            <av:Point x:Key="ShapeLocation">275,846.5</av:Point>
-            <av:Size x:Key="ShapeSize">70,87</av:Size>
-            <av:PointCollection x:Key="TrueConnector">275,890 250,890 250,989 310,989 310,1019</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="组装工序NPI_1" sap:VirtualizedContainerService.HintSize="200,22">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="生产部负责人_1" sap:VirtualizedContainerService.HintSize="200,22">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="品保部负责人_1" sap:VirtualizedContainerService.HintSize="200,22">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="项目确认_1" sap:VirtualizedContainerService.HintSize="200,22">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="审批节点_1" sap:VirtualizedContainerService.HintSize="200,22">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="研发部负责人_1" sap:VirtualizedContainerService.HintSize="200,22">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="抄送财务_1" sap:VirtualizedContainerService.HintSize="200,22">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_6">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">190,3129</av:Point>
+            <av:Size x:Key="ShapeSize">200,22</av:Size>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
@@ -267,6 +571,208 @@
             <av:Size x:Key="ShapeSize">70,87</av:Size>
             <av:PointCollection x:Key="Default">730,883.5 730,913.5 665,913.5 665,103.5 310,103.5 310,129</av:PointCollection>
             <av:PointCollection x:Key="附件上传Connector">695,818.25 547.5,818.25 547.5,190 410,190</av:PointCollection>
+            <av:PointCollection x:Key="CNC工序NPIConnector">695,840 665,840 665,620 410,620</av:PointCollection>
+            <av:PointCollection x:Key="喷涂工序NPIConnector">695,840 665,840 665,1030 410,1030</av:PointCollection>
+            <av:PointCollection x:Key="激光切割工序NPIConnector">695,840 624.5,840 624.5,1430 400,1430</av:PointCollection>
+            <av:PointCollection x:Key="组装工序NPIConnector">695,840 665.5,840 665.5,1830 400,1830</av:PointCollection>
+            <av:PointCollection x:Key="生产部负责人Connector">695,840 665.5,840 665.5,2050 400,2050</av:PointCollection>
+            <av:PointCollection x:Key="品保部负责人Connector">695,840 665,840 665,2270 400,2270</av:PointCollection>
+            <av:PointCollection x:Key="项目确认Connector">695,840 665,840 665,2470 400,2470</av:PointCollection>
+            <av:PointCollection x:Key="审批节点Connector">695,840 665,840 665,2680 400,2680</av:PointCollection>
+            <av:PointCollection x:Key="研发部负责人Connector">695,840 665,840 665,2890 400,2890</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowDecision_5" sap:VirtualizedContainerService.HintSize="70,87">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <av:Point x:Key="ShapeLocation">265,2966.5</av:Point>
+            <av:Size x:Key="ShapeSize">70,87</av:Size>
+            <av:PointCollection x:Key="TrueConnector">265,3010 235,3010 235,3099 290,3099 290,3129</av:PointCollection>
+            <av:PointCollection x:Key="FalseConnector">335,3010 795,3010 795,818.25 765,818.25</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_7">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">200,2879</av:Point>
+            <av:Size x:Key="ShapeSize">200,22</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">300,2901 300,2966.5</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowDecision_6" sap:VirtualizedContainerService.HintSize="70,87">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <av:Point x:Key="ShapeLocation">265,2736.5</av:Point>
+            <av:Size x:Key="ShapeSize">70,87</av:Size>
+            <av:PointCollection x:Key="TrueConnector">265,2780 240,2780 240,2849 300,2849 300,2879</av:PointCollection>
+            <av:PointCollection x:Key="FalseConnector">335,2780 795,2780 795,818.25 765,818.25</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_8">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">200,2669</av:Point>
+            <av:Size x:Key="ShapeSize">200,22</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">300,2691 300,2736.5</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowDecision_7" sap:VirtualizedContainerService.HintSize="70,87">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <av:Point x:Key="ShapeLocation">265,2536.5</av:Point>
+            <av:Size x:Key="ShapeSize">70,87</av:Size>
+            <av:PointCollection x:Key="TrueConnector">265,2580 240,2580 240,2639 300,2639 300,2669</av:PointCollection>
+            <av:PointCollection x:Key="FalseConnector">335,2580 795,2580 795,818.25 765,818.25</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_9">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">200,2459</av:Point>
+            <av:Size x:Key="ShapeSize">200,22</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">300,2481 300,2536.5</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowDecision_8" sap:VirtualizedContainerService.HintSize="70,87">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <av:Point x:Key="ShapeLocation">265,2316.5</av:Point>
+            <av:Size x:Key="ShapeSize">70,87</av:Size>
+            <av:PointCollection x:Key="TrueConnector">265,2360 240,2360 240,2429 300,2429 300,2459</av:PointCollection>
+            <av:PointCollection x:Key="FalseConnector">335,2360 795,2360 795,818.25 765,818.25</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_10">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">200,2259</av:Point>
+            <av:Size x:Key="ShapeSize">200,22</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">300,2281 300,2316.5</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowDecision_9" sap:VirtualizedContainerService.HintSize="70,87">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <av:Point x:Key="ShapeLocation">265,2106.5</av:Point>
+            <av:Size x:Key="ShapeSize">70,87</av:Size>
+            <av:PointCollection x:Key="TrueConnector">265,2150 240,2150 240,2229 300,2229 300,2259</av:PointCollection>
+            <av:PointCollection x:Key="FalseConnector">335,2150 795,2150 795,818.25 765,818.25</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_11">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">200,2039</av:Point>
+            <av:Size x:Key="ShapeSize">200,22</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">300,2061 300,2106.5</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowDecision_10" sap:VirtualizedContainerService.HintSize="70,87">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <av:Point x:Key="ShapeLocation">265,1886.5</av:Point>
+            <av:Size x:Key="ShapeSize">70,87</av:Size>
+            <av:PointCollection x:Key="TrueConnector">265,1930 240,1930 240,2009 300,2009 300,2039</av:PointCollection>
+            <av:PointCollection x:Key="FalseConnector">335,1930 795,1930 795,818.25 765,818.25</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_12">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">200,1819</av:Point>
+            <av:Size x:Key="ShapeSize">200,22</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">300,1841 300,1886.5</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowDecision_11" sap:VirtualizedContainerService.HintSize="70,87">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <av:Point x:Key="ShapeLocation">265,1656.5</av:Point>
+            <av:Size x:Key="ShapeSize">70,87</av:Size>
+            <av:PointCollection x:Key="TrueConnector">265,1700 240,1700 240,1789 300,1789 300,1819</av:PointCollection>
+            <av:PointCollection x:Key="FalseConnector">335,1700 425,1700 425,2009 300,2009 300,2039</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowDecision_12" sap:VirtualizedContainerService.HintSize="70,87">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <av:Point x:Key="ShapeLocation">265,1506.5</av:Point>
+            <av:Size x:Key="ShapeSize">70,87</av:Size>
+            <av:PointCollection x:Key="TrueConnector">265,1550 240,1550 240,1626.5 300,1626.5 300,1656.5</av:PointCollection>
+            <av:PointCollection x:Key="FalseConnector">335,1550 486.5,1550 486.5,721.76 730,721.76 730,796.5</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_13">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">200,1419</av:Point>
+            <av:Size x:Key="ShapeSize">200,22</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">300,1441 300,1506.5</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowDecision_13" sap:VirtualizedContainerService.HintSize="70,87">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <av:Point x:Key="ShapeLocation">275,1266.5</av:Point>
+            <av:Size x:Key="ShapeSize">70,87</av:Size>
+            <av:PointCollection x:Key="TrueConnector">275,1310 245,1310 245,1389 300,1389 300,1419</av:PointCollection>
+            <av:PointCollection x:Key="FalseConnector">345,1310 430,1310 430,1626.5 300,1626.5 300,1656.5</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowDecision_14" sap:VirtualizedContainerService.HintSize="70,87">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <av:Point x:Key="ShapeLocation">275,1106.5</av:Point>
+            <av:Size x:Key="ShapeSize">70,87</av:Size>
+            <av:PointCollection x:Key="FalseConnector">345,1150 440,1150 440,766.5 730,766.5 730,796.5</av:PointCollection>
+            <av:PointCollection x:Key="TrueConnector">275,1150 250,1150 250,1236.5 310,1236.5 310,1266.5</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_5">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">210,1019</av:Point>
+            <av:Size x:Key="ShapeSize">200,22</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">310,1041 310,1106.5</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowDecision_1" sap:VirtualizedContainerService.HintSize="70,87">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <av:Point x:Key="ShapeLocation">265,876.5</av:Point>
+            <av:Size x:Key="ShapeSize">70,87</av:Size>
+            <av:PointCollection x:Key="TrueConnector">265,920 250,920 250,989 310,989 310,1019</av:PointCollection>
+            <av:PointCollection x:Key="FalseConnector">335,920 352.5,920 352.5,846.5 172.5,846.5 172.5,1236.5 292.5,1236.5 292.5,1266.5</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
@@ -276,7 +782,7 @@
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             <av:Point x:Key="ShapeLocation">275,696.5</av:Point>
             <av:Size x:Key="ShapeSize">70,87</av:Size>
-            <av:PointCollection x:Key="TrueConnector">275,740 250,740 250,816.5 310,816.5 310,846.5</av:PointCollection>
+            <av:PointCollection x:Key="TrueConnector">275,740 245,740 245,830.76 300,830.76 300,876.5</av:PointCollection>
             <av:PointCollection x:Key="FalseConnector">345,740 730,740 730,796.5</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
@@ -297,7 +803,7 @@
             <av:Point x:Key="ShapeLocation">275,436.5</av:Point>
             <av:Size x:Key="ShapeSize">70,87</av:Size>
             <av:PointCollection x:Key="TrueConnector">275,480 250,480 250,579 310,579 310,609</av:PointCollection>
-            <av:PointCollection x:Key="FalseConnector">345,480 435,480 435,816.5 327.5,816.5 327.5,846.5</av:PointCollection>
+            <av:PointCollection x:Key="FalseConnector">345,480 435,480 435,830.76 317.5,830.76 317.5,876.5</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
@@ -339,19 +845,19 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Flowchart_1" sap:VirtualizedContainerService.HintSize="814,2414">
+      <sap2010:ViewStateData Id="Flowchart_1" sap:VirtualizedContainerService.HintSize="842,3260">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">False</x:Boolean>
             <av:Point x:Key="ShapeLocation">280,2.5</av:Point>
             <av:Size x:Key="ShapeSize">60,75</av:Size>
-            <x:Double x:Key="Height">2377.608</x:Double>
-            <x:Double x:Key="Width">800</x:Double>
+            <x:Double x:Key="Height">3224.0080000000007</x:Double>
+            <x:Double x:Key="Width">828</x:Double>
             <av:PointCollection x:Key="ConnectorLocation">310,77.5 310,129</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="ActivityLibrary.Activities.RDTrial.研发项目试产记录表_1" sap:VirtualizedContainerService.HintSize="854,2494" />
+      <sap2010:ViewStateData Id="ActivityLibrary.Activities.RDTrial.研发项目试产记录表_1" sap:VirtualizedContainerService.HintSize="882,3340" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

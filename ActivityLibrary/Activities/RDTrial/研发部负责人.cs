@@ -10,6 +10,7 @@ namespace ActivityLibrary.Activities.RDTrial
     public sealed class 研发部负责人 : NativeActivity
     {
         public OutArgument<bool> Answer_研发部负责人 { get; set; }
+        public OutArgument<string> BookMarkName { get; set; }
 
         protected override void Execute(NativeActivityContext context)
         {
@@ -20,7 +21,13 @@ namespace ActivityLibrary.Activities.RDTrial
         private void DoSome(NativeActivityContext context, Bookmark bookmark, object value)
         {
             Debug.WriteLine("执行:研发部负责人");
-            context.SetValue(Answer_研发部负责人, Convert.ToBoolean(value));
+
+            Dictionary<string, object> keys = (Dictionary<string, object>)value;
+            keys.TryGetValue("IsPass", out object b);
+            keys.TryGetValue("BookMarkName", out object m);
+
+            context.SetValue(Answer_研发部负责人, Convert.ToBoolean(b));
+            context.SetValue(BookMarkName, Convert.ToString(m));
         }
 
         protected override bool CanInduceIdle => true;

@@ -373,12 +373,12 @@ namespace RDProject.ViewModels
                 Dictionary<string, object> keys = new Dictionary<string, object>();
                 keys.Add("IsPass", CheckResult);
                 keys.Add("BookMarkName", step.BookMark);
-                //WFHelper.Resume(
-                //        new 研发项目试产记录表(),
-                //        Instance.InstanceGuid,
-                //        step.BookMark,
-                //        keys
-                //    );
+                WFHelper.Resume(
+                        new 研发项目试产记录表(),
+                        Instance.InstanceGuid,
+                        step.BookMark,
+                        keys
+                    );
                 //更新审批和审批步骤
                 step.Status = 1;
                 step.SubTime = DateTime.Now;

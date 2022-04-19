@@ -10,6 +10,7 @@ namespace ActivityLibrary.Activities.RDTrial
     public sealed class 激光切割工序NPI : NativeActivity
     {
         public OutArgument<bool> Answer_激光切割工序NPI { get; set; }
+        public OutArgument<string> BookMarkName { get; set; }
 
         protected override void Execute(NativeActivityContext context)
         {
@@ -20,7 +21,13 @@ namespace ActivityLibrary.Activities.RDTrial
         private void DoSome(NativeActivityContext context, Bookmark bookmark, object value)
         {
             Debug.WriteLine("执行:激光切割工序NPI");
-            context.SetValue(Answer_激光切割工序NPI, Convert.ToBoolean(value));
+
+            Dictionary<string, object> keys = (Dictionary<string, object>)value;
+            keys.TryGetValue("IsPass", out object b);
+            keys.TryGetValue("BookMarkName", out object m);
+
+            context.SetValue(Answer_激光切割工序NPI, Convert.ToBoolean(b));
+            context.SetValue(BookMarkName, Convert.ToString(m));
         }
 
         protected override bool CanInduceIdle => true;
