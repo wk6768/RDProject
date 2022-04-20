@@ -37,6 +37,7 @@ namespace RDProject
             containerRegistry.RegisterForNavigation<EmployeeControl, EmployeeControlViewModel>();
             containerRegistry.RegisterForNavigation<TrialForm, TrialFormViewModel>();
             containerRegistry.RegisterForNavigation<MyForm, MyFormViewModel>();
+            containerRegistry.RegisterForNavigation<WelcomePage>();
         }
     }
 }

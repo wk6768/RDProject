@@ -223,11 +223,12 @@
 
                             <dxg:GridColumn FieldName="StepId"></dxg:GridColumn>
                             <dxg:GridColumn FieldName="InstanceId"></dxg:GridColumn>
+                            <dxg:GridColumn FieldName="StepNo"></dxg:GridColumn>
                             <dxg:GridColumn FieldName="BookMark"></dxg:GridColumn>
                             <dxg:GridColumn FieldName="Remark"></dxg:GridColumn>
                             <dxg:GridColumn FieldName="SubBy"></dxg:GridColumn>
                             <dxg:GridColumn FieldName="SubTime"></dxg:GridColumn>
-
+                            <dxg:GridColumn FieldName="Status"></dxg:GridColumn>
                         </dxg:GridControl>
                     </dxlc:LayoutGroup>
 

@@ -21,7 +21,8 @@ namespace RDProject.ViewModels
 
             OpenLoginDialogCommand = new DelegateCommand<string>(OpenLoginDialog);
             ChangePwdCommand = new DelegateCommand<string>(ChangePwd);
-            LogoutCommand = new DelegateCommand(() => User = null);
+            //LogoutCommand = new DelegateCommand(() => User = null);
+            LogoutCommand = new DelegateCommand<string>(Logout);
 
             NavigateEmployeeControlCommand = new DelegateCommand<string>(NavigateEmployeeControl);
             NavigateTrialFormCommand = new DelegateCommand<string>(NavigateTrialForm);
@@ -29,7 +30,7 @@ namespace RDProject.ViewModels
 
         }
 
-       
+        
 
         private readonly IRegionManager regionManager;
         private readonly IDialogService dialogService;
@@ -44,7 +45,7 @@ namespace RDProject.ViewModels
 
         public DelegateCommand<string> OpenLoginDialogCommand { get; private set; }
         public DelegateCommand<string> ChangePwdCommand { get; private set; }
-        public DelegateCommand LogoutCommand { get; private set; }
+        public DelegateCommand<string> LogoutCommand { get; private set; }
 
         public DelegateCommand<string> NavigateEmployeeControlCommand { get; private set; }
         public DelegateCommand<string> NavigateTrialFormCommand { get; private set; }
@@ -77,6 +78,12 @@ namespace RDProject.ViewModels
                     }
                 });
             }
+        }
+
+        private void Logout(string obj)
+        {
+            User = null;
+            regionManager.Regions["MainControl"].RequestNavigate(obj);
         }
 
         private void NavigateEmployeeControl(string obj)

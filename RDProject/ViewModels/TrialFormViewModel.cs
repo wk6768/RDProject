@@ -102,6 +102,11 @@ namespace RDProject.ViewModels
 
             List<WFStep> list2;
             (Instance, list2) = wfService.GetInstanceByTableNameAndHeadID("Trial", fHeadID);
+            if(list2 == null)
+            {
+                //有表单，但是没有启用审批流
+                list2 = new List<WFStep>();
+            }
             Steps = new ObservableCollection<WFStep>(list2);
         }
 
@@ -349,7 +354,13 @@ namespace RDProject.ViewModels
         private void Check()
         {
             //查找当前由谁审批
-            var step = Steps.Where(s => s.Status == 0).FirstOrDefault();
+            var step = Steps.Where(s => s.Status != 1).FirstOrDefault();
+            if (step == null)
+            {
+                //step为空，表示没有启用审批流或者已审批完成
+                WinUIMessageBox.Show($"该表单没有启用审批流或者已完成审批", "提示", MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.None, MessageBoxOptions.None);
+                return;
+            }
             //名字对不上，则提示
             if (!User.Name.Equals(step.SubBy))
             {
@@ -357,27 +368,37 @@ namespace RDProject.ViewModels
                 return;
             }
 
-            bool CheckResult = false;
-            string Reason = null;
-            dialogService.ShowDialog("CheckDialog", callback =>
+            bool CheckResultPass = false;       //通过
+            bool CheckResultReject = false;     //驳回
+            string Reason = null;               
+            string Bookmark = null;             
+
+            var keys1 = new DialogParameters();
+            keys1.Add("Steps", Steps);
+            dialogService.ShowDialog("CheckDialog", keys1, callback =>
             {
-                CheckResult = callback.Parameters.GetValue<bool>("CheckResult");
+                CheckResultPass = callback.Parameters.GetValue<bool>("CheckResultPass");
+                CheckResultReject = callback.Parameters.GetValue<bool>("CheckResultReject");
                 Reason = callback.Parameters.GetValue<string>("Reason");
+                if (callback.Parameters.ContainsKey("Bookmark"))
+                {
+                    Bookmark = callback.Parameters.GetValue<string>("Bookmark");
+                }
             });
 
             //审批，就是 调用Instance，并更新Steps
             //如果审批通过
-            if (CheckResult == true)
+            if (CheckResultPass == true)
             {
                 //执行工作流
-                Dictionary<string, object> keys = new Dictionary<string, object>();
-                keys.Add("IsPass", CheckResult);
-                keys.Add("BookMarkName", step.BookMark);
+                Dictionary<string, object> keys2 = new Dictionary<string, object>();
+                keys2.Add("IsPass", true);
+                keys2.Add("BookMarkName", step.BookMark);
                 WFHelper.Resume(
                         new 研发项目试产记录表(),
                         Instance.InstanceGuid,
                         step.BookMark,
-                        keys
+                        keys2
                     );
                 //更新审批和审批步骤
                 step.Status = 1;
@@ -403,6 +424,49 @@ namespace RDProject.ViewModels
 
                 (Instance, Steps) = wfService.UpdateInstance(Instance, Steps);
             }
+            //驳回
+            if(CheckResultReject == true)
+            {
+
+                //如果驳回的节点为空，则找上一个不为抄送节点的节点
+                if (Bookmark == null)
+                {
+                    var lastStep = Steps.Where(s => s.StepNo < step.StepNo && !s.BookMark.Contains("抄送")).OrderByDescending(s => s.StepNo).FirstOrDefault();
+                    Bookmark = lastStep.BookMark;
+                }
+
+                //执行工作流
+                Dictionary<string, object> keys2 = new Dictionary<string, object>();
+                keys2.Add("IsPass", false);
+                keys2.Add("BookMarkName", Bookmark);
+                
+
+                WFHelper.Resume(
+                        new 研发项目试产记录表(),
+                        Instance.InstanceGuid,
+                        step.BookMark,
+                        keys2
+                    );
+
+                
+                //更新审批和审批步骤
+                step.Status = 2; //2表示在此节点驳回
+                step.SubTime = DateTime.Now;
+                step.Remark = Reason;
+
+                //找到驳回的节点
+                var rejectStep = Steps.Where(s => s.BookMark == Bookmark).First();
+                //找到驳回的节点之后的所有节点(s.Status != 2 不包含已被驳回的节点)
+                var rejectSteps = Steps.Where(s => s.StepNo >= rejectStep.StepNo && s.Status != 2).ToList();
+                //将这些中间节点全部更新为未审核
+                foreach(var item in rejectSteps)
+                {
+                    item.Status = 0;
+                }
+                //更新
+                (Instance, Steps) = wfService.UpdateInstance(Instance, Steps);
+                
+            }
         }
 
 
@@ -411,28 +475,30 @@ namespace RDProject.ViewModels
         /// </summary>
         private ObservableCollection<WFStep> CreateSteps()
         {
-            ObservableCollection<WFStep> steps = new ObservableCollection<WFStep>();
-            steps.Add(new WFStep() { BookMark = "提交申请", SubBy = User.Name , SubTime = DateTime.Now, Status = 1});
-            steps.Add(new WFStep() { BookMark = "附件上传", SubBy = "陆冬夏" });
-            steps.Add(new WFStep() { BookMark = "抄送节点", SubBy = "赵鹏" });
+            var stepNo = 1;
+            List<WFStep> steps = new List<WFStep>();
+            steps.Add(new WFStep() { BookMark = "提交申请", SubBy = User.Name , SubTime = DateTime.Now, StepNo = stepNo++, Status = 1});
+            steps.Add(new WFStep() { BookMark = "附件上传", SubBy = "陆冬夏", StepNo = stepNo++ });
+            steps.Add(new WFStep() { BookMark = "抄送节点", SubBy = "赵鹏", StepNo = stepNo++ });
 
             if (Convert.ToBoolean(Trial.FHasCNC) == true)
-                steps.Add(new WFStep() { BookMark = "CNC工序NPI", SubBy = Trial.FCNCNPI });
+                steps.Add(new WFStep() { BookMark = "CNC工序NPI", SubBy = Trial.FCNCNPI, StepNo = stepNo++ });
             if (Convert.ToBoolean(Trial.FHasCoating) == true)
-                steps.Add(new WFStep() { BookMark = "喷涂工序NPI", SubBy = Trial.FCoatingNPI });
+                steps.Add(new WFStep() { BookMark = "喷涂工序NPI", SubBy = Trial.FCoatingNPI, StepNo = stepNo++ });
             if (Convert.ToBoolean(Trial.FHasLaser) == true)
-                steps.Add(new WFStep() { BookMark = "激光切割工序NPI", SubBy = Trial.FLaserNPI });
+                steps.Add(new WFStep() { BookMark = "激光切割工序NPI", SubBy = Trial.FLaserNPI, StepNo = stepNo++ });
             if (Convert.ToBoolean(Trial.FHasAssembly) == true)
-                steps.Add(new WFStep() { BookMark = "组装工序NPI", SubBy = Trial.FAssemblyNPI });
+                steps.Add(new WFStep() { BookMark = "组装工序NPI", SubBy = Trial.FAssemblyNPI, StepNo = stepNo++ });
             
-            steps.Add(new WFStep() { BookMark = "生产部负责人", SubBy = "刘乐" });
-            steps.Add(new WFStep() { BookMark = "品保部负责人", SubBy = "胡顺林" });
-            steps.Add(new WFStep() { BookMark = "项目确认", SubBy = User.Name });
-            steps.Add(new WFStep() { BookMark = "审批节点", SubBy = "赵鹏" });
-            steps.Add(new WFStep() { BookMark = "研发部负责人", SubBy = "郝明友" });
-            steps.Add(new WFStep() { BookMark = "抄送财务", SubBy = "财务" });
+            steps.Add(new WFStep() { BookMark = "生产部负责人", SubBy = "刘乐", StepNo = stepNo++ });
+            steps.Add(new WFStep() { BookMark = "品保部负责人", SubBy = "胡顺林", StepNo = stepNo++ });
+            steps.Add(new WFStep() { BookMark = "项目确认", SubBy = User.Name, StepNo = stepNo++ });
+            steps.Add(new WFStep() { BookMark = "审批节点", SubBy = "赵鹏", StepNo = stepNo++ });
+            steps.Add(new WFStep() { BookMark = "研发部负责人", SubBy = "郝明友", StepNo = stepNo++ });
+            steps.Add(new WFStep() { BookMark = "抄送财务", SubBy = "财务", StepNo = stepNo++ });
 
-            return steps;
+            steps = steps.OrderBy(s => s.StepNo).ToList();
+            return new ObservableCollection<WFStep>(steps);
         }
 
         /// <summary>

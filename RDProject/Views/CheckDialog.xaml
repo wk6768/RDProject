@@ -15,6 +15,8 @@
             <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
                 <RadioButton Content="通过" GroupName="审批" IsChecked="{Binding CheckResultPass}" ></RadioButton>
                 <RadioButton Content="驳回" GroupName="审批" IsChecked="{Binding CheckResultReject}"></RadioButton>
+                <TextBlock Text="到" VerticalAlignment="Center" />
+                <ComboBox ItemsSource="{Binding Steps}" DisplayMemberPath="BookMark" SelectedValue="{Binding Step}"></ComboBox>
             </StackPanel>
             <GroupBox Header="审批意见" DockPanel.Dock="Top">
                 <TextBox Height="150" Text="{Binding Reason}" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"/>

@@ -21,8 +21,10 @@
                         <dxb:BarButtonItem Content="{Binding User.Name, FallbackValue='登录'}" Command="{Binding OpenLoginDialogCommand}" CommandParameter="LoginDialog" Glyph="{dx:DXImage SvgImages/Business Objects/BO_Person.svg}" RibbonStyle="Large"/>
                         <dxb:BarSplitButtonItem Content="登录管理" Glyph="{dx:DXImage SvgImages/Business Objects/BO_MyDetails.svg}" RibbonStyle="Large">
                             <dxb:PopupMenu>
-                                <dxb:BarButtonItem Content="退出登录" Command="{Binding LogoutCommand}" Glyph="{dx:DXImage SvgImages/RichEdit/TrackingChanges_Previous.svg}"></dxb:BarButtonItem>
-                                <dxb:BarButtonItem Content="修改密码" Command="{Binding ChangePwdCommand}" CommandParameter="ChangePwdDialog" Glyph="{dx:DXImage SvgImages/Business Objects/BO_User.svg}" ></dxb:BarButtonItem>
+                                <dxb:BarButtonItem Content="退出登录" Command="{Binding LogoutCommand}" CommandParameter="WelcomePage"
+                                                   Glyph="{dx:DXImage SvgImages/RichEdit/TrackingChanges_Previous.svg}"></dxb:BarButtonItem>
+                                <dxb:BarButtonItem Content="修改密码" Command="{Binding ChangePwdCommand}" CommandParameter="ChangePwdDialog" 
+                                                   Glyph="{dx:DXImage SvgImages/Business Objects/BO_User.svg}" ></dxb:BarButtonItem>
                             </dxb:PopupMenu>
                         </dxb:BarSplitButtonItem>
                     </dxr:RibbonPageGroup>

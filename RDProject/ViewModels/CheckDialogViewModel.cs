@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
 using Prism.Commands;
+using System.Collections.ObjectModel;
+using RDProject.Models;
 
 namespace RDProject.ViewModels
 {
@@ -27,11 +29,15 @@ namespace RDProject.ViewModels
 
         public void OnDialogOpened(IDialogParameters parameters)
         {
-            
+            if (parameters.ContainsKey("Steps"))
+            {
+                Steps = parameters.GetValue<ObservableCollection<WFStep>>("Steps");
+            }
         }
 
         public CheckDialogViewModel()
         {
+            Steps = new ObservableCollection<WFStep>();
             OkCommand = new DelegateCommand(Ok);
         }
 
@@ -59,6 +65,22 @@ namespace RDProject.ViewModels
             set { reason = value; RaisePropertyChanged(); }
         }
 
+        private WFStep step;
+            
+        public WFStep Step
+        {
+            get { return step; }
+            set { step = value; RaisePropertyChanged(); }
+        }
+
+
+        private ObservableCollection<WFStep> steps;
+
+        public ObservableCollection<WFStep> Steps
+        {
+            get { return steps; }
+            set { steps = value; RaisePropertyChanged(); }
+        }
 
 
         public DelegateCommand OkCommand { get; private set; }
@@ -66,8 +88,13 @@ namespace RDProject.ViewModels
         private void Ok()
         {
             var keys = new DialogParameters();
-            keys.Add("CheckResult", CheckResultPass);
+            keys.Add("CheckResultPass", CheckResultPass);
+            keys.Add("CheckResultReject", CheckResultReject);
             keys.Add("Reason", Reason);
+            if(Step != null)
+            {
+                keys.Add("Bookmark", Step.BookMark);
+            }
             RequestClose?.Invoke(new DialogResult(ButtonResult.OK, keys));
         }
     }

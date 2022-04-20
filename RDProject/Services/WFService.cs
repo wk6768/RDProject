@@ -50,6 +50,11 @@ namespace RDProject.Services
         public (WFInstance instance, List<WFStep> steps) GetInstanceByTableNameAndHeadID(string tableName, long headId)
         {
             var instance = ctx.WFInstances.Where(i => i.TableName == tableName && i.HeadId == headId).FirstOrDefault();
+            if (instance == null)
+            {
+                //有表单，但是没有启用审批流
+                return (null, null);
+            }
             var steps = ctx.WFSteps.Where(s => s.InstanceId == instance.InstanceId).ToList();
             return (instance, steps);
         }

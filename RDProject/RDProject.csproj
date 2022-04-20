@@ -217,6 +217,10 @@
     <Compile Include="Migrations\20220418073403_change_WFSteps_defaultdata.designer.cs">
       <DependentUpon>20220418073403_change_WFSteps_defaultdata.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20220420054241_add_WFStep_field.cs" />
+    <Compile Include="Migrations\20220420054241_add_WFStep_field.designer.cs">
+      <DependentUpon>20220420054241_add_WFStep_field.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\MyDbContextModelSnapshot.cs" />
     <Compile Include="Models\VO\TrialTitle.cs" />
     <Compile Include="Models\WFInstance.cs" />
@@ -242,6 +246,9 @@
     <Compile Include="ViewModels\TrialFormViewModel.cs" />
     <Compile Include="Views\TrialForm.xaml.cs">
       <DependentUpon>TrialForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WelcomePage.xaml.cs">
+      <DependentUpon>WelcomePage.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\CheckDialog.xaml">
       <SubType>Designer</SubType>
@@ -302,6 +309,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\TrialForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WelcomePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

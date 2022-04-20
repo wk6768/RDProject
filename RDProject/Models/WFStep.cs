@@ -11,6 +11,7 @@ namespace RDProject.Models
     {
         private long stepId;
         private long instanceId;
+        private int stepNo;
         private string bookMark;
         private string subBy;
         private DateTime? subTime;
@@ -20,6 +21,7 @@ namespace RDProject.Models
 
         public long StepId { get => stepId; set { stepId = value; RaisePropertyChanged(); } }
         public long InstanceId { get => instanceId; set { instanceId = value; RaisePropertyChanged(); } }
+        public int StepNo { get => stepNo; set { stepNo = value; RaisePropertyChanged(); } }
         public string BookMark { get => bookMark; set { bookMark = value; RaisePropertyChanged(); } }
         public string Remark { get => remark; set { remark = value; RaisePropertyChanged(); } }
         public string SubBy { get => subBy; set { subBy = value; RaisePropertyChanged(); } }
@@ -28,7 +30,7 @@ namespace RDProject.Models
 
         public override string ToString()
         {
-            return $"{{{nameof(StepId)}={StepId.ToString()}, {nameof(InstanceId)}={InstanceId.ToString()}, {nameof(BookMark)}={BookMark}, {nameof(Remark)}={Remark}, {nameof(SubBy)}={SubBy}, {nameof(SubTime)}={SubTime.ToString()}}}";
+            return $"{{{nameof(StepId)}={StepId.ToString()}, {nameof(InstanceId)}={InstanceId.ToString()}, {nameof(StepNo)}={StepNo.ToString()}, {nameof(BookMark)}={BookMark}, {nameof(Remark)}={Remark}, {nameof(SubBy)}={SubBy}, {nameof(SubTime)}={SubTime.ToString()}, {nameof(Status)}={Status.ToString()}}}";
         }
     }
 }
