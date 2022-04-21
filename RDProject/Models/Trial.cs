@@ -14,6 +14,7 @@ namespace RDProject.Models
         private string fCreateUser;
         private DateTime fCreateDate;
         private string fTitle;
+        private int fStatus;                        //0已保存、草稿、初始状态  1正在审批、审批完成  2驳回、废弃  3审批结束
 
         private DateTime fDate;
         private string fBillNo;
@@ -55,10 +56,11 @@ namespace RDProject.Models
         public string FCreateUser { get => fCreateUser; set { fCreateUser = value; RaisePropertyChanged(); } }
         public DateTime FCreateDate { get => fCreateDate; set { fCreateDate = value; RaisePropertyChanged(); } }
         public string FTitle { get => fTitle; set { fTitle = value; RaisePropertyChanged(); } }
+        public int FStatus { get => fStatus; set { fStatus = value; RaisePropertyChanged(); } }
 
         public override string ToString()
         {
-            return $"{{{nameof(FHeadId)}={FHeadId.ToString()}, {nameof(FDate)}={FDate.ToString()}, {nameof(FBillNo)}={FBillNo}, {nameof(FRDNo)}={FRDNo}, {nameof(FProductName)}={FProductName}, {nameof(FWorkerOrderDescription)}={FWorkerOrderDescription}, {nameof(FCompany)}={FCompany}, {nameof(FHasCNC)}={FHasCNC.ToString()}, {nameof(FHasCoating)}={FHasCoating.ToString()}, {nameof(FHasLaser)}={FHasLaser.ToString()}, {nameof(FHasAssembly)}={FHasAssembly.ToString()}, {nameof(FCNCNPI)}={FCNCNPI}, {nameof(FCoatingNPI)}={FCoatingNPI}, {nameof(FLaserNPI)}={FLaserNPI}, {nameof(FAssemblyNPI)}={FAssemblyNPI}, {nameof(FAssemblyFactory)}={FAssemblyFactory}, {nameof(FInformation)}={FInformation}, {nameof(FRequire)}={FRequire}, {nameof(FCreateUser)}={FCreateUser}, {nameof(FCreateDate)}={FCreateDate.ToString()}, {nameof(FTitle)}={FTitle}}}";
+            return $"{{{nameof(FHeadId)}={FHeadId.ToString()}, {nameof(FDate)}={FDate.ToString()}, {nameof(FBillNo)}={FBillNo}, {nameof(FRDNo)}={FRDNo}, {nameof(FProductName)}={FProductName}, {nameof(FWorkerOrderDescription)}={FWorkerOrderDescription}, {nameof(FCompany)}={FCompany}, {nameof(FHasCNC)}={FHasCNC.ToString()}, {nameof(FHasCoating)}={FHasCoating.ToString()}, {nameof(FHasLaser)}={FHasLaser.ToString()}, {nameof(FHasAssembly)}={FHasAssembly.ToString()}, {nameof(FCNCNPI)}={FCNCNPI}, {nameof(FCoatingNPI)}={FCoatingNPI}, {nameof(FLaserNPI)}={FLaserNPI}, {nameof(FAssemblyNPI)}={FAssemblyNPI}, {nameof(FAssemblyFactory)}={FAssemblyFactory}, {nameof(FInformation)}={FInformation}, {nameof(FRequire)}={FRequire}, {nameof(FCreateUser)}={FCreateUser}, {nameof(FCreateDate)}={FCreateDate.ToString()}, {nameof(FTitle)}={FTitle}, {nameof(FStatus)}={FStatus.ToString()}}}";
         }
     }
 }

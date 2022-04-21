@@ -7,9 +7,6 @@
              xmlns:converters="clr-namespace:RDProject.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="250" d:DesignWidth="400" Width="400" Height="250">
-    <UserControl.Resources>
-        <converters:CheckDialogConverter x:Key="checkDialogConverter"/>
-    </UserControl.Resources>
     <Grid>
         <DockPanel LastChildFill="False">
             <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">

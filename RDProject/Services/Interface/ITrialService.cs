@@ -76,5 +76,12 @@ namespace RDProject.Services.Interface
         /// <param name="title"></param>
         /// <returns></returns>
         List<TrialTitle> GetTrialTitleByTitle(string title);
+
+        /// <summary>
+        /// 通过标题和表单状态获取所有复符合条件的表单的ID和标题
+        /// </summary>
+        /// <param name="title"></param>
+        /// <returns></returns>
+        List<TrialTitle> GetTrialTitleByTitleAndStatus(string title, int status);
     }
 }

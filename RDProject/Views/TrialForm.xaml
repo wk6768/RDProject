@@ -23,7 +23,7 @@
                                 <dxb:ToolBarControl>
                                     <dxb:BarButtonItem Content="新增明细" Command="{Binding AddTrialEntryCommand}" CommandParameter="TrialAddDialog" 
                                                            Glyph="{dx:DXImage SvgImages/Icon Builder/Actions_AddCircled.svg}"/>
-                                    <dxb:BarButtonItem Content="删除明细" Command="{Binding DeleteTrialEntryCommand}" 
+                                    <dxb:BarButtonItem Content="删除明细" Command="{Binding DeleteTrialEntryCommand}" CommandParameter="{Binding ElementName=GridControl_TrialEntry,Path=SelectedItem}"
                                                            Glyph="{dx:DXImage SvgImages/Icon Builder/Actions_DeleteCircled.svg}"/>
                                 </dxb:ToolBarControl>
                                 <dxb:ToolBarControl>
@@ -31,26 +31,8 @@
                                                            Glyph="{dx:DXImage SvgImages/XAF/Action_SaveScript.svg}"></dxb:BarButtonItem>
                                     <dxb:BarButtonItem Content="发起流程" Command="{Binding SendCommand}"
                                                            Glyph="{dx:DXImage SvgImages/Spreadsheet/FillUp.svg}"></dxb:BarButtonItem>
-                                </dxb:ToolBarControl>
-                                <dxb:ToolBarControl>
                                     <dxb:BarButtonItem Content="审批" Command="{Binding CheckCommand}"
                                                        Glyph="{dx:DXImage SvgImages/Dashboards/RenameDataSource.svg}"></dxb:BarButtonItem>
-                                    <dxb:BarEditItem EditWidth="100" x:Name="guid">
-                                        <dxb:BarEditItem.EditSettings>
-                                            <dxe:TextEditSettings></dxe:TextEditSettings>
-                                        </dxb:BarEditItem.EditSettings>
-                                    </dxb:BarEditItem>
-                                    <dxb:BarEditItem EditWidth="100" EditValue="{Binding BookmarkName}">
-                                        <dxb:BarEditItem.EditSettings>
-                                            <dxe:TextEditSettings></dxe:TextEditSettings>
-                                        </dxb:BarEditItem.EditSettings>
-                                    </dxb:BarEditItem>
-                                    <dxb:BarEditItem EditWidth="100" EditValue="{Binding Answer}">
-                                        <dxb:BarEditItem.EditSettings>
-                                            <dxe:TextEditSettings></dxe:TextEditSettings>
-                                        </dxb:BarEditItem.EditSettings>
-                                    </dxb:BarEditItem>
-                                    <dxb:BarButtonItem Content="审批" Command="{Binding NextStepCommand}" CommandParameter="{Binding ElementName=guid,Path=EditValue}"></dxb:BarButtonItem>
                                 </dxb:ToolBarControl>
                             </dxb:BarContainerControl>
                         </dxlc:LayoutItem>
@@ -60,12 +42,12 @@
                         <dxlc:LayoutGroup Orientation="Vertical">
                             <dxlc:LayoutGroup Orientation="Horizontal">
                                 <dxlc:LayoutItem Label="标题">
-                                    <dxe:TextEdit IsEnabled="False" Text="{Binding Trial.FTitle}"/>
+                                    <dxe:TextEdit IsReadOnly="True" Text="{Binding Trial.FTitle}"/>
                                 </dxlc:LayoutItem>
                             </dxlc:LayoutGroup>
                             <dxlc:LayoutGroup Orientation="Horizontal">
                                 <dxlc:LayoutItem Label="编号">
-                                    <dxe:TextEdit IsEnabled="False" Text="{Binding Trial.FHeadId}"/>
+                                    <dxe:TextEdit IsReadOnly="True" Text="{Binding Trial.FHeadId}"/>
                                 </dxlc:LayoutItem>
                             </dxlc:LayoutGroup>
                             <dxlc:LayoutGroup >
@@ -190,26 +172,26 @@
                     <dxlc:LayoutGroup Header="研发项目试产记录表明细" View="Group" MinHeight="200">
                         <dxlc:LayoutGroup Orientation="Vertical">
                             <dxlc:LayoutGroup>
-                                <dxg:GridControl ItemsSource="{Binding TrialEntries}">
+                                <dxg:GridControl x:Name="GridControl_TrialEntry" ItemsSource="{Binding TrialEntries}">
                                     <dxg:GridControl.View>
                                         <dxg:TableView AutoWidth="True" BestFitModeOnSourceChange="Smart" ShowGroupPanel="False"/>
                                     </dxg:GridControl.View>
-                                    <dxg:GridColumn FieldName="FHeadId" IsSmart="True" />
-                                    <dxg:GridColumn FieldName="FWorkOrder" IsSmart="True" />
-                                    <dxg:GridColumn FieldName="FProcessName" IsSmart="True" />
-                                    <dxg:GridColumn FieldName="FBeginDate" IsSmart="True">
+                                    <dxg:GridColumn FieldName="FHeadId" IsSmart="True"  Visible="{Binding ColumnVisibility}"/>
+                                    <dxg:GridColumn Header="工单号" FieldName="FWorkOrder" IsSmart="True" />
+                                    <dxg:GridColumn Header="工序" FieldName="FProcessName" IsSmart="True" />
+                                    <dxg:GridColumn Header="投入时间" FieldName="FBeginDate" IsSmart="True">
                                         <dxg:GridColumn.EditSettings>
                                             <dxe:DateEditSettings Mask="G" MaskUseAsDisplayFormat="True"/>
                                         </dxg:GridColumn.EditSettings>
                                     </dxg:GridColumn>
-                                    <dxg:GridColumn FieldName="FEndDate" IsSmart="True">
+                                    <dxg:GridColumn Header="结束时间" FieldName="FEndDate" IsSmart="True">
                                         <dxg:GridColumn.EditSettings>
                                             <dxe:DateEditSettings Mask="G" MaskUseAsDisplayFormat="True"/>
                                         </dxg:GridColumn.EditSettings>
                                     </dxg:GridColumn>
-                                    <dxg:GridColumn FieldName="FAmount" IsSmart="True" />
-                                    <dxg:GridColumn FieldName="FManPower" IsSmart="True" />
-                                    <dxg:GridColumn FieldName="FManHours" IsSmart="True" />
+                                    <dxg:GridColumn Header="投入数量" FieldName="FAmount" IsSmart="True" />
+                                    <dxg:GridColumn Header="投入人力" FieldName="FManPower" IsSmart="True" />
+                                    <dxg:GridColumn Header="投入工时" FieldName="FManHours" IsSmart="True" />
                                 </dxg:GridControl>
                             </dxlc:LayoutGroup>
                         </dxlc:LayoutGroup>
@@ -221,14 +203,18 @@
                                 <dxg:TableView AutoWidth="True" BestFitModeOnSourceChange="Smart" ShowGroupPanel="False"/>
                             </dxg:GridControl.View>
 
-                            <dxg:GridColumn FieldName="StepId"></dxg:GridColumn>
-                            <dxg:GridColumn FieldName="InstanceId"></dxg:GridColumn>
-                            <dxg:GridColumn FieldName="StepNo"></dxg:GridColumn>
-                            <dxg:GridColumn FieldName="BookMark"></dxg:GridColumn>
-                            <dxg:GridColumn FieldName="Remark"></dxg:GridColumn>
-                            <dxg:GridColumn FieldName="SubBy"></dxg:GridColumn>
-                            <dxg:GridColumn FieldName="SubTime"></dxg:GridColumn>
-                            <dxg:GridColumn FieldName="Status"></dxg:GridColumn>
+                            <dxg:GridColumn FieldName="StepId" IsSmart="True" ReadOnly="True" Visible="{Binding ColumnVisibility}"></dxg:GridColumn>
+                            <dxg:GridColumn FieldName="InstanceId" IsSmart="True" ReadOnly="True" Visible="{Binding ColumnVisibility}"></dxg:GridColumn>
+                            <dxg:GridColumn Header="序号" FieldName="StepNo" IsSmart="True" ReadOnly="True"></dxg:GridColumn>
+                            <dxg:GridColumn Header="节点名称" FieldName="BookMark" IsSmart="True" ReadOnly="True"></dxg:GridColumn>
+                            <dxg:GridColumn Header="审批意见" FieldName="Remark" IsSmart="True" ReadOnly="True"></dxg:GridColumn>
+                            <dxg:GridColumn Header="审批人" FieldName="SubBy" IsSmart="True" ReadOnly="True"></dxg:GridColumn>
+                            <dxg:GridColumn Header="审批时间" FieldName="SubTime" IsSmart="True" ReadOnly="True">
+                                <dxg:GridColumn.EditSettings>
+                                    <dxe:DateEditSettings Mask="G" MaskUseAsDisplayFormat="True"/>
+                                </dxg:GridColumn.EditSettings>
+                            </dxg:GridColumn>
+                            <dxg:GridColumn Header="状态码" FieldName="Status" IsSmart="True" ReadOnly="True"></dxg:GridColumn>
                         </dxg:GridControl>
                     </dxlc:LayoutGroup>
 

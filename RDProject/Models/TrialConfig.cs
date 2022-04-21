@@ -14,6 +14,7 @@ namespace RDProject.Models
         {
             builder.ToTable(nameof(Trial));
             builder.Property(b => b.FCreateDate).HasDefaultValue(DateTime.Now);
+            builder.Property(b => b.FStatus).HasDefaultValue(0);
         }
     }
 }

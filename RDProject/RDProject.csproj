@@ -208,7 +208,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Common\WFHelper.cs" />
-    <Compile Include="Converters\CheckDialogConverter.cs" />
+    <Compile Include="Converters\MultiParamterConvertor.cs" />
     <Compile Include="Migrations\20220413085051_init_table.cs" />
     <Compile Include="Migrations\20220413085051_init_table.designer.cs">
       <DependentUpon>20220413085051_init_table.cs</DependentUpon>
@@ -221,6 +221,10 @@
     <Compile Include="Migrations\20220420054241_add_WFStep_field.designer.cs">
       <DependentUpon>20220420054241_add_WFStep_field.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20220421074511_add_Trial_field.cs" />
+    <Compile Include="Migrations\20220421074511_add_Trial_field.designer.cs">
+      <DependentUpon>20220421074511_add_Trial_field.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\MyDbContextModelSnapshot.cs" />
     <Compile Include="Models\VO\TrialTitle.cs" />
     <Compile Include="Models\WFInstance.cs" />
@@ -232,10 +236,15 @@
     <Compile Include="Services\TrialService.cs" />
     <Compile Include="Services\WFService.cs" />
     <Compile Include="ViewModels\CheckDialogViewModel.cs" />
+    <Compile Include="ViewModels\EmptyPageViewModel.cs" />
     <Compile Include="ViewModels\MyFormViewModel.cs" />
     <Compile Include="ViewModels\TrialAddDialogViewModel.cs" />
+    <Compile Include="ViewModels\WelcomePageViewModel.cs" />
     <Compile Include="Views\CheckDialog.xaml.cs">
       <DependentUpon>CheckDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EmptyPage.xaml.cs">
+      <DependentUpon>EmptyPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MyForm.xaml.cs">
       <DependentUpon>MyForm.xaml</DependentUpon>
@@ -251,6 +260,10 @@
       <DependentUpon>WelcomePage.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\CheckDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EmptyPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

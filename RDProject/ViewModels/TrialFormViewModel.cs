@@ -25,6 +25,8 @@ namespace RDProject.ViewModels
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             User = navigationContext.Parameters["User"] as Employee;
+            ColumnVisibility = User.UserGroup.Equals("管理员");
+
             var fHeadID = (long)navigationContext.Parameters["FHeadID"];
             if (fHeadID <= 0)
             {
@@ -63,11 +65,10 @@ namespace RDProject.ViewModels
             Employees = new ObservableCollection<Employee>();
 
             AddTrialEntryCommand = new DelegateCommand<string>(AddTrialEntry);
-            DeleteTrialEntryCommand = new DelegateCommand<string>(DeleteTrialEntry);
+            DeleteTrialEntryCommand = new DelegateCommand<TrialEntry>(DeleteTrialEntry);
             QuerySubmittedCommand = new DelegateCommand<object>(QuerySubmitted);
             SaveCommand = new DelegateCommand(Save);
             SendCommand = new DelegateCommand(Send);
-            NextStepCommand = new DelegateCommand<string>(NextStep);
             CheckCommand = new DelegateCommand(Check);
         }
 
@@ -84,7 +85,8 @@ namespace RDProject.ViewModels
                 FDate = DateTime.Now,
                 FCompany = "一车间",
                 FCreateUser = User.Name,
-                FTitle = $"研发项目试产记录表-{User.EmpName}-{User.Name}-{DateTime.Now.ToString("D")}"
+                FTitle = $"研发项目试产记录表-{User.EmpName}-{User.Name}-{DateTime.Now.ToString("D")}",
+                FStatus = 0,
             };
 
             TrialEntries = new ObservableCollection<TrialEntry>();
@@ -199,7 +201,7 @@ namespace RDProject.ViewModels
         }
 
         /// <summary>
-        /// 是否通过
+        /// 审批意见
         /// </summary>
         private string answer;
 
@@ -209,13 +211,21 @@ namespace RDProject.ViewModels
             set { answer = value; RaisePropertyChanged(); }
         }
 
+        private bool columnVisibility;
+
+        public bool ColumnVisibility
+        {
+            get { return columnVisibility; }
+            set { columnVisibility = value; RaisePropertyChanged(); }
+        }
+
+
+
         public DelegateCommand<string> AddTrialEntryCommand { get; private set; }
-        public DelegateCommand<string> DeleteTrialEntryCommand { get; private set; }
+        public DelegateCommand<TrialEntry> DeleteTrialEntryCommand { get; private set; }
         public DelegateCommand<object> QuerySubmittedCommand { get;private set; }
         public DelegateCommand SaveCommand { get; private set; }
         public DelegateCommand SendCommand { get; private set; }
-        public DelegateCommand<string> NextStepCommand { get; private set; }
-
         public DelegateCommand CheckCommand { get; private set; }
 
         private void AddTrialEntry(string obj)
@@ -230,9 +240,10 @@ namespace RDProject.ViewModels
             });
         }
 
-        private void DeleteTrialEntry(string obj)
+        private void DeleteTrialEntry(TrialEntry obj)
         {
-            Debug.WriteLine(Trial.ToString());
+            TrialEntries.Remove(obj);
+            (Trial, TrialEntries) = trialService.UpdateTrialPageAndReturnFullData(Trial, TrialEntries);
         }
         
         private void QuerySubmitted(object obj)
@@ -302,24 +313,27 @@ namespace RDProject.ViewModels
         }
 
 
-        //WorkflowApplication app = null;
         private void Send()
         {
+            if(Steps.Count > 0)
+            {
+                WinUIMessageBox.Show("重复发起审批", "提示", MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.None, MessageBoxOptions.None);
+                return;
+            }
             var activity = new 研发项目试产记录表();
             Dictionary<string, object> keys = new Dictionary<string, object>();
             keys.Add("ParamHasCNC", Trial.FHasCNC);
             keys.Add("ParamHasCoating", Trial.FHasCoating);
             keys.Add("ParamHasLaser", Trial.FHasLaser);
             keys.Add("ParamHasAssembly", Trial.FHasAssembly);
-            //app = new WorkflowApplication(activity, keys);
-            //app.PersistableIdle = a => PersistableIdleAction.Unload;
-            //app.Run();
-            //Debug.WriteLine(app.Id.ToString());
 
             //开启一个工作流，获取工作流ID
             var guid = WFHelper.Run(activity, keys);
             Debug.WriteLine(guid);
 
+            //更新表单为审核状态
+            Trial.FStatus = 1;
+            (Trial, _) = trialService.UpdateTrialPageAndReturnFullData(Trial, null);
 
             //构建审批表
             WFInstance instance = new WFInstance()
@@ -328,6 +342,7 @@ namespace RDProject.ViewModels
                 InstanceGuid = guid,
                 HeadId = Trial.FHeadId,
                 SubBy = Trial.FCreateUser,
+                Status = 1,
             };
             //构建审批步骤
             Steps = CreateSteps();
@@ -341,15 +356,6 @@ namespace RDProject.ViewModels
             InitNewTrialForm();
         }
 
-        private void NextStep(string obj)
-        {
-            //app.Load(Guid.Parse(obj));
-            //var arr = Answer.Split(',');
-            //Dictionary<string , object> keys = new Dictionary<string , object>();
-            //keys.Add("IsPass", Convert.ToBoolean(arr[0]));
-            //keys.Add("BookMarkName", arr[1]);
-            //app.ResumeBookmark(BookmarkName, keys);
-        }
 
         private void Check()
         {
@@ -400,11 +406,13 @@ namespace RDProject.ViewModels
                         step.BookMark,
                         keys2
                     );
-                //更新审批和审批步骤
+
+                //审批步骤和更新审批
+
+                //审批步骤
                 step.Status = 1;
                 step.SubTime = DateTime.Now;
                 step.Remark = Reason;
-
                 //如果下一步骤为抄送节点，则直接更新下一节点
                 var flag = true;
                 while (flag)
@@ -422,12 +430,21 @@ namespace RDProject.ViewModels
                     }
                 }
 
+                //审批表
+                //如果当前节点为最后一个不为抄送节点的 节点,则表示流程结束, 更新 审批表、表单 的状态为3
+                var last = Steps.Where(s => !s.BookMark.Contains("抄送")).OrderBy(s => s.StepNo).LastOrDefault();
+                if (step.StepNo == last.StepNo)
+                {
+                    Instance.Status = 3;
+                    Trial.FStatus = 3;
+                    (Trial, _) = trialService.UpdateTrialPageAndReturnFullData(Trial, null);
+                }
+
                 (Instance, Steps) = wfService.UpdateInstance(Instance, Steps);
             }
             //驳回
             if(CheckResultReject == true)
             {
-
                 //如果驳回的节点为空，则找上一个不为抄送节点的节点
                 if (Bookmark == null)
                 {
@@ -477,7 +494,7 @@ namespace RDProject.ViewModels
         {
             var stepNo = 1;
             List<WFStep> steps = new List<WFStep>();
-            steps.Add(new WFStep() { BookMark = "提交申请", SubBy = User.Name , SubTime = DateTime.Now, StepNo = stepNo++, Status = 1});
+            steps.Add(new WFStep() { BookMark = "提交申请", SubBy = User.Name , SubTime = DateTime.Now, Remark = "发起流程", StepNo = stepNo++, Status = 1});
             steps.Add(new WFStep() { BookMark = "附件上传", SubBy = "陆冬夏", StepNo = stepNo++ });
             steps.Add(new WFStep() { BookMark = "抄送节点", SubBy = "赵鹏", StepNo = stepNo++ });
 
@@ -500,6 +517,7 @@ namespace RDProject.ViewModels
             steps = steps.OrderBy(s => s.StepNo).ToList();
             return new ObservableCollection<WFStep>(steps);
         }
+
 
         /// <summary>
         /// 发送邮件

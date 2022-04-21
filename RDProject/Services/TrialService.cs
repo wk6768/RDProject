@@ -86,9 +86,16 @@ namespace RDProject.Services
                     ctx.Trials.Update(trial);
                     ctx.SaveChanges();
 
-                    ctx.TrialEntries.UpdateRange(trialEntries);
-                    ctx.SaveChanges();
-
+                    if(trialEntries != null)
+                    {
+                        foreach (TrialEntry trialEntry in trialEntries)
+                        {
+                            trialEntry.FHeadId = trial.FHeadId;
+                        }
+                        ctx.TrialEntries.UpdateRange(trialEntries);
+                        ctx.SaveChanges();
+                    }
+                    
                     tran.Commit();
                     return (trial, trialEntries);
                 }
@@ -134,6 +141,12 @@ namespace RDProject.Services
         public List<TrialTitle> GetTrialTitleByTitle(string title)
         {
             return ctx.Trials.Where(t => t.FTitle.Contains(title)).
+                Select(t => new TrialTitle() { FHeadId = t.FHeadId, FTitle = t.FTitle }).ToList();
+        }
+
+        public List<TrialTitle> GetTrialTitleByTitleAndStatus(string title, int status)
+        {
+            return ctx.Trials.Where(t => t.FStatus == status && t.FTitle.Contains(title)).
                 Select(t => new TrialTitle() { FHeadId = t.FHeadId, FTitle = t.FTitle }).ToList();
         }
     }

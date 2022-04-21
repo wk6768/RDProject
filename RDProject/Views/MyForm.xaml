@@ -6,8 +6,12 @@
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:prism="http://prismlibrary.com/"
              xmlns:local="clr-namespace:RDProject.Views"
+             xmlns:convertor="clr-namespace:RDProject.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <convertor:MultiParamterConvertor x:Key="multiParamterConvertor"/>
+    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition MinWidth="220" Width="auto"/>
@@ -15,14 +19,24 @@
         </Grid.ColumnDefinitions>
 
         <DockPanel Margin="5,0">
-            <dxe:ComboBoxEdit Height="25" DockPanel.Dock="Top" VerticalAlignment="Top" Margin="0,5">
+            <dxe:ComboBoxEdit Height="25" DockPanel.Dock="Top" VerticalAlignment="Top" Margin="0,5" x:Name="type">
                 <dxe:ComboBoxEditItem IsSelected="True">全部</dxe:ComboBoxEditItem>
                 <dxe:ComboBoxEditItem>草稿</dxe:ComboBoxEditItem>
                 <dxe:ComboBoxEditItem>已发起</dxe:ComboBoxEditItem>
             </dxe:ComboBoxEdit>
             <dxe:TextEdit Height="25" DockPanel.Dock="Top" VerticalAlignment="Top" Margin="0,5" EditValue="搜索标题" x:Name="text"></dxe:TextEdit>
+            <!--CommandParameter="{Binding ElementName=text,Path=EditValue}"-->
             <dx:SimpleButton Height="25" DockPanel.Dock="Top" VerticalAlignment="Top" Margin="0,5" Content="搜索" 
-                             Command="{Binding SearchCommand}" CommandParameter="{Binding ElementName=text,Path=EditValue}" />
+                             Command="{Binding SearchCommand}"  >
+                <dx:SimpleButton.CommandParameter>
+                    <MultiBinding Converter="{StaticResource multiParamterConvertor}">
+                        <MultiBinding.Bindings>
+                            <Binding ElementName="type" Path="EditValue"/>
+                            <Binding ElementName="text" Path="EditValue"/>
+                        </MultiBinding.Bindings>
+                    </MultiBinding>
+                </dx:SimpleButton.CommandParameter>
+            </dx:SimpleButton>
 
             <ListBox ItemsSource="{Binding TrialTitles}" x:Name="MyListBox">
                 <i:Interaction.Triggers>

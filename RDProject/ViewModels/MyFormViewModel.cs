@@ -19,6 +19,7 @@ namespace RDProject.ViewModels
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
+            regionManager.Regions["FormShowControl"].RequestNavigate("EmptyPage");
             User = navigationContext.Parameters["User"] as Employee;
             GetData();
         }
@@ -46,7 +47,7 @@ namespace RDProject.ViewModels
             this.trialService = trialService;
 
             SelectIndexCommand = new DelegateCommand<object>(SelectIndex);
-            SearchCommand = new DelegateCommand<string>(Search);
+            SearchCommand = new DelegateCommand<object[]>(Search);
         }
 
         private readonly IRegionManager regionManager;
@@ -74,7 +75,7 @@ namespace RDProject.ViewModels
 
 
         public DelegateCommand<object> SelectIndexCommand { get; private set; }
-        public DelegateCommand<string> SearchCommand { get; private set; }
+        public DelegateCommand<object[]> SearchCommand { get; private set; }
 
 
         private void SelectIndex(object obj)
@@ -91,10 +92,30 @@ namespace RDProject.ViewModels
             regionManager.Regions["FormShowControl"].RequestNavigate("TrialForm", keys);
         }
 
-        private void Search(string obj)
+        private void Search(object[] objs)
         {
-            Debug.WriteLine(obj);
-            var list = trialService.GetTrialTitleByTitle(obj);
+            Debug.WriteLine(objs);
+
+            var type = objs[0].ToString();
+            var title = objs[1].ToString();
+            int status;
+            List<TrialTitle> list;
+
+            switch (type)
+            {
+                case "草稿":
+                    status = 0;
+                    list = trialService.GetTrialTitleByTitleAndStatus(title, status);
+                    break;
+                case "已发起":
+                    status = 1;
+                    list = trialService.GetTrialTitleByTitleAndStatus(title, status);
+                    break;
+                default:
+                    list = trialService.GetTrialTitleByTitle(title);
+                    break;
+
+            }
             TrialTitles = new ObservableCollection<TrialTitle>(list);
         }
     }
