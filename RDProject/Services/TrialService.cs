@@ -149,5 +149,11 @@ namespace RDProject.Services
             return ctx.Trials.Where(t => t.FStatus == status && t.FTitle.Contains(title)).
                 Select(t => new TrialTitle() { FHeadId = t.FHeadId, FTitle = t.FTitle }).ToList();
         }
+
+        public int UpdateTrialEntry(TrialEntry trialEntry)
+        {
+            ctx.TrialEntries.Update(trialEntry);
+            return ctx.SaveChanges();
+        }
     }
 }

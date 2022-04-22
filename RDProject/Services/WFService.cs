@@ -55,7 +55,7 @@ namespace RDProject.Services
                 //有表单，但是没有启用审批流
                 return (null, null);
             }
-            var steps = ctx.WFSteps.Where(s => s.InstanceId == instance.InstanceId).ToList();
+            var steps = ctx.WFSteps.Where(s => s.InstanceId == instance.InstanceId).OrderBy(s => s.StepNo).ToList();
             return (instance, steps);
         }
 
@@ -79,6 +79,12 @@ namespace RDProject.Services
                     return (null, null);
                 }
             }
+        }
+
+        public int UpdateStep(WFStep step)
+        {
+            ctx.WFSteps.Update(step);
+            return ctx.SaveChanges();
         }
     }
 }

@@ -8,6 +8,7 @@ using Prism.Commands;
 using RDProject.Models;
 using RDProject.Services.Interface;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace RDProject.ViewModels
 {
@@ -18,9 +19,13 @@ namespace RDProject.ViewModels
             Employee = new Employee();
             AddEmployeeCommand = new DelegateCommand(AddEmployee);
             GetEmployeeListCommand = new DelegateCommand(GetEmployeeList);
+            UpdateEmployeeCommand = new DelegateCommand<Employee>(UpdateEmployee);
+
             this.employeeService = employeeService;
             GetEmployeeList();
         }
+
+     
 
         private readonly IEmployeeService employeeService;
 
@@ -43,6 +48,7 @@ namespace RDProject.ViewModels
 
         public DelegateCommand AddEmployeeCommand { get; private set; }
         public DelegateCommand GetEmployeeListCommand { get; private set; }
+        public DelegateCommand<Employee> UpdateEmployeeCommand { get; private set; }
 
         private async void AddEmployee()
         {
@@ -61,5 +67,10 @@ namespace RDProject.ViewModels
             EmployeeList = new ObservableCollection<Employee>(list);
         }
 
+        private void UpdateEmployee(Employee obj)
+        {
+            Debug.WriteLine(obj);
+            employeeService.UpdateEmployee(obj);
+        }
     }
 }

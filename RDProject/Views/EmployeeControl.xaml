@@ -5,6 +5,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:local="clr-namespace:RDProject.Views"
              xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"  x:Class="RDProject.Views.EmployeeControl"
              mc:Ignorable="d" 
@@ -33,10 +34,17 @@
                     </dxlc:LayoutItem>
                 </dxlc:LayoutGroup>
                 <dxlc:LayoutGroup Header="LayoutGroup">
-                    <dxg:GridControl ItemsSource="{Binding EmployeeList}" AutoGenerateColumns="AddNew" 
+                    <dxg:GridControl x:Name="employeeGridControl" ItemsSource="{Binding EmployeeList}" AutoGenerateColumns="AddNew" 
                                      EnableSmartColumnsGeneration="True" >
                         <dxg:GridControl.View>
-                            <dxg:TableView AutoWidth="True" BestFitModeOnSourceChange="Smart"/>
+                            <dxg:TableView AutoWidth="True" BestFitModeOnSourceChange="Smart" 
+                                           ShowUpdateRowButtons="OnCellValueChange">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="ValidateRow">
+                                        <i:InvokeCommandAction Command="{Binding UpdateEmployeeCommand}" CommandParameter="{Binding ElementName=employeeGridControl,Path=SelectedItem}"></i:InvokeCommandAction>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </dxg:TableView>
                         </dxg:GridControl.View>
                         <dxg:GridColumn FieldName="Id" IsSmart="True" />
                         <dxg:GridColumn FieldName="Name" IsSmart="True" />

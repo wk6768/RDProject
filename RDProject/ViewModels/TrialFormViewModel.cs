@@ -25,17 +25,80 @@ namespace RDProject.ViewModels
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             User = navigationContext.Parameters["User"] as Employee;
-            ColumnVisibility = User.UserGroup.Equals("管理员");
+            
 
             var fHeadID = (long)navigationContext.Parameters["FHeadID"];
             if (fHeadID <= 0)
             {
                 //如果小于0，则是新增表单
                 InitNewTrialForm();
-            } else if (fHeadID > 0)
+
+                #region 新建表单时的权限控制
+                if (User.UserGroup.Equals("管理员"))
+                {
+                    ColumnVisibility = true;    //是否显示隐藏列
+                    Readonly_Trial = false;     //表单头是否只读
+                    Readonly_TrialEntry = false;//表单明细是否只读
+                    Readonly_WFStep = false;    //步骤是否只读
+
+                    SaveButtonEnable = true;    //保存表单内容的按钮
+                    SendButtonEnable = true;    //发起流程的按钮
+                    EditButtonEnable = true;    //新建、删除明细的按钮
+                }
+                else
+                {
+                    ColumnVisibility = false;
+                    Readonly_Trial = false;
+                    Readonly_TrialEntry = false;
+                    Readonly_WFStep = true;
+
+                    SaveButtonEnable = true;
+                    SendButtonEnable = true;
+                    EditButtonEnable = true;
+                }
+                #endregion
+
+            }
+            else if (fHeadID > 0)
             {
                 //如果大于0，则是浏览表单
                 InitOldTrialForm(fHeadID);
+
+                #region 浏览表单时的权限控制
+                if (User.UserGroup.Equals("管理员"))
+                {
+                    ColumnVisibility = true;
+                    Readonly_Trial = false;
+                    Readonly_TrialEntry = false;
+                    Readonly_WFStep = false;
+
+                    SaveButtonEnable = true;
+                    SendButtonEnable = true;
+                    EditButtonEnable = true;
+                }
+                else if (User.UserGroup.Equals("NPI"))
+                {
+                    ColumnVisibility = false;
+                    Readonly_Trial = true;
+                    Readonly_TrialEntry = false;
+                    Readonly_WFStep = true;
+
+                    SaveButtonEnable = true;
+                    SendButtonEnable = false;
+                    EditButtonEnable = true;
+                }
+                else
+                {
+                    ColumnVisibility = false;
+                    Readonly_Trial = true;
+                    Readonly_TrialEntry = true;
+                    Readonly_WFStep = true;
+
+                    SaveButtonEnable = false;
+                    SendButtonEnable = false;
+                    EditButtonEnable = false;
+                }
+                #endregion
             }
             GetEmployeesList();
         }
@@ -64,15 +127,16 @@ namespace RDProject.ViewModels
 
             Employees = new ObservableCollection<Employee>();
 
+            AddTrialCommand = new DelegateCommand(AddTrial);
             AddTrialEntryCommand = new DelegateCommand<string>(AddTrialEntry);
             DeleteTrialEntryCommand = new DelegateCommand<TrialEntry>(DeleteTrialEntry);
             QuerySubmittedCommand = new DelegateCommand<object>(QuerySubmitted);
             SaveCommand = new DelegateCommand(Save);
             SendCommand = new DelegateCommand(Send);
             CheckCommand = new DelegateCommand(Check);
+            UpdateTrialEntryCommand = new DelegateCommand<TrialEntry>(UpdateTrialEntry);
+            UpdateStepCommand = new DelegateCommand<WFStep>(UpdateStep);
         }
-
-       
 
 
         /// <summary>
@@ -211,6 +275,9 @@ namespace RDProject.ViewModels
             set { answer = value; RaisePropertyChanged(); }
         }
 
+        /// <summary>
+        /// 控制部分字段的显示（只有管理员端显示）
+        /// </summary>
         private bool columnVisibility;
 
         public bool ColumnVisibility
@@ -219,14 +286,76 @@ namespace RDProject.ViewModels
             set { columnVisibility = value; RaisePropertyChanged(); }
         }
 
+        /// <summary>
+        /// 控制部分字段只读
+        /// </summary>
+        private bool readonly_Trial;
+
+        public bool Readonly_Trial
+        {
+            get { return readonly_Trial; }
+            set { readonly_Trial = value; RaisePropertyChanged(); }
+        }
+
+        private bool readonly_TrialEntry;
+
+        public bool Readonly_TrialEntry
+        {
+            get { return readonly_TrialEntry; }
+            set { readonly_TrialEntry = value; RaisePropertyChanged(); }
+        }
+
+        private bool readonly_WFStep;
+
+        public bool Readonly_WFStep
+        {
+            get { return readonly_WFStep; }
+            set { readonly_WFStep = value; RaisePropertyChanged(); }
+        }
+
+        private bool saveButtonEnable;
+
+        public bool SaveButtonEnable
+        {
+            get { return saveButtonEnable; }
+            set { saveButtonEnable = value; RaisePropertyChanged(); }
+        }
+
+        private bool sendButtonEnable;
+
+        public bool SendButtonEnable
+        {
+            get { return sendButtonEnable; }
+            set { sendButtonEnable = value; RaisePropertyChanged(); }
+        }
+
+        private bool editButtonEnable;
+
+        public bool EditButtonEnable
+        {
+            get { return editButtonEnable; }
+            set { editButtonEnable = value; RaisePropertyChanged(); }
+        }
 
 
+
+
+
+        public DelegateCommand AddTrialCommand { get; private set; }
         public DelegateCommand<string> AddTrialEntryCommand { get; private set; }
         public DelegateCommand<TrialEntry> DeleteTrialEntryCommand { get; private set; }
         public DelegateCommand<object> QuerySubmittedCommand { get;private set; }
         public DelegateCommand SaveCommand { get; private set; }
         public DelegateCommand SendCommand { get; private set; }
         public DelegateCommand CheckCommand { get; private set; }
+        public DelegateCommand<TrialEntry> UpdateTrialEntryCommand { get; private set; }
+        public DelegateCommand<WFStep> UpdateStepCommand { get; private set; }
+
+        private void AddTrial()
+        {
+            //初始化一个空表单
+            InitNewTrialForm();
+        }
 
         private void AddTrialEntry(string obj)
         {
@@ -245,7 +374,12 @@ namespace RDProject.ViewModels
             TrialEntries.Remove(obj);
             (Trial, TrialEntries) = trialService.UpdateTrialPageAndReturnFullData(Trial, TrialEntries);
         }
-        
+
+        private void UpdateTrialEntry(TrialEntry obj)
+        {
+            trialService.UpdateTrialEntry(obj);
+        }
+
         private void QuerySubmitted(object obj)
         {
             string name = ((DevExpress.Xpf.Editors.AutoSuggestEdit)obj).EditText;
@@ -353,7 +487,7 @@ namespace RDProject.ViewModels
 
 
             //提交后清空
-            InitNewTrialForm();
+            //InitNewTrialForm();
         }
 
 
@@ -518,6 +652,10 @@ namespace RDProject.ViewModels
             return new ObservableCollection<WFStep>(steps);
         }
 
+        private void UpdateStep(WFStep obj)
+        {
+            wfService.UpdateStep(obj);
+        }
 
         /// <summary>
         /// 发送邮件

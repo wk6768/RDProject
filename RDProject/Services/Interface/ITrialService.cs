@@ -83,5 +83,12 @@ namespace RDProject.Services.Interface
         /// <param name="title"></param>
         /// <returns></returns>
         List<TrialTitle> GetTrialTitleByTitleAndStatus(string title, int status);
+
+        /// <summary>
+        /// 更新一条明细
+        /// </summary>
+        /// <param name="trialEntry"></param>
+        /// <returns></returns>
+        int UpdateTrialEntry(TrialEntry trialEntry);
     }
 }

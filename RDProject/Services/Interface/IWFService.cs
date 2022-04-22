@@ -31,5 +31,12 @@ namespace RDProject.Services.Interface
         /// <param name="steps"></param>
         /// <returns></returns>
         (WFInstance instance, ObservableCollection<WFStep> steps) UpdateInstance(WFInstance instance, ObservableCollection<WFStep> steps);
+
+        /// <summary>
+        /// 更新一个步骤
+        /// </summary>
+        /// <param name="step"></param>
+        /// <returns></returns>
+        int UpdateStep(WFStep step);
     }
 }

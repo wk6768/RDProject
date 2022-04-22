@@ -6,6 +6,7 @@
     xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
     xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"  
     x:Class="RDProject.Views.MainView"
+    WindowStartupLocation="CenterScreen"
     Title="研发项目试产记录" Height="800" Width="1280">
     <Grid>
         <Grid.RowDefinitions>
@@ -31,20 +32,16 @@
                     <dxr:RibbonPageGroup  Caption="表单">
                         <dxb:BarButtonItem Content="新建表单" Command="{Binding NavigateTrialFormCommand}" CommandParameter="TrialForm" 
                                            Glyph="{dx:DXImage SvgImages/Dashboards/Edit.svg}" RibbonStyle="Large"></dxb:BarButtonItem>
-                        <dxb:BarButtonItem Content="我的表单" Command="{Binding NavigateMyFormCommand}" CommandParameter="MyForm" 
+                        <dxb:BarButtonItem Content="全部表单" Command="{Binding NavigateMyFormCommand}" CommandParameter="MyForm" 
                                            Glyph="{dx:DXImage SvgImages/Dashboards/InsertComboBox.svg}" RibbonStyle="Large"></dxb:BarButtonItem>
                     </dxr:RibbonPageGroup>
                 </dxr:RibbonPage>
 
-                <dxr:RibbonPage Caption="管理">
+                <dxr:RibbonPage Caption="管理" IsEnabled="{Binding IsAdmin}">
                     <dxr:RibbonPageGroup Caption="用户">
                         <dxb:BarButtonItem Content="账号管理" Command="{Binding NavigateEmployeeControlCommand}" CommandParameter="EmployeeControl" 
                                            Glyph="{dx:DXImage SvgImages/Spreadsheet/AllowUsersToEditRanges.svg}" RibbonStyle="Large"/>
                     </dxr:RibbonPageGroup>
-                    <dxr:RibbonPageGroup Caption="表单/流程">
-                        <dxb:BarButtonItem Content="表单管理"/>
-                    </dxr:RibbonPageGroup>
-
                 </dxr:RibbonPage>
             </dxr:RibbonPageCategory>
         </dxr:RibbonControl>

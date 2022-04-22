@@ -48,5 +48,11 @@ namespace RDProject.Services
         {
             return await ctx.Employees.Where(e => e.Name.Contains(name) == true).ToListAsync();
         }
+
+        public int UpdateEmployee(Employee employee)
+        {
+            ctx.Employees.Update(employee);
+            return ctx.SaveChanges();
+        }
     }
 }

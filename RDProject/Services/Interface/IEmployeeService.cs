@@ -43,5 +43,12 @@ namespace RDProject.Services.Interface
         /// <param name="name"></param>
         /// <returns></returns>
         Task<List<Employee>> GetEmployeeListByName(string name);
+
+        /// <summary>
+        /// 更新用户信息
+        /// </summary>
+        /// <param name="employee"></param>
+        /// <returns></returns>
+        int UpdateEmployee(Employee employee);
     }
 }

@@ -43,6 +43,15 @@ namespace RDProject.ViewModels
             set { user = value; RaisePropertyChanged(); }
         }
 
+        private bool isAdmin;
+
+        public bool IsAdmin
+        {
+            get { return isAdmin; }
+            set { isAdmin = value; RaisePropertyChanged(); }
+        }
+
+
         public DelegateCommand<string> OpenLoginDialogCommand { get; private set; }
         public DelegateCommand<string> ChangePwdCommand { get; private set; }
         public DelegateCommand<string> LogoutCommand { get; private set; }
@@ -59,7 +68,14 @@ namespace RDProject.ViewModels
                 dialogService.ShowDialog(obj, callback =>
                 {
                     if(callback.Result == ButtonResult.OK)
+                    {
                         User = callback.Parameters.GetValue<Employee>("User");
+                        if (User.UserGroup.Equals("管理员"))
+                        {
+                            IsAdmin = true;
+                        }
+                    }
+                        
                 });
             }
         }
@@ -83,6 +99,7 @@ namespace RDProject.ViewModels
         private void Logout(string obj)
         {
             User = null;
+            IsAdmin = false;
             regionManager.Regions["MainControl"].RequestNavigate(obj);
         }
 

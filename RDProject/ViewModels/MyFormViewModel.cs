@@ -11,6 +11,8 @@ using RDProject.Models;
 using RDProject.Models.VO;
 using RDProject.Services.Interface;
 using System.Diagnostics;
+using DevExpress.Xpf.WindowsUI;
+using System.Windows;
 
 namespace RDProject.ViewModels
 {
@@ -95,9 +97,18 @@ namespace RDProject.ViewModels
         private void Search(object[] objs)
         {
             Debug.WriteLine(objs);
+            foreach(var obj in objs)
+            {
+                if (obj == null)
+                {
+                    WinUIMessageBox.Show("请输入搜索条件", "提示", MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.None, MessageBoxOptions.None);
+                    return;
+                }
+            }
 
             var type = objs[0].ToString();
             var title = objs[1].ToString();
+            
             int status;
             List<TrialTitle> list;
 

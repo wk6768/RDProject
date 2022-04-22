@@ -22,5 +22,10 @@ namespace RDProject.Models
         public string Pwd { get => pwd; set { pwd = value;RaisePropertyChanged(); } }
         public string UserGroup { get => userGroup; set { userGroup = value;RaisePropertyChanged(); } }
         public bool IsDeleted { get => isDeleted; set { isDeleted = value; RaisePropertyChanged(); } }
+
+        public override string ToString()
+        {
+            return $"{{{nameof(Id)}={Id}, {nameof(Name)}={Name}, {nameof(EmpName)}={EmpName}, {nameof(Pwd)}={Pwd}, {nameof(UserGroup)}={UserGroup}, {nameof(IsDeleted)}={IsDeleted.ToString()}}}";
+        }
     }
 }
