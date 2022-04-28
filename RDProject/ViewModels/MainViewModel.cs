@@ -75,7 +75,7 @@ namespace RDProject.ViewModels
                             IsAdmin = true;
                         }
                     }
-                        
+                    Console.WriteLine("登录--" + callback.Result);
                 });
             }
         }

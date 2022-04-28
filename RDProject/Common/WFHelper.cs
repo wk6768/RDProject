@@ -11,7 +11,7 @@ namespace RDProject.Common
     {
         private static string ConnString()
         {
-            return "server=127.0.0.1;database=yanfa_test_1;uid=sa;pwd=123";
+            return "server=192.168.5.80;database=yanfa_test_1;uid=sa;pwd=123";
         }
 
         /// <summary>

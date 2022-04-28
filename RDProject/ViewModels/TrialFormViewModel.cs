@@ -524,25 +524,14 @@ namespace RDProject.ViewModels
                 {
                     Bookmark = callback.Parameters.GetValue<string>("Bookmark");
                 }
+                Console.WriteLine("审批--" + CheckResultPass + CheckResultReject + Reason + Bookmark);
             });
 
             //审批，就是 调用Instance，并更新Steps
             //如果审批通过
             if (CheckResultPass == true)
             {
-                //执行工作流
-                Dictionary<string, object> keys2 = new Dictionary<string, object>();
-                keys2.Add("IsPass", true);
-                keys2.Add("BookMarkName", step.BookMark);
-                WFHelper.Resume(
-                        new 研发项目试产记录表(),
-                        Instance.InstanceGuid,
-                        step.BookMark,
-                        keys2
-                    );
-
                 //审批步骤和更新审批
-
                 //审批步骤
                 step.Status = 1;
                 step.SubTime = DateTime.Now;
@@ -552,6 +541,10 @@ namespace RDProject.ViewModels
                 while (flag)
                 {
                     var step2 = Steps.Where(s => s.Status == 0).FirstOrDefault();
+                    if(step2 == null)
+                    {
+                        break;
+                    }
                     if (step2.BookMark.Contains("抄送"))
                     {
                         step2.Status = 1;
@@ -575,6 +568,18 @@ namespace RDProject.ViewModels
                 }
 
                 (Instance, Steps) = wfService.UpdateInstance(Instance, Steps);
+
+
+                //执行工作流
+                Dictionary<string, object> keys2 = new Dictionary<string, object>();
+                keys2.Add("IsPass", true);
+                keys2.Add("BookMarkName", step.BookMark);
+                WFHelper.Resume(
+                        new 研发项目试产记录表(),
+                        Instance.InstanceGuid,
+                        step.BookMark,
+                        keys2
+                    );
             }
             //驳回
             if(CheckResultReject == true)
