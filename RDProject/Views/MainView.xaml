@@ -14,8 +14,8 @@
             <RowDefinition/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        
-        <dxr:RibbonControl>
+
+        <dxr:RibbonControl RibbonStyle="Office2019">
             <dxr:RibbonPageCategory>
                 <dxr:RibbonPage Caption="开始">
                     <dxr:RibbonPageGroup Caption="账号">

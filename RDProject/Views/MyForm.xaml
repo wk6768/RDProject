@@ -24,7 +24,7 @@
                 <dxe:ComboBoxEditItem>草稿</dxe:ComboBoxEditItem>
                 <dxe:ComboBoxEditItem>已发起</dxe:ComboBoxEditItem>
             </dxe:ComboBoxEdit>
-            <dxe:TextEdit Height="25" DockPanel.Dock="Top" VerticalAlignment="Top" Margin="0,5" EditValue="搜索标题" x:Name="text"></dxe:TextEdit>
+            <dxe:TextEdit Height="25" DockPanel.Dock="Top" VerticalAlignment="Top" Margin="0,5" EditValue="在此输入标题并搜索" x:Name="text"></dxe:TextEdit>
             <!--CommandParameter="{Binding ElementName=text,Path=EditValue}"-->
             <dx:SimpleButton Height="25" DockPanel.Dock="Top" VerticalAlignment="Top" Margin="0,5" Content="搜索" 
                              Command="{Binding SearchCommand}"  >
@@ -38,7 +38,9 @@
                 </dx:SimpleButton.CommandParameter>
             </dx:SimpleButton>
 
-            <ListBox ItemsSource="{Binding TrialTitles}" x:Name="MyListBox">
+            <TextBlock Text="待审批" Margin="0,10,0,5" DockPanel.Dock="Top"/>
+
+            <ListBox ItemsSource="{Binding TrialTitles}" x:Name="MyListBox" DockPanel.Dock="Top" MinHeight="200">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectionChanged">
                         <i:InvokeCommandAction Command="{Binding SelectIndexCommand}" CommandParameter="{Binding ElementName=MyListBox,Path=SelectedItem}" />
@@ -52,6 +54,13 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+
+            <TextBlock Text="我的表单" Margin="0,10,0,5" DockPanel.Dock="Top" />
+
+            <ListBox MinHeight="200">
+               
+            </ListBox>
+
         </DockPanel>
 
         <ContentControl Grid.Column="1" prism:RegionManager.RegionName="FormShowControl" />

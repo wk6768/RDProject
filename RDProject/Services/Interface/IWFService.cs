@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RDProject.Models;
+using RDProject.Models.VO;
 
 namespace RDProject.Services.Interface
 {
@@ -38,5 +39,13 @@ namespace RDProject.Services.Interface
         /// <param name="step"></param>
         /// <returns></returns>
         int UpdateStep(WFStep step);
+
+        /// <summary>
+        /// 根据姓名获取该用户待审批列表
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        List<TrialTitle> GetTrialTitleByCreateUser(string userName, int status);
+        
     }
 }

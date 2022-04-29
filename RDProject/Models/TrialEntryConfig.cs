@@ -14,6 +14,9 @@ namespace RDProject.Models
         {
             builder.ToTable(nameof(TrialEntry));
             builder.Property(b => b.FCreateDate).HasDefaultValue(DateTime.Now);
+
+            builder.Property(b => b.FWorkOrder).HasMaxLength(32);
+            builder.Property(b => b.FProcessName).HasMaxLength(32);
         }
     }
 }

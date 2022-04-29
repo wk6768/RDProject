@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using RDProject.Models;
 using RDProject.Services.Interface;
 using RDProject.Common;
+using RDProject.Models.VO;
 
 namespace RDProject.Services
 {
@@ -85,6 +86,17 @@ namespace RDProject.Services
         {
             ctx.WFSteps.Update(step);
             return ctx.SaveChanges();
+        }
+
+        public List<TrialTitle> GetTrialTitleByCreateUser(string userName, int status)
+        {
+            //获取某人，某状态的流程
+            return ctx.WFInstances.Join(ctx.Trials, i => i.HeadId, t => t.FHeadId, (i, t) => new { Status = i.Status, SubBy = i.SubBy, FHeadId = t.FHeadId, FTitle = t.FTitle })
+                .Where(b => b.Status == status && b.SubBy == userName)
+                .Select(t => new TrialTitle { FHeadId = t.FHeadId, FTitle = t.FTitle})
+                .ToList();
+
+
         }
     }
 }

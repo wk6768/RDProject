@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RDProject.Common;
 
 namespace RDProject.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220429085629_change_field_length")]
+    partial class change_field_length
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -90,7 +92,7 @@ namespace RDProject.Migrations
                     b.Property<DateTime>("FCreateDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 4, 29, 16, 58, 0, 383, DateTimeKind.Local).AddTicks(9186));
+                        .HasDefaultValue(new DateTime(2022, 4, 29, 16, 56, 29, 303, DateTimeKind.Local).AddTicks(40));
 
                     b.Property<string>("FCreateUser")
                         .HasColumnType("nvarchar(16)")
@@ -165,7 +167,7 @@ namespace RDProject.Migrations
                     b.Property<DateTime>("FCreateDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 4, 29, 16, 58, 0, 384, DateTimeKind.Local).AddTicks(9189));
+                        .HasDefaultValue(new DateTime(2022, 4, 29, 16, 56, 29, 304, DateTimeKind.Local).AddTicks(74));
 
                     b.Property<DateTime>("FEndDate")
                         .HasColumnType("datetime2");
@@ -207,8 +209,7 @@ namespace RDProject.Migrations
                         .HasMaxLength(64);
 
                     b.Property<string>("NextName")
-                        .HasColumnType("nvarchar(16)")
-                        .HasMaxLength(16);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Status")
                         .ValueGeneratedOnAdd()
@@ -222,7 +223,7 @@ namespace RDProject.Migrations
                     b.Property<DateTime>("SubTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 4, 29, 16, 58, 0, 372, DateTimeKind.Local).AddTicks(9192));
+                        .HasDefaultValue(new DateTime(2022, 4, 29, 16, 56, 29, 288, DateTimeKind.Local).AddTicks(26));
 
                     b.Property<string>("TableName")
                         .HasColumnType("nvarchar(32)")

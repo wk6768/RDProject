@@ -26,7 +26,7 @@
                 </dxlc:LayoutGroup>
                 <dxlc:LayoutGroup>
                     <dxlc:LayoutItem Label="投入时间">
-                        <dxe:DateEdit Text="{Binding TrialEntry.FBeginDate,StringFormat='yyyy/MM/dd HH:mm:ss'}">
+                        <dxe:DateEdit Text="{Binding TrialEntry.FBeginDate,StringFormat='yyyy/MM/dd HH:mm'}">
                             <dxe:DateEdit.StyleSettings>
                                 <dxe:DateEditNavigatorWithTimePickerStyleSettings/>
                             </dxe:DateEdit.StyleSettings>
@@ -38,7 +38,7 @@
                 </dxlc:LayoutGroup>
                 <dxlc:LayoutGroup>
                     <dxlc:LayoutItem Label="结束时间">
-                        <dxe:DateEdit Text="{Binding TrialEntry.FEndDate,StringFormat='yyyy/MM/dd HH:mm:ss'}">
+                        <dxe:DateEdit Text="{Binding TrialEntry.FEndDate,StringFormat='yyyy/MM/dd HH:mm'}">
                             <dxe:DateEdit.StyleSettings>
                                 <dxe:DateEditNavigatorWithTimePickerStyleSettings/>
                             </dxe:DateEdit.StyleSettings>

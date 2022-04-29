@@ -15,6 +15,11 @@ namespace RDProject.Models
             builder.ToTable(nameof(WFInstance));
             builder.Property(b => b.SubTime).HasDefaultValue(DateTime.Now);
             builder.Property(b => b.Status).HasDefaultValue(0);
+
+            builder.Property(b => b.TableName).HasMaxLength(32);
+            builder.Property(b => b.InstanceGuid).HasMaxLength(64);
+            builder.Property(b => b.SubBy).HasMaxLength(16);
+            builder.Property(b => b.NextName).HasMaxLength(16);
         }
     }
 }

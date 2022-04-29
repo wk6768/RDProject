@@ -36,24 +36,26 @@ namespace RDProject.ViewModels
 
         }
 
-        //获取当前用户所有表单
+        //获取当前用户所有待审核表单
         void GetData()
         {
-            var list = trialService.GetTrialTitleByCreateUser(User.Name);
+            //var list = trialService.GetTrialTitleByCreateUser(User.Name);
+            var list = wfService.GetTrialTitleByCreateUser(User.Name, 1);
             TrialTitles = new ObservableCollection<TrialTitle>(list);
         }
 
-        public MyFormViewModel(IRegionManager regionManager, ITrialService trialService)
+        public MyFormViewModel(IRegionManager regionManager, ITrialService trialService, IWFService wfService)
         {
             this.regionManager = regionManager;
             this.trialService = trialService;
-
+            this.wfService = wfService;
             SelectIndexCommand = new DelegateCommand<object>(SelectIndex);
             SearchCommand = new DelegateCommand<object[]>(Search);
         }
 
         private readonly IRegionManager regionManager;
         private readonly ITrialService trialService;
+        private readonly IWFService wfService;
 
         /// <summary>
         /// 该用户

@@ -51,16 +51,22 @@
                                 <dxlc:LayoutItem Label="编号">
                                     <dxe:TextEdit IsReadOnly="True" Text="{Binding Trial.FHeadId}"/>
                                 </dxlc:LayoutItem>
+                                <dxlc:LayoutItem Label="公司">
+                                    <dxe:ComboBoxEdit IsReadOnly="{Binding Readonly_Trial}" EditValue="{Binding Trial.FCompany}">
+                                        <dxe:ComboBoxEditItem Content="广东紫文星电子科技有限公司" IsSelected="True"/>
+                                        <dxe:ComboBoxEditItem Content="广东智芯光电科技股份有限公司"/>
+                                    </dxe:ComboBoxEdit>
+                                </dxlc:LayoutItem>
                             </dxlc:LayoutGroup>
                             <dxlc:LayoutGroup >
                                 <dxlc:LayoutItem Label="厂别">
-                                    <dxe:ComboBoxEdit IsReadOnly="{Binding Readonly_Trial}" EditValue="{Binding Trial.FCompany}">
+                                    <dxe:ComboBoxEdit IsReadOnly="{Binding Readonly_Trial}" EditValue="{Binding Trial.FAssemblyFactory}">
                                         <dxe:ComboBoxEditItem Content="一车间"/>
                                         <dxe:ComboBoxEditItem Content="二车间"/>
                                     </dxe:ComboBoxEdit>
                                 </dxlc:LayoutItem>
                                 <dxlc:LayoutItem Label="日期">
-                                    <dxe:DateEdit IsReadOnly="{Binding Readonly_Trial}" Text="{Binding Trial.FDate, StringFormat=yyyy/MM/dd HH:mm:ss}">
+                                    <dxe:DateEdit IsReadOnly="{Binding Readonly_Trial}" Text="{Binding Trial.FDate, StringFormat=yyyy/MM/dd HH:mm}">
                                         <dxe:DateEdit.StyleSettings>
                                             <dxe:DateEditNavigatorWithTimePickerStyleSettings/>
                                         </dxe:DateEdit.StyleSettings>
@@ -175,8 +181,9 @@
                         <dxlc:LayoutGroup Orientation="Vertical">
                             <dxlc:LayoutGroup>
                                 <dxg:GridControl x:Name="GridControl_TrialEntry" ItemsSource="{Binding TrialEntries}">
+                                    
                                     <dxg:GridControl.View>
-                                        <dxg:TableView AutoWidth="True" BestFitModeOnSourceChange="Smart" ShowGroupPanel="False"
+                                        <dxg:TableView AutoWidth="True" BestFitModeOnSourceChange="Smart" ShowGroupPanel="False" ShowFixedTotalSummary="True"
                                                        ShowUpdateRowButtons="OnCellValueChange">
                                             <i:Interaction.Triggers>
                                                 <i:EventTrigger EventName="ValidateRow">
@@ -201,9 +208,14 @@
                                             <dxe:DateEditSettings Mask="G" MaskUseAsDisplayFormat="True"/>
                                         </dxg:GridColumn.EditSettings>
                                     </dxg:GridColumn>
-                                    <dxg:GridColumn Header="投入数量" FieldName="FAmount" ReadOnly="{Binding Readonly_TrialEntry}" IsSmart="True" />
+                                    <dxg:GridColumn Header="投入数量" FieldName="FAmount" ReadOnly="{Binding Readonly_TrialEntry}" IsSmart="True" UnboundType="Bound" />
                                     <dxg:GridColumn Header="投入人力" FieldName="FManPower" ReadOnly="{Binding Readonly_TrialEntry}" IsSmart="True" />
                                     <dxg:GridColumn Header="投入工时" FieldName="FManHours" ReadOnly="{Binding Readonly_TrialEntry}" IsSmart="True" />
+
+                                    <dxg:GridControl.TotalSummary>
+                                        <dxg:GridSummaryItem Alignment="Right" DisplayFormat="总工时:{0}" FieldName="FManHours" SummaryType="Sum" />
+                                    </dxg:GridControl.TotalSummary>
+                                    
                                 </dxg:GridControl>
                             </dxlc:LayoutGroup>
                         </dxlc:LayoutGroup>

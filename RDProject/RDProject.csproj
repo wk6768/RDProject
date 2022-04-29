@@ -232,6 +232,14 @@
     <Compile Include="Migrations\20220421074511_add_Trial_field.designer.cs">
       <DependentUpon>20220421074511_add_Trial_field.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20220429085629_change_field_length.cs" />
+    <Compile Include="Migrations\20220429085629_change_field_length.designer.cs">
+      <DependentUpon>20220429085629_change_field_length.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20220429085800_change_field_nextName.cs" />
+    <Compile Include="Migrations\20220429085800_change_field_nextName.designer.cs">
+      <DependentUpon>20220429085800_change_field_nextName.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\MyDbContextModelSnapshot.cs" />
     <Compile Include="Models\VO\TrialTitle.cs" />
     <Compile Include="Models\WFInstance.cs" />

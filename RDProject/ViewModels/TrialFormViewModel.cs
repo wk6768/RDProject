@@ -147,7 +147,8 @@ namespace RDProject.ViewModels
             Trial = new Trial()
             {
                 FDate = DateTime.Now,
-                FCompany = "一车间",
+                FAssemblyFactory = "一车间",
+                FCompany = "广东紫文星电子科技有限公司",
                 FCreateUser = User.Name,
                 FTitle = $"研发项目试产记录表-{User.EmpName}-{User.Name}-{DateTime.Now.ToString("D")}",
                 FStatus = 0,
@@ -469,7 +470,11 @@ namespace RDProject.ViewModels
             Trial.FStatus = 1;
             (Trial, _) = trialService.UpdateTrialPageAndReturnFullData(Trial, null);
 
+            //构建步骤表
+            Steps = CreateSteps();
+
             //构建审批表
+            var step = Steps.Where(s => s.Status != 1).FirstOrDefault();//下一步
             WFInstance instance = new WFInstance()
             {
                 TableName = "Trial",
@@ -477,17 +482,13 @@ namespace RDProject.ViewModels
                 HeadId = Trial.FHeadId,
                 SubBy = Trial.FCreateUser,
                 Status = 1,
+                NextName = step == null ? null : step.SubBy,
             };
-            //构建审批步骤
-            Steps = CreateSteps();
+
             //保存
             (instance, Steps) = wfService.SaveInstance(instance, Steps);
 
             //发送邮件
-
-
-            //提交后清空
-            //InitNewTrialForm();
         }
 
 
@@ -567,6 +568,11 @@ namespace RDProject.ViewModels
                     (Trial, _) = trialService.UpdateTrialPageAndReturnFullData(Trial, null);
                 }
 
+                //设置下一审批人
+                var step3 = Steps.Where(s => s.Status != 1).FirstOrDefault();
+                Instance.NextName = step3 == null ? null : step3.SubBy;
+
+                //更新审批表和步骤表
                 (Instance, Steps) = wfService.UpdateInstance(Instance, Steps);
 
 
