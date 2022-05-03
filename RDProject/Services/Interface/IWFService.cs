@@ -41,11 +41,18 @@ namespace RDProject.Services.Interface
         int UpdateStep(WFStep step);
 
         /// <summary>
-        /// 根据姓名获取该用户待审批列表
+        /// 根据姓名和表单状态获取该用户待审批列表
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        List<TrialTitle> GetTrialTitleByCreateUser(string userName, int status);
+        Task<List<TrialTitle>> GetTrialTitleByUserNameAsync(string userName, int status);
+
+        /// <summary>
+        /// 根据姓名获取与该用户相关的所有审批列表
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        Task<List<TrialTitle>> GetTrialTitleByUserNameAsync(string userName);
         
     }
 }

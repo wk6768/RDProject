@@ -19,11 +19,12 @@ namespace RDProject.ViewModels
     public class MyFormViewModel : BindableBase, INavigationAware
     {
 
-        public void OnNavigatedTo(NavigationContext navigationContext)
+        public async void OnNavigatedTo(NavigationContext navigationContext)
         {
             regionManager.Regions["FormShowControl"].RequestNavigate("EmptyPage");
             User = navigationContext.Parameters["User"] as Employee;
-            GetData();
+            await GetData1();
+            await GetData2();
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
@@ -37,11 +38,17 @@ namespace RDProject.ViewModels
         }
 
         //获取当前用户所有待审核表单
-        void GetData()
+        async Task GetData1()
         {
             //var list = trialService.GetTrialTitleByCreateUser(User.Name);
-            var list = wfService.GetTrialTitleByCreateUser(User.Name, 1);
-            TrialTitles = new ObservableCollection<TrialTitle>(list);
+            var list1 = await wfService.GetTrialTitleByUserNameAsync(User.Name, 1);
+            TrialTitles1 = new ObservableCollection<TrialTitle>(list1);
+        }
+
+        async Task GetData2()
+        {
+            var list2 = await wfService.GetTrialTitleByUserNameAsync(User.Name);
+            TrialTitles2 = new ObservableCollection<TrialTitle>(list2);
         }
 
         public MyFormViewModel(IRegionManager regionManager, ITrialService trialService, IWFService wfService)
@@ -68,20 +75,39 @@ namespace RDProject.ViewModels
             set { user = value; RaisePropertyChanged(); }
         }
 
-        //右侧列表
-        private ObservableCollection<TrialTitle> trialTitles;
+        //右侧列表，一共有三个
+        private ObservableCollection<TrialTitle> trialTitles1;
 
-        public ObservableCollection<TrialTitle> TrialTitles
+        public ObservableCollection<TrialTitle> TrialTitles1
         {
-            get { return trialTitles; }
-            set { trialTitles = value; RaisePropertyChanged(); }
+            get { return trialTitles1; }
+            set { trialTitles1 = value; RaisePropertyChanged(); }
+        }
+
+        private ObservableCollection<TrialTitle> trialTitles2;
+
+        public ObservableCollection<TrialTitle> TrialTitles2
+        {
+            get { return trialTitles2; }
+            set { trialTitles2 = value; RaisePropertyChanged(); }
+        }
+
+        private ObservableCollection<TrialTitle> trialTitles3;
+
+        public ObservableCollection<TrialTitle> TrialTitles3
+        {
+            get { return trialTitles3; }
+            set { trialTitles3 = value; RaisePropertyChanged(); }
         }
 
 
         public DelegateCommand<object> SelectIndexCommand { get; private set; }
         public DelegateCommand<object[]> SearchCommand { get; private set; }
 
-
+        /// <summary>
+        /// 点击列表跳转
+        /// </summary>
+        /// <param name="obj"></param>
         private void SelectIndex(object obj)
         {
             if (obj == null)
@@ -96,6 +122,10 @@ namespace RDProject.ViewModels
             regionManager.Regions["FormShowControl"].RequestNavigate("TrialForm", keys);
         }
 
+        /// <summary>
+        /// 搜索
+        /// </summary>
+        /// <param name="objs"></param>
         private void Search(object[] objs)
         {
             Debug.WriteLine(objs);
@@ -129,7 +159,7 @@ namespace RDProject.ViewModels
                     break;
 
             }
-            TrialTitles = new ObservableCollection<TrialTitle>(list);
+            TrialTitles3 = new ObservableCollection<TrialTitle>(list);
         }
     }
 

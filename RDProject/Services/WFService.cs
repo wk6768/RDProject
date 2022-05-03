@@ -8,6 +8,7 @@ using RDProject.Models;
 using RDProject.Services.Interface;
 using RDProject.Common;
 using RDProject.Models.VO;
+using Microsoft.EntityFrameworkCore;
 
 namespace RDProject.Services
 {
@@ -88,15 +89,23 @@ namespace RDProject.Services
             return ctx.SaveChanges();
         }
 
-        public List<TrialTitle> GetTrialTitleByCreateUser(string userName, int status)
+        public async Task<List<TrialTitle>> GetTrialTitleByUserNameAsync(string userName, int status)
         {
             //获取某人，某状态的流程
-            return ctx.WFInstances.Join(ctx.Trials, i => i.HeadId, t => t.FHeadId, (i, t) => new { Status = i.Status, SubBy = i.SubBy, FHeadId = t.FHeadId, FTitle = t.FTitle })
-                .Where(b => b.Status == status && b.SubBy == userName)
-                .Select(t => new TrialTitle { FHeadId = t.FHeadId, FTitle = t.FTitle})
-                .ToList();
+            return await ctx.WFInstances.Join(ctx.Trials, i => i.HeadId, t => t.FHeadId, (i, t) => new { Status = i.Status, NextName = i.NextName, FHeadId = t.FHeadId, FTitle = t.FTitle })
+                .Where(b => b.Status == status && b.NextName == userName)
+                .Select(t => new TrialTitle { FHeadId = t.FHeadId, FTitle = t.FTitle, FStatus = t.Status})
+                .ToListAsync();
+        }
 
-
+        public async Task<List<TrialTitle>> GetTrialTitleByUserNameAsync(string userName)
+        {
+            //获取与某人相关的所有流程
+            var InstanceIds = await ctx.WFSteps.Where(s => s.SubBy == userName).Select( s => s.InstanceId ).Distinct().ToListAsync();
+            return await ctx.WFInstances.Join(ctx.Trials, i => i.HeadId, t => t.FHeadId, (i, t) => new { InstanceId = i.InstanceId, Status = i.Status, FHeadId = t.FHeadId, FTitle = t.FTitle })
+                .Where(i => InstanceIds.Contains(i.InstanceId))
+                .Select(t => new TrialTitle { FHeadId = t.FHeadId, FTitle = t.FTitle, FStatus = t.Status })
+                .ToListAsync();
         }
     }
 }

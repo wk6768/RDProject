@@ -11,13 +11,15 @@ namespace RDProject.Models.VO
     {
         private long fHeadId;
         private string fTitle;
+        private int fStatus;
 
         public long FHeadId { get => fHeadId; set { fHeadId = value; RaisePropertyChanged(); } }
         public string FTitle { get => fTitle; set { fTitle = value; RaisePropertyChanged(); } }
+        public int FStatus { get => fStatus; set { fStatus = value; RaisePropertyChanged(); } }
 
         public override string ToString()
         {
-            return $"{{{nameof(FHeadId)}={FHeadId.ToString()}, {nameof(FTitle)}={FTitle}}}";
+            return $"{{{nameof(FHeadId)}={FHeadId.ToString()}, {nameof(FTitle)}={FTitle}, {nameof(FStatus)}={FStatus.ToString()}}}";
         }
     }
 }

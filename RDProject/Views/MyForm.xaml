@@ -1,4 +1,4 @@
-﻿<UserControl xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"  xmlns:dxa="http://schemas.devexpress.com/winfx/2008/xaml/accordion"  xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"  x:Class="RDProject.Views.MyForm"
+﻿<UserControl xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"  xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"  xmlns:dxa="http://schemas.devexpress.com/winfx/2008/xaml/accordion"  xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"  x:Class="RDProject.Views.MyForm"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -11,57 +11,95 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <convertor:MultiParamterConvertor x:Key="multiParamterConvertor"/>
+        <convertor:StatusToColorConvertor x:Key="statusToColorConvertor"/>
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition MinWidth="220" Width="auto"/>
+            <ColumnDefinition MinWidth="300" Width="auto"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <DockPanel Margin="5,0">
-            <dxe:ComboBoxEdit Height="25" DockPanel.Dock="Top" VerticalAlignment="Top" Margin="0,5" x:Name="type">
-                <dxe:ComboBoxEditItem IsSelected="True">全部</dxe:ComboBoxEditItem>
-                <dxe:ComboBoxEditItem>草稿</dxe:ComboBoxEditItem>
-                <dxe:ComboBoxEditItem>已发起</dxe:ComboBoxEditItem>
-            </dxe:ComboBoxEdit>
-            <dxe:TextEdit Height="25" DockPanel.Dock="Top" VerticalAlignment="Top" Margin="0,5" EditValue="在此输入标题并搜索" x:Name="text"></dxe:TextEdit>
-            <!--CommandParameter="{Binding ElementName=text,Path=EditValue}"-->
-            <dx:SimpleButton Height="25" DockPanel.Dock="Top" VerticalAlignment="Top" Margin="0,5" Content="搜索" 
+        <dxlc:LayoutControl>
+            <dxlc:LayoutGroup View="Tabs">
+                <dxlc:LayoutGroup Header="我的表单" Orientation="Vertical">
+                    <DockPanel>
+                        
+                        <TextBlock Text="待审批" Margin="0,0,0,5" DockPanel.Dock="Top"/>
+                        
+                        <ListBox ItemsSource="{Binding TrialTitles1}" x:Name="MyListBox1" DockPanel.Dock="Top" MinHeight="200">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding SelectIndexCommand}" CommandParameter="{Binding ElementName=MyListBox1,Path=SelectedItem}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding FTitle}"></TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+
+                        <TextBlock Text="关联表单" Margin="0,10,0,5" DockPanel.Dock="Top" />
+
+                        <ListBox ItemsSource="{Binding TrialTitles2}" x:Name="MyListBox2" DockPanel.Dock="Top" MinHeight="200">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding SelectIndexCommand}" CommandParameter="{Binding ElementName=MyListBox2,Path=SelectedItem}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding FTitle}" Foreground="{Binding FStatus,Converter={StaticResource statusToColorConvertor}}"></TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+
+                    </DockPanel>
+                </dxlc:LayoutGroup>
+                <dxlc:LayoutGroup Header="搜索表单">
+                    <DockPanel>
+                        <dxe:ComboBoxEdit Height="25" DockPanel.Dock="Top" VerticalAlignment="Top" Margin="0,5" x:Name="type">
+                            <dxe:ComboBoxEditItem IsSelected="True">全部</dxe:ComboBoxEditItem>
+                            <dxe:ComboBoxEditItem>草稿</dxe:ComboBoxEditItem>
+                            <dxe:ComboBoxEditItem>已发起</dxe:ComboBoxEditItem>
+                        </dxe:ComboBoxEdit>
+                        <dxe:TextEdit Height="25" DockPanel.Dock="Top" VerticalAlignment="Top" Margin="0,5" EditValue="在此输入标题并搜索" x:Name="text"></dxe:TextEdit>
+                        <!--CommandParameter="{Binding ElementName=text,Path=EditValue}"-->
+                        <dx:SimpleButton Height="25" DockPanel.Dock="Top" VerticalAlignment="Top" Margin="0,5" Content="搜索" 
                              Command="{Binding SearchCommand}"  >
-                <dx:SimpleButton.CommandParameter>
-                    <MultiBinding Converter="{StaticResource multiParamterConvertor}">
-                        <MultiBinding.Bindings>
-                            <Binding ElementName="type" Path="EditValue"/>
-                            <Binding ElementName="text" Path="EditValue"/>
-                        </MultiBinding.Bindings>
-                    </MultiBinding>
-                </dx:SimpleButton.CommandParameter>
-            </dx:SimpleButton>
+                            <dx:SimpleButton.CommandParameter>
+                                <MultiBinding Converter="{StaticResource multiParamterConvertor}">
+                                    <MultiBinding.Bindings>
+                                        <Binding ElementName="type" Path="EditValue"/>
+                                        <Binding ElementName="text" Path="EditValue"/>
+                                    </MultiBinding.Bindings>
+                                </MultiBinding>
+                            </dx:SimpleButton.CommandParameter>
+                        </dx:SimpleButton>
 
-            <TextBlock Text="待审批" Margin="0,10,0,5" DockPanel.Dock="Top"/>
+                        <ListBox ItemsSource="{Binding TrialTitles3}" x:Name="MyListBox3" DockPanel.Dock="Top" MinHeight="200">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding SelectIndexCommand}" CommandParameter="{Binding ElementName=MyListBox3,Path=SelectedItem}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding FTitle}"></TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
 
-            <ListBox ItemsSource="{Binding TrialTitles}" x:Name="MyListBox" DockPanel.Dock="Top" MinHeight="200">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="SelectionChanged">
-                        <i:InvokeCommandAction Command="{Binding SelectIndexCommand}" CommandParameter="{Binding ElementName=MyListBox,Path=SelectedItem}" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel>
-                            <TextBlock Text="{Binding FTitle}"></TextBlock>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-
-            <TextBlock Text="我的表单" Margin="0,10,0,5" DockPanel.Dock="Top" />
-
-            <ListBox MinHeight="200">
-               
-            </ListBox>
-
-        </DockPanel>
+                    </DockPanel>
+                </dxlc:LayoutGroup>
+            </dxlc:LayoutGroup>
+        </dxlc:LayoutControl>
 
         <ContentControl Grid.Column="1" prism:RegionManager.RegionName="FormShowControl" />
     </Grid>
