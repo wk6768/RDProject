@@ -21,16 +21,17 @@
                         <dxlc:LayoutItem>
                             <dxb:BarContainerControl>
                                 <dxb:ToolBarControl>
-                                    <dxb:BarButtonItem Content="新建表单" IsEnabled="True" Command="{Binding AddTrialCommand}"
-                                                           Glyph="{dx:DXImage SvgImages/Icon Builder/Actions_Add.svg}"/>
+                                    
                                     <dxb:BarButtonItem Content="新增明细" IsEnabled="{Binding EditButtonEnable}" Command="{Binding AddTrialEntryCommand}" CommandParameter="TrialAddDialog" 
                                                            Glyph="{dx:DXImage SvgImages/Icon Builder/Actions_AddCircled.svg}"/>
                                     <dxb:BarButtonItem Content="删除明细" IsEnabled="{Binding EditButtonEnable}" Command="{Binding DeleteTrialEntryCommand}" CommandParameter="{Binding ElementName=GridControl_TrialEntry,Path=SelectedItem}"
                                                            Glyph="{dx:DXImage SvgImages/Icon Builder/Actions_DeleteCircled.svg}"/>
-                                    <dxb:BarButtonItem Content="保存表单" IsEnabled="{Binding SaveButtonEnable}" Command="{Binding SaveCommand}"
-                                                           Glyph="{dx:DXImage SvgImages/XAF/Action_SaveScript.svg}"></dxb:BarButtonItem>
                                 </dxb:ToolBarControl>
                                 <dxb:ToolBarControl>
+                                    <dxb:BarButtonItem Content="新建表单" IsEnabled="{Binding NewButtonEnable}" Command="{Binding AddTrialCommand}"
+                                                           Glyph="{dx:DXImage SvgImages/Outlook Inspired/NewProduct.svg}"/>
+                                    <dxb:BarButtonItem Content="保存表单" IsEnabled="{Binding SaveButtonEnable}" Command="{Binding SaveCommand}"
+                                                           Glyph="{dx:DXImage SvgImages/XAF/Action_SaveScript.svg}"></dxb:BarButtonItem>
                                     <dxb:BarButtonItem Content="发起流程" IsEnabled="{Binding SendButtonEnable}" Command="{Binding SendCommand}"
                                                            Glyph="{dx:DXImage SvgImages/Spreadsheet/FillUp.svg}"></dxb:BarButtonItem>
                                     <dxb:BarButtonItem Content="审批" Command="{Binding CheckCommand}"

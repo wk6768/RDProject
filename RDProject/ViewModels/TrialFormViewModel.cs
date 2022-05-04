@@ -7,9 +7,11 @@ using Prism.Mvvm;
 using Prism.Commands;
 using Prism.Regions;
 using Prism.Services.Dialogs;
+using Prism.Events;
 using RDProject.Common;
 using RDProject.Models;
 using RDProject.Services.Interface;
+using RDProject.Event;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Activities;
@@ -44,6 +46,7 @@ namespace RDProject.ViewModels
                     SaveButtonEnable = true;    //保存表单内容的按钮
                     SendButtonEnable = true;    //发起流程的按钮
                     EditButtonEnable = true;    //新建、删除明细的按钮
+                    NewButtonEnable = true;     //新建表单的按钮
                 }
                 else
                 {
@@ -55,6 +58,7 @@ namespace RDProject.ViewModels
                     SaveButtonEnable = true;
                     SendButtonEnable = true;
                     EditButtonEnable = true;
+                    NewButtonEnable = true;
                 }
                 #endregion
 
@@ -75,6 +79,7 @@ namespace RDProject.ViewModels
                     SaveButtonEnable = true;
                     SendButtonEnable = true;
                     EditButtonEnable = true;
+                    NewButtonEnable = false;
                 }
                 else if (User.UserGroup.Equals("NPI"))
                 {
@@ -86,6 +91,7 @@ namespace RDProject.ViewModels
                     SaveButtonEnable = true;
                     SendButtonEnable = false;
                     EditButtonEnable = true;
+                    NewButtonEnable = false;
                 }
                 else
                 {
@@ -97,6 +103,7 @@ namespace RDProject.ViewModels
                     SaveButtonEnable = false;
                     SendButtonEnable = false;
                     EditButtonEnable = false;
+                    NewButtonEnable = false;
                 }
                 #endregion
             }
@@ -117,14 +124,15 @@ namespace RDProject.ViewModels
         private readonly IEmployeeService employeeService;
         private readonly ITrialService trialService;
         private readonly IWFService wfService;
+        private readonly IEventAggregator aggregator;
 
-        public TrialFormViewModel(IDialogService dialogService, IEmployeeService employeeService, ITrialService trialService, IWFService wfService)
+        public TrialFormViewModel(IDialogService dialogService, IEmployeeService employeeService, ITrialService trialService, IWFService wfService, IEventAggregator aggregator)
         {
             this.dialogService = dialogService;
             this.employeeService = employeeService;
             this.trialService = trialService;
             this.wfService = wfService;
-
+            this.aggregator = aggregator;
             Employees = new ObservableCollection<Employee>();
 
             AddTrialCommand = new DelegateCommand(AddTrial);
@@ -338,6 +346,13 @@ namespace RDProject.ViewModels
             set { editButtonEnable = value; RaisePropertyChanged(); }
         }
 
+        private bool newButtonEnable;
+
+        public bool NewButtonEnable
+        {
+            get { return newButtonEnable; }
+            set { newButtonEnable = value; RaisePropertyChanged(); }
+        }
 
 
 
@@ -629,6 +644,9 @@ namespace RDProject.ViewModels
                 (Instance, Steps) = wfService.UpdateInstance(Instance, Steps);
                 
             }
+
+            //发布消息，刷新右侧列表
+            aggregator.GetEvent<RefreshTrialTitleListEvent>().Publish();
         }
 
 

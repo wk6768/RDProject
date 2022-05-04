@@ -94,7 +94,7 @@ namespace RDProject.Services
             //获取某人，某状态的流程
             return await ctx.WFInstances.Join(ctx.Trials, i => i.HeadId, t => t.FHeadId, (i, t) => new { Status = i.Status, NextName = i.NextName, FHeadId = t.FHeadId, FTitle = t.FTitle })
                 .Where(b => b.Status == status && b.NextName == userName)
-                .Select(t => new TrialTitle { FHeadId = t.FHeadId, FTitle = t.FTitle, FStatus = t.Status})
+                .Select(t => new TrialTitle { FHeadId = t.FHeadId, FTitle = t.FTitle + "-" + t.FHeadId, FStatus = t.Status})
                 .ToListAsync();
         }
 
@@ -104,7 +104,7 @@ namespace RDProject.Services
             var InstanceIds = await ctx.WFSteps.Where(s => s.SubBy == userName).Select( s => s.InstanceId ).Distinct().ToListAsync();
             return await ctx.WFInstances.Join(ctx.Trials, i => i.HeadId, t => t.FHeadId, (i, t) => new { InstanceId = i.InstanceId, Status = i.Status, FHeadId = t.FHeadId, FTitle = t.FTitle })
                 .Where(i => InstanceIds.Contains(i.InstanceId))
-                .Select(t => new TrialTitle { FHeadId = t.FHeadId, FTitle = t.FTitle, FStatus = t.Status })
+                .Select(t => new TrialTitle { FHeadId = t.FHeadId, FTitle = t.FTitle + "-" + t.FHeadId, FStatus = t.Status })
                 .ToListAsync();
         }
     }

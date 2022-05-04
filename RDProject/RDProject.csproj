@@ -217,6 +217,7 @@
     <Compile Include="Common\WFHelper.cs" />
     <Compile Include="Converters\MultiParamterConvertor.cs" />
     <Compile Include="Converters\StatusToColorConvertor.cs" />
+    <Compile Include="Event\RefreshTrialTitleListEvent.cs" />
     <Compile Include="Migrations\20220413085051_init_table.cs" />
     <Compile Include="Migrations\20220413085051_init_table.designer.cs">
       <DependentUpon>20220413085051_init_table.cs</DependentUpon>
@@ -240,6 +241,10 @@
     <Compile Include="Migrations\20220429085800_change_field_nextName.cs" />
     <Compile Include="Migrations\20220429085800_change_field_nextName.designer.cs">
       <DependentUpon>20220429085800_change_field_nextName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20220504021625_add_fieldindex.cs" />
+    <Compile Include="Migrations\20220504021625_add_fieldindex.designer.cs">
+      <DependentUpon>20220504021625_add_fieldindex.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\MyDbContextModelSnapshot.cs" />
     <Compile Include="Models\VO\TrialTitle.cs" />
@@ -382,6 +387,7 @@
   <ItemGroup>
     <Resource Include="Resources\logo.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Data.SqlClient.SNI.1.1.0\build\net46\Microsoft.Data.SqlClient.SNI.targets" Condition="Exists('..\packages\Microsoft.Data.SqlClient.SNI.1.1.0\build\net46\Microsoft.Data.SqlClient.SNI.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

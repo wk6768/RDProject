@@ -58,6 +58,8 @@ namespace RDProject.Services
                     ctx.Trials.Add(trial);
                     ctx.SaveChanges();
 
+                    //trial.FTitle = trial.FTitle += $"-{trial.FHeadId}";
+
                     foreach (TrialEntry trialEntry in trialEntries)
                     {
                         trialEntry.FHeadId = trial.FHeadId;
@@ -141,13 +143,13 @@ namespace RDProject.Services
         public List<TrialTitle> GetTrialTitleByTitle(string title)
         {
             return ctx.Trials.Where(t => t.FTitle.Contains(title)).
-                Select(t => new TrialTitle() { FHeadId = t.FHeadId, FTitle = t.FTitle }).ToList();
+                Select(t => new TrialTitle() { FHeadId = t.FHeadId, FTitle = t.FTitle, FStatus = t.FStatus }).ToList();
         }
 
         public List<TrialTitle> GetTrialTitleByTitleAndStatus(string title, int status)
         {
             return ctx.Trials.Where(t => t.FStatus == status && t.FTitle.Contains(title)).
-                Select(t => new TrialTitle() { FHeadId = t.FHeadId, FTitle = t.FTitle }).ToList();
+                Select(t => new TrialTitle() { FHeadId = t.FHeadId, FTitle = t.FTitle, FStatus = t.FStatus }).ToList();
         }
 
         public int UpdateTrialEntry(TrialEntry trialEntry)

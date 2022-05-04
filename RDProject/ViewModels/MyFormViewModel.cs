@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 using Prism.Mvvm;
 using Prism.Commands;
 using Prism.Regions;
+using Prism.Events;
 using RDProject.Models;
 using RDProject.Models.VO;
 using RDProject.Services.Interface;
+using RDProject.Event;
 using System.Diagnostics;
 using DevExpress.Xpf.WindowsUI;
 using System.Windows;
@@ -44,25 +46,33 @@ namespace RDProject.ViewModels
             var list1 = await wfService.GetTrialTitleByUserNameAsync(User.Name, 1);
             TrialTitles1 = new ObservableCollection<TrialTitle>(list1);
         }
-
+        //获取所有与当前用户有关的表单
         async Task GetData2()
         {
             var list2 = await wfService.GetTrialTitleByUserNameAsync(User.Name);
             TrialTitles2 = new ObservableCollection<TrialTitle>(list2);
         }
 
-        public MyFormViewModel(IRegionManager regionManager, ITrialService trialService, IWFService wfService)
+        public MyFormViewModel(IRegionManager regionManager, ITrialService trialService, IWFService wfService, IEventAggregator aggregator)
         {
             this.regionManager = regionManager;
             this.trialService = trialService;
             this.wfService = wfService;
+            this.aggregator = aggregator;
             SelectIndexCommand = new DelegateCommand<object>(SelectIndex);
             SearchCommand = new DelegateCommand<object[]>(Search);
+
+            //刷新待审批列表
+            aggregator.GetEvent<RefreshTrialTitleListEvent>().Subscribe(async () =>
+            {
+                await GetData1();
+            });
         }
 
         private readonly IRegionManager regionManager;
         private readonly ITrialService trialService;
         private readonly IWFService wfService;
+        private readonly IEventAggregator aggregator;
 
         /// <summary>
         /// 该用户

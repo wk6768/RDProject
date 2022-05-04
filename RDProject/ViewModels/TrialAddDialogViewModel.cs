@@ -7,6 +7,7 @@ using Prism.Mvvm;
 using Prism.Services.Dialogs;
 using Prism.Commands;
 using RDProject.Models;
+using System.Windows;
 
 namespace RDProject.ViewModels
 {
@@ -63,6 +64,16 @@ namespace RDProject.ViewModels
 
         private void Add()
         {
+            //计算工时
+            var timeSpan = TrialEntry.FEndDate - TrialEntry.FBeginDate;
+            if(timeSpan.TotalHours <= 0)
+            {
+                MessageBox.Show("请重新选择投入/结束时间");
+                return;
+            }
+            var hour = (decimal)Math.Round(timeSpan.TotalHours, 1, MidpointRounding.AwayFromZero);
+            TrialEntry.FManHours = TrialEntry.FManPower * hour;
+
             TrialEntries.Add(TrialEntry);
             TrialEntry = new TrialEntry() { FBeginDate = DateTime.Now, FEndDate = DateTime.Now };
         }

@@ -41,7 +41,7 @@
                             </ListBox.ItemTemplate>
                         </ListBox>
 
-                        <TextBlock Text="关联表单" Margin="0,10,0,5" DockPanel.Dock="Top" />
+                        <TextBlock Text="相关表单" Margin="0,10,0,5" DockPanel.Dock="Top" />
 
                         <ListBox ItemsSource="{Binding TrialTitles2}" x:Name="MyListBox2" DockPanel.Dock="Top" MinHeight="200">
                             <i:Interaction.Triggers>
@@ -90,7 +90,7 @@
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel>
-                                        <TextBlock Text="{Binding FTitle}"></TextBlock>
+                                        <TextBlock Text="{Binding FTitle}" Foreground="{Binding FStatus,Converter={StaticResource statusToColorConvertor}}"></TextBlock>
                                     </StackPanel>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
