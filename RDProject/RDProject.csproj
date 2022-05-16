@@ -246,20 +246,38 @@
     <Compile Include="Migrations\20220504021625_add_fieldindex.designer.cs">
       <DependentUpon>20220504021625_add_fieldindex.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20220516011128_add_SerialNumber_Table.cs" />
+    <Compile Include="Migrations\20220516011128_add_SerialNumber_Table.designer.cs">
+      <DependentUpon>20220516011128_add_SerialNumber_Table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20220516015143_add_TrialEntry_Field_FStation.cs" />
+    <Compile Include="Migrations\20220516015143_add_TrialEntry_Field_FStation.designer.cs">
+      <DependentUpon>20220516015143_add_TrialEntry_Field_FStation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20220516015211_add_TrialEntry_Field_FStation2.cs" />
+    <Compile Include="Migrations\20220516015211_add_TrialEntry_Field_FStation2.designer.cs">
+      <DependentUpon>20220516015211_add_TrialEntry_Field_FStation2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\MyDbContextModelSnapshot.cs" />
+    <Compile Include="Models\SerialNumber.cs" />
+    <Compile Include="Models\SerialNumberConfig.cs" />
+    <Compile Include="Models\VO\TrialReport.cs" />
     <Compile Include="Models\VO\TrialTitle.cs" />
     <Compile Include="Models\WFInstance.cs" />
     <Compile Include="Models\WFInstanceConfig.cs" />
     <Compile Include="Models\WFStep.cs" />
     <Compile Include="Models\WFStepConfig.cs" />
+    <Compile Include="Services\Interface\ISerialNumberService.cs" />
     <Compile Include="Services\Interface\ITrialService.cs" />
     <Compile Include="Services\Interface\IWFService.cs" />
+    <Compile Include="Services\SerialNumberService.cs" />
     <Compile Include="Services\TrialService.cs" />
     <Compile Include="Services\WFService.cs" />
     <Compile Include="ViewModels\CheckDialogViewModel.cs" />
     <Compile Include="ViewModels\EmptyPageViewModel.cs" />
     <Compile Include="ViewModels\MyFormViewModel.cs" />
     <Compile Include="ViewModels\TrialAddDialogViewModel.cs" />
+    <Compile Include="ViewModels\TrialStatisticsViewModel.cs" />
     <Compile Include="ViewModels\WelcomePageViewModel.cs" />
     <Compile Include="Views\CheckDialog.xaml.cs">
       <DependentUpon>CheckDialog.xaml</DependentUpon>
@@ -276,6 +294,9 @@
     <Compile Include="ViewModels\TrialFormViewModel.cs" />
     <Compile Include="Views\TrialForm.xaml.cs">
       <DependentUpon>TrialForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TrialStatistics.xaml.cs">
+      <DependentUpon>TrialStatistics.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WelcomePage.xaml.cs">
       <DependentUpon>WelcomePage.xaml</DependentUpon>
@@ -343,6 +364,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\TrialForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TrialStatistics.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

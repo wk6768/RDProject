@@ -66,6 +66,7 @@
                             <dxe:ComboBoxEditItem IsSelected="True">全部</dxe:ComboBoxEditItem>
                             <dxe:ComboBoxEditItem>草稿</dxe:ComboBoxEditItem>
                             <dxe:ComboBoxEditItem>已发起</dxe:ComboBoxEditItem>
+                            <dxe:ComboBoxEditItem>已结束</dxe:ComboBoxEditItem>
                         </dxe:ComboBoxEdit>
                         <dxe:TextEdit Height="25" DockPanel.Dock="Top" VerticalAlignment="Top" Margin="0,5" EditValue="在此输入标题并搜索" x:Name="text"></dxe:TextEdit>
                         <!--CommandParameter="{Binding ElementName=text,Path=EditValue}"-->

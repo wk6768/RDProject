@@ -29,11 +29,13 @@
                             </dxb:PopupMenu>
                         </dxb:BarSplitButtonItem>
                     </dxr:RibbonPageGroup>
-                    <dxr:RibbonPageGroup  Caption="表单">
-                        <dxb:BarButtonItem Content="新建表单" Command="{Binding NavigateTrialFormCommand}" CommandParameter="TrialForm" 
-                                           Glyph="{dx:DXImage SvgImages/Dashboards/Edit.svg}" RibbonStyle="Large"></dxb:BarButtonItem>
-                        <dxb:BarButtonItem Content="全部表单" Command="{Binding NavigateMyFormCommand}" CommandParameter="MyForm" 
-                                           Glyph="{dx:DXImage SvgImages/Dashboards/InsertComboBox.svg}" RibbonStyle="Large"></dxb:BarButtonItem>
+                    <dxr:RibbonPageGroup  Caption="研发项目试产记录表">
+                        <dxb:BarButtonItem Content="新建" Command="{Binding NavigateTrialFormCommand}" CommandParameter="TrialForm" 
+                                           Glyph="{dx:DXImage SvgImages/Outlook Inspired/AddFile.svg}" RibbonStyle="Large"></dxb:BarButtonItem>
+                        <dxb:BarButtonItem Content="浏览" Command="{Binding NavigateMyFormCommand}" CommandParameter="MyForm" 
+                                           Glyph="{dx:DXImage SvgImages/Outlook Inspired/DataPanel.svg}" RibbonStyle="Large"></dxb:BarButtonItem>
+                        <dxb:BarButtonItem Content="汇总" Command="{Binding NavigateTrialStatisticsCommand}" CommandParameter="TrialStatistics" 
+                                           Glyph="{dx:DXImage SvgImages/Outlook Inspired/EmployeeTaskList.svg}" RibbonStyle="Large"></dxb:BarButtonItem>
                     </dxr:RibbonPageGroup>
                 </dxr:RibbonPage>
 

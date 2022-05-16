@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using RDProject.Models;
+using RDProject.Models.VO;
 
 namespace RDProject.Common
 {
@@ -15,6 +16,9 @@ namespace RDProject.Common
         public DbSet<TrialEntry> TrialEntries { get; set; }
         public DbSet<WFInstance> WFInstances { get; set; }
         public DbSet<WFStep> WFSteps { get; set; }
+        public DbSet<SerialNumber> SerialNumbers { get; set; }
+
+        public DbSet<TrialReport> TrialReports { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -58,6 +62,11 @@ namespace RDProject.Common
             modelBuilder.Entity<WFStep>().HasIndex(b => b.BookMark);
             modelBuilder.Entity<WFStep>().HasIndex(b => b.SubBy);
             modelBuilder.Entity<WFStep>().HasIndex(b => b.Status);
+
+            modelBuilder.Entity<SerialNumber>().HasKey(b => b.FId);
+            modelBuilder.Entity<SerialNumber>().HasIndex(b => b.FTableName);
+
+            modelBuilder.Entity<TrialReport>().HasNoKey();
 
             modelBuilder.ApplyConfigurationsFromAssembly(this.GetType().Assembly);
 

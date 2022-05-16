@@ -12,7 +12,7 @@ namespace RDProject.Models
         private long instanceId;
         private string tableName;
         private string instanceGuid;
-        private int status;             //0已保存、草稿、初始状态  1正在审批、审批完成  2驳回  3审批结束
+        private int status;             //0已保存、草稿、初始状态  1正在审批  2驳回  3审批结束
         private long headId;
         private string subBy;
         private string nextName;

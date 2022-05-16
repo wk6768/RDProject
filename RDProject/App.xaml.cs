@@ -30,6 +30,8 @@ namespace RDProject
             containerRegistry.RegisterScoped<IEmployeeService, EmployeeService>();
             containerRegistry.RegisterScoped<ITrialService, TrialService>();
             containerRegistry.RegisterScoped<IWFService, WFService>();
+            containerRegistry.RegisterScoped<ISerialNumberService, SerialNumberService>();
+
             containerRegistry.RegisterDialog<LoginDialog, LoginDialogViewModel>();
             containerRegistry.RegisterDialog<ChangePwdDialog, ChangePwdDialogViewModel>();
             containerRegistry.RegisterDialog<TrialAddDialog, TrialAddDialogViewModel>();
@@ -37,6 +39,8 @@ namespace RDProject
             containerRegistry.RegisterForNavigation<EmployeeControl, EmployeeControlViewModel>();
             containerRegistry.RegisterForNavigation<TrialForm, TrialFormViewModel>();
             containerRegistry.RegisterForNavigation<MyForm, MyFormViewModel>();
+            containerRegistry.RegisterForNavigation<TrialStatistics, TrialStatisticsViewModel>();
+
             containerRegistry.RegisterForNavigation<WelcomePage, WelcomePageViewModel>();
             containerRegistry.RegisterForNavigation<EmptyPage, EmptyPageViewModel>();
         }

@@ -138,7 +138,7 @@ namespace RDProject.ViewModels
         /// <param name="objs"></param>
         private void Search(object[] objs)
         {
-            Debug.WriteLine(objs);
+            //Debug.WriteLine(objs);
             foreach(var obj in objs)
             {
                 if (obj == null)
@@ -162,6 +162,10 @@ namespace RDProject.ViewModels
                     break;
                 case "已发起":
                     status = 1;
+                    list = trialService.GetTrialTitleByTitleAndStatus(title, status);
+                    break;
+                case "已结束":
+                    status = 3;
                     list = trialService.GetTrialTitleByTitleAndStatus(title, status);
                     break;
                 default:

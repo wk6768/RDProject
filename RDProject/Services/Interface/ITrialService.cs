@@ -90,5 +90,13 @@ namespace RDProject.Services.Interface
         /// <param name="trialEntry"></param>
         /// <returns></returns>
         int UpdateTrialEntry(TrialEntry trialEntry);
+
+        /// <summary>
+        /// 查询某时间区间的报表信息
+        /// </summary>
+        /// <param name="beginDate"></param>
+        /// <param name="endDate"></param>
+        /// <returns></returns>
+        List<TrialReport> GetTrialReports(DateTime beginDate, DateTime endDate);
     }
 }

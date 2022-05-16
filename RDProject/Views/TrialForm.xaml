@@ -47,10 +47,13 @@
                                 <dxlc:LayoutItem Label="标题">
                                     <dxe:TextEdit IsReadOnly="{Binding Readonly_Trial}" Text="{Binding Trial.FTitle}"/>
                                 </dxlc:LayoutItem>
+                                <dxlc:LayoutItem Label="ID">
+                                    <dxe:TextEdit IsReadOnly="True" Text="{Binding Trial.FHeadId}"/>
+                                </dxlc:LayoutItem>
                             </dxlc:LayoutGroup>
                             <dxlc:LayoutGroup Orientation="Horizontal">
-                                <dxlc:LayoutItem Label="编号">
-                                    <dxe:TextEdit IsReadOnly="True" Text="{Binding Trial.FHeadId}"/>
+                                <dxlc:LayoutItem Label="单据编号">
+                                    <dxe:TextEdit IsReadOnly="True" Text="{Binding Trial.FBillNo}"/>
                                 </dxlc:LayoutItem>
                                 <dxlc:LayoutItem Label="公司">
                                     <dxe:ComboBoxEdit IsReadOnly="{Binding Readonly_Trial}" EditValue="{Binding Trial.FCompany}">
@@ -198,6 +201,7 @@
                                     <dxg:GridColumn FieldName="FEntryId" IsSmart="True" ReadOnly="True" Visible="{Binding ColumnVisibility}"/>
                                     <dxg:GridColumn FieldName="FHeadId" IsSmart="True" ReadOnly="True" Visible="{Binding ColumnVisibility}"/>
                                     <dxg:GridColumn Header="工单号" FieldName="FWorkOrder" ReadOnly="{Binding Readonly_TrialEntry}" IsSmart="True" />
+                                    <dxg:GridColumn Header="工站" FieldName="FStation" ReadOnly="{Binding Readonly_TrialEntry}" IsSmart="True" />
                                     <dxg:GridColumn Header="工序" FieldName="FProcessName" ReadOnly="{Binding Readonly_TrialEntry}" IsSmart="True" />
                                     <dxg:GridColumn Header="投入时间" FieldName="FBeginDate" ReadOnly="{Binding Readonly_TrialEntry}" IsSmart="True">
                                         <dxg:GridColumn.EditSettings>

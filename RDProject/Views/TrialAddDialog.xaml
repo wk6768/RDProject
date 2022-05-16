@@ -20,9 +20,24 @@
                     <dxlc:LayoutItem Label="工单号">
                         <dxe:TextEdit Text="{Binding TrialEntry.FWorkOrder}"/>
                     </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="投入数量">
+                        <dxe:TextEdit Text="{Binding TrialEntry.FAmount}"/>
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+                <dxlc:LayoutGroup>
+                    <dxlc:LayoutItem Label="工站">
+                        <!--<dxe:TextEdit Text="{Binding TrialEntry.FStation}"/>-->
+                        <dxe:ComboBoxEdit x:Name="station" Text="{Binding TrialEntry.FStation}">
+                            <dxe:ComboBoxEditItem IsSelected="True">CNC</dxe:ComboBoxEditItem>
+                            <dxe:ComboBoxEditItem>喷涂</dxe:ComboBoxEditItem>
+                            <dxe:ComboBoxEditItem>激光切割</dxe:ComboBoxEditItem>
+                            <dxe:ComboBoxEditItem>组装</dxe:ComboBoxEditItem>
+                        </dxe:ComboBoxEdit>
+                    </dxlc:LayoutItem>
                     <dxlc:LayoutItem Label="工序">
                         <dxe:TextEdit Text="{Binding TrialEntry.FProcessName}"/>
                     </dxlc:LayoutItem>
+
                 </dxlc:LayoutGroup>
                 <dxlc:LayoutGroup>
                     <dxlc:LayoutItem Label="投入时间">
@@ -32,11 +47,6 @@
                             </dxe:DateEdit.StyleSettings>
                         </dxe:DateEdit>
                     </dxlc:LayoutItem>
-                    <dxlc:LayoutItem Label="投入数量">
-                        <dxe:TextEdit Text="{Binding TrialEntry.FAmount}"/>
-                    </dxlc:LayoutItem>
-                </dxlc:LayoutGroup>
-                <dxlc:LayoutGroup>
                     <dxlc:LayoutItem Label="结束时间">
                         <dxe:DateEdit Text="{Binding TrialEntry.FEndDate,StringFormat='yyyy/MM/dd HH:mm'}">
                             <dxe:DateEdit.StyleSettings>
@@ -44,16 +54,13 @@
                             </dxe:DateEdit.StyleSettings>
                         </dxe:DateEdit>
                     </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+                <dxlc:LayoutGroup>
                     <dxlc:LayoutItem Label="投入人力">
                         <dxe:TextEdit Text="{Binding TrialEntry.FManPower}"/>
                     </dxlc:LayoutItem>
-                </dxlc:LayoutGroup>
-                <dxlc:LayoutGroup>
                     <dxlc:LayoutItem Label="投入工时">
                         <dxe:TextEdit Text="{Binding TrialEntry.FManHours}"/>
-                    </dxlc:LayoutItem>
-                    <dxlc:LayoutItem >
-
                     </dxlc:LayoutItem>
                 </dxlc:LayoutGroup>
             </dxlc:LayoutGroup>

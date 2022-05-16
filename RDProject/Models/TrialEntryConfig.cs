@@ -16,6 +16,7 @@ namespace RDProject.Models
             builder.Property(b => b.FCreateDate).HasDefaultValue(DateTime.Now);
 
             builder.Property(b => b.FWorkOrder).HasMaxLength(32);
+            builder.Property(b => b.FStation).HasMaxLength(32);
             builder.Property(b => b.FProcessName).HasMaxLength(32);
         }
     }

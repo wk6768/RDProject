@@ -27,10 +27,10 @@ namespace RDProject.ViewModels
             NavigateEmployeeControlCommand = new DelegateCommand<string>(NavigateEmployeeControl);
             NavigateTrialFormCommand = new DelegateCommand<string>(NavigateTrialForm);
             NavigateMyFormCommand = new DelegateCommand<string>(NavigateMyForm);
-
+            NavigateTrialStatisticsCommand = new DelegateCommand<string>(NavigateTrialStatistics);
         }
 
-        
+       
 
         private readonly IRegionManager regionManager;
         private readonly IDialogService dialogService;
@@ -59,7 +59,7 @@ namespace RDProject.ViewModels
         public DelegateCommand<string> NavigateEmployeeControlCommand { get; private set; }
         public DelegateCommand<string> NavigateTrialFormCommand { get; private set; }
         public DelegateCommand<string> NavigateMyFormCommand { get; private set; }
-
+        public DelegateCommand<string> NavigateTrialStatisticsCommand { get; private set; }
 
         private void OpenLoginDialog(string obj)
         {
@@ -126,6 +126,14 @@ namespace RDProject.ViewModels
                 var keys = new NavigationParameters();
                 keys.Add("User", User);
                 regionManager.Regions["MainControl"].RequestNavigate(obj, keys);
+            }
+        }
+
+        private void NavigateTrialStatistics(string obj)
+        {
+            if (User != null && !string.IsNullOrEmpty(User.Name))
+            {
+                regionManager.Regions["MainControl"].RequestNavigate(obj);
             }
         }
     }

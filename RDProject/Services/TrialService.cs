@@ -8,16 +8,20 @@ using RDProject.Services.Interface;
 using RDProject.Common;
 using System.Collections.ObjectModel;
 using RDProject.Models.VO;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Data.SqlClient;
 
 namespace RDProject.Services
 {
     public class TrialService : ITrialService
     {
         private readonly MyDbContext ctx;
+        private readonly ISerialNumberService serialNumberService;
 
-        public TrialService(MyDbContext ctx)
+        public TrialService(MyDbContext ctx, ISerialNumberService serialNumberService)
         {
             this.ctx = ctx;
+            this.serialNumberService = serialNumberService;
         }
 
         public (long, string) SaveTrialPageAndReturnID(Trial trial, ObservableCollection<TrialEntry> trialEntries)
@@ -26,6 +30,9 @@ namespace RDProject.Services
             {
                 try
                 {
+                    var FBillNo = serialNumberService.GetFBillNo("Trial");
+                    trial.FBillNo = FBillNo;
+
                     ctx.Trials.Add(trial);
                     ctx.SaveChanges();
 
@@ -55,6 +62,9 @@ namespace RDProject.Services
             {
                 try
                 {
+                    var FBillNo = serialNumberService.GetFBillNo("Trial");
+                    trial.FBillNo = FBillNo;
+
                     ctx.Trials.Add(trial);
                     ctx.SaveChanges();
 
@@ -156,6 +166,19 @@ namespace RDProject.Services
         {
             ctx.TrialEntries.Update(trialEntry);
             return ctx.SaveChanges();
+        }
+
+        public List<TrialReport> GetTrialReports(DateTime beginDate, DateTime endDate)
+        {
+            var begin = new SqlParameter("beginDate", beginDate);
+            var end = new SqlParameter("endDate", endDate);
+            var result = ctx.TrialReports.FromSqlRaw(
+                @"select b.FDate,b.FBillNo,b.FRDNo,a.FWorkOrder,a.FStation,SUM(a.FAmount) FAmount,SUM(a.FManHours) FManHours,MIN(a.FBeginDate) FBeginDate,MAX(a.FEndDate) FEndDate from TrialEntry a
+                left join Trial b on a.FHeadId = b.FHeadId 
+                where b.FDate between @beginDate and @endDate 
+                GROUP BY b.FDate,b.FBillNo,b.FRDNo,a.FWorkOrder,a.FStation", begin, end)
+                .ToList();
+            return result;
         }
     }
 }
