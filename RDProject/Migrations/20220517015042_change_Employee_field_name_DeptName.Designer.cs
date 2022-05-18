@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RDProject.Common;
 
 namespace RDProject.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220517015042_change_Employee_field_name_DeptName")]
+    partial class change_Employee_field_name_DeptName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,122 +58,6 @@ namespace RDProject.Migrations
                     b.HasIndex("Name");
 
                     b.ToTable("Employee");
-                });
-
-            modelBuilder.Entity("RDProject.Models.Manpower", b =>
-                {
-                    b.Property<long>("FHeadId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("FCompany")
-                        .HasColumnType("nvarchar(32)")
-                        .HasMaxLength(32);
-
-                    b.Property<DateTime>("FCreateDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 5, 17, 11, 0, 42, 326, DateTimeKind.Local).AddTicks(8843));
-
-                    b.Property<string>("FCreateUser")
-                        .HasColumnType("nvarchar(16)")
-                        .HasMaxLength(16);
-
-                    b.Property<DateTime>("FDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("FStatus")
-                        .HasColumnType("int");
-
-                    b.Property<string>("FTitle")
-                        .HasColumnType("nvarchar(64)")
-                        .HasMaxLength(64);
-
-                    b.HasKey("FHeadId");
-
-                    b.HasIndex("FCompany");
-
-                    b.HasIndex("FCreateDate");
-
-                    b.HasIndex("FCreateUser");
-
-                    b.HasIndex("FDate");
-
-                    b.HasIndex("FStatus");
-
-                    b.HasIndex("FTitle");
-
-                    b.ToTable("Manpower");
-                });
-
-            modelBuilder.Entity("RDProject.Models.ManpowerEntry", b =>
-                {
-                    b.Property<long>("FEntryId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<decimal>("FAttendanceHours")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime>("FCreateDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 5, 17, 11, 0, 42, 332, DateTimeKind.Local).AddTicks(8797));
-
-                    b.Property<string>("FDeptName")
-                        .HasColumnType("nvarchar(16)")
-                        .HasMaxLength(16);
-
-                    b.Property<string>("FEmpId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FEmpName")
-                        .HasColumnType("nvarchar(16)")
-                        .HasMaxLength(16);
-
-                    b.Property<long>("FHeadId")
-                        .HasColumnType("bigint");
-
-                    b.Property<decimal>("FHolidayOvertimeHours")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("FNormalOvertimeHours")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("FRD28Hours")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("FRD30Hours")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("FRD31Hours")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("FRD32Hours")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("FRD33Hours")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("FRD34Hours")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("FTotalHours")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("FVarianceHours")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("FWeekendOvertimeHours")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("FEntryId");
-
-                    b.HasIndex("FHeadId");
-
-                    b.ToTable("ManpowerEntry");
                 });
 
             modelBuilder.Entity("RDProject.Models.SerialNumber", b =>
@@ -235,7 +121,7 @@ namespace RDProject.Migrations
                     b.Property<DateTime>("FCreateDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 5, 17, 11, 0, 42, 338, DateTimeKind.Local).AddTicks(8803));
+                        .HasDefaultValue(new DateTime(2022, 5, 17, 9, 50, 42, 594, DateTimeKind.Local).AddTicks(6503));
 
                     b.Property<string>("FCreateUser")
                         .HasColumnType("nvarchar(16)")
@@ -326,7 +212,7 @@ namespace RDProject.Migrations
                     b.Property<DateTime>("FCreateDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 5, 17, 11, 0, 42, 339, DateTimeKind.Local).AddTicks(8824));
+                        .HasDefaultValue(new DateTime(2022, 5, 17, 9, 50, 42, 595, DateTimeKind.Local).AddTicks(6504));
 
                     b.Property<DateTime>("FEndDate")
                         .HasColumnType("datetime2");
@@ -425,7 +311,7 @@ namespace RDProject.Migrations
                     b.Property<DateTime>("SubTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 5, 17, 11, 0, 42, 333, DateTimeKind.Local).AddTicks(8509));
+                        .HasDefaultValue(new DateTime(2022, 5, 17, 9, 50, 42, 584, DateTimeKind.Local).AddTicks(6506));
 
                     b.Property<string>("TableName")
                         .HasColumnType("nvarchar(32)")

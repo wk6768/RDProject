@@ -33,14 +33,14 @@ namespace RDProject.ViewModels
             if (fHeadID <= 0)
             {
                 //如果小于0，则是新增表单
-                InitNewTrialForm();
+                InitNewForm();
 
                 #region 新建表单时的权限控制
                 if (User.UserGroup.Equals("管理员"))
                 {
                     ColumnVisibility = true;    //是否显示隐藏列
-                    Readonly_Trial = false;     //表单头是否只读
-                    Readonly_TrialEntry = false;//表单明细是否只读
+                    Readonly_Head = false;     //表单头是否只读
+                    Readonly_Entry = false;//表单明细是否只读
                     Readonly_WFStep = false;    //步骤是否只读
 
                     SaveButtonEnable = true;    //保存表单内容的按钮
@@ -51,8 +51,8 @@ namespace RDProject.ViewModels
                 else
                 {
                     ColumnVisibility = false;
-                    Readonly_Trial = false;
-                    Readonly_TrialEntry = false;
+                    Readonly_Head = false;
+                    Readonly_Entry = false;
                     Readonly_WFStep = true;
 
                     SaveButtonEnable = true;
@@ -66,14 +66,14 @@ namespace RDProject.ViewModels
             else if (fHeadID > 0)
             {
                 //如果大于0，则是浏览表单
-                InitOldTrialForm(fHeadID);
+                InitOldForm(fHeadID);
 
                 #region 浏览表单时的权限控制
                 if (User.UserGroup.Equals("管理员"))
                 {
                     ColumnVisibility = true;
-                    Readonly_Trial = false;
-                    Readonly_TrialEntry = false;
+                    Readonly_Head = false;
+                    Readonly_Entry = false;
                     Readonly_WFStep = false;
 
                     SaveButtonEnable = true;
@@ -84,8 +84,8 @@ namespace RDProject.ViewModels
                 else if (User.UserGroup.Equals("NPI"))
                 {
                     ColumnVisibility = false;
-                    Readonly_Trial = true;
-                    Readonly_TrialEntry = false;
+                    Readonly_Head = true;
+                    Readonly_Entry = false;
                     Readonly_WFStep = true;
 
                     SaveButtonEnable = true;
@@ -96,8 +96,8 @@ namespace RDProject.ViewModels
                 else
                 {
                     ColumnVisibility = false;
-                    Readonly_Trial = true;
-                    Readonly_TrialEntry = true;
+                    Readonly_Head = true;
+                    Readonly_Entry = true;
                     Readonly_WFStep = true;
 
                     SaveButtonEnable = false;
@@ -150,15 +150,15 @@ namespace RDProject.ViewModels
         /// <summary>
         /// 初始化空白表单
         /// </summary>
-        void InitNewTrialForm()
+        void InitNewForm()
         {
             Trial = new Trial()
             {
                 FDate = DateTime.Now,
-                FAssemblyFactory = "一车间",
-                FCompany = "广东紫文星电子科技有限公司",
+                //FAssemblyFactory = "一车间",
+                //FCompany = "广东紫文星电子科技有限公司",
                 FCreateUser = User.Name,
-                FTitle = $"研发项目试产记录表-{User.EmpName}-{User.Name}-{DateTime.Now.ToString("D")}",
+                FTitle = $"研发项目试产记录表-{User.DeptName}-{User.Name}-{DateTime.Now.ToString("D")}",
                 FStatus = 0,
             };
 
@@ -169,7 +169,7 @@ namespace RDProject.ViewModels
             Steps = new ObservableCollection<WFStep>();
         }
 
-        void InitOldTrialForm(long fHeadID)
+        void InitOldForm(long fHeadID)
         {
             List<TrialEntry> list;
             (Trial, list) = trialService.GetTrialFullData(fHeadID);
@@ -298,20 +298,20 @@ namespace RDProject.ViewModels
         /// <summary>
         /// 控制部分字段只读
         /// </summary>
-        private bool readonly_Trial;
+        private bool readonly_Head;
 
-        public bool Readonly_Trial
+        public bool Readonly_Head
         {
-            get { return readonly_Trial; }
-            set { readonly_Trial = value; RaisePropertyChanged(); }
+            get { return readonly_Head; }
+            set { readonly_Head = value; RaisePropertyChanged(); }
         }
 
-        private bool readonly_TrialEntry;
+        private bool readonly_Entry;
 
-        public bool Readonly_TrialEntry
+        public bool Readonly_Entry
         {
-            get { return readonly_TrialEntry; }
-            set { readonly_TrialEntry = value; RaisePropertyChanged(); }
+            get { return readonly_Entry; }
+            set { readonly_Entry = value; RaisePropertyChanged(); }
         }
 
         private bool readonly_WFStep;
@@ -370,7 +370,7 @@ namespace RDProject.ViewModels
         private void AddTrial()
         {
             //初始化一个空表单
-            InitNewTrialForm();
+            InitNewForm();
         }
 
         private void AddTrialEntry(string obj)
@@ -411,9 +411,9 @@ namespace RDProject.ViewModels
         {
             #region 检查必填项
             //先检查必填项是否填了
-            if (string.IsNullOrWhiteSpace(Trial.FRDNo) || string.IsNullOrWhiteSpace(Trial.FProductName) || string.IsNullOrWhiteSpace(Trial.FCompany))
+            if (string.IsNullOrWhiteSpace(Trial.FRDNo) || string.IsNullOrWhiteSpace(Trial.FProductName) || string.IsNullOrWhiteSpace(Trial.FCompany) || string.IsNullOrWhiteSpace(Trial.FAssemblyFactory))
             {
-                WinUIMessageBox.Show("研发项目编号，产品名称，厂别 为必填项", "提示",  MessageBoxButton.OK, MessageBoxImage.Warning,MessageBoxResult.None, MessageBoxOptions.None);
+                WinUIMessageBox.Show("研发项目编号，产品名称，厂别，公司 为必填项", "提示",  MessageBoxButton.OK, MessageBoxImage.Warning,MessageBoxResult.None, MessageBoxOptions.None);
                 return;
             }
             if (Trial.FHasCNC == true && string.IsNullOrWhiteSpace(Trial.FCNCNPI))

@@ -17,8 +17,9 @@ namespace RDProject.Common
         public DbSet<WFInstance> WFInstances { get; set; }
         public DbSet<WFStep> WFSteps { get; set; }
         public DbSet<SerialNumber> SerialNumbers { get; set; }
-
         public DbSet<TrialReport> TrialReports { get; set; }
+        public DbSet<Manpower> Manpowers { get; set; }
+        public DbSet<ManpowerEntry> manpowerEntries { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -67,6 +68,17 @@ namespace RDProject.Common
             modelBuilder.Entity<SerialNumber>().HasIndex(b => b.FTableName);
 
             modelBuilder.Entity<TrialReport>().HasNoKey();
+
+            modelBuilder.Entity<Manpower>().HasKey(b => b.FHeadId);
+            modelBuilder.Entity<Manpower>().HasIndex(b => b.FCreateUser);
+            modelBuilder.Entity<Manpower>().HasIndex(b => b.FCompany);
+            modelBuilder.Entity<Manpower>().HasIndex(b => b.FTitle);
+            modelBuilder.Entity<Manpower>().HasIndex(b => b.FStatus);
+            modelBuilder.Entity<Manpower>().HasIndex(b => b.FDate);
+            modelBuilder.Entity<Manpower>().HasIndex(b => b.FCreateDate);
+
+            modelBuilder.Entity<ManpowerEntry>().HasKey(b => b.FEntryId);
+            modelBuilder.Entity<ManpowerEntry>().HasIndex(b => b.FHeadId);
 
             modelBuilder.ApplyConfigurationsFromAssembly(this.GetType().Assembly);
 

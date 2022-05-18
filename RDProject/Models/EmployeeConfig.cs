@@ -17,7 +17,7 @@ namespace RDProject.Models
             builder.ToTable(nameof(Employee));
             builder.Property(b => b.Id).HasMaxLength(16).IsRequired();
             builder.Property(b => b.Name).HasMaxLength(16).IsRequired();
-            builder.Property(b => b.EmpName).HasMaxLength(16).IsRequired();
+            builder.Property(b => b.DeptName).HasMaxLength(16).IsRequired();
             builder.Property(b => b.Pwd).HasMaxLength(128).IsRequired();
             builder.Property(b => b.UserGroup).HasMaxLength(32);
             builder.Property(b => b.IsDeleted).HasDefaultValue(false);

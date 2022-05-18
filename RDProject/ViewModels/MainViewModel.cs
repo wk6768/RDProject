@@ -28,9 +28,11 @@ namespace RDProject.ViewModels
             NavigateTrialFormCommand = new DelegateCommand<string>(NavigateTrialForm);
             NavigateMyFormCommand = new DelegateCommand<string>(NavigateMyForm);
             NavigateTrialStatisticsCommand = new DelegateCommand<string>(NavigateTrialStatistics);
+            NavigateManpowerFormCommand = new DelegateCommand<string>(NavigateManpowerForm);
+            NavigateManpowerStatisticsCommand = new DelegateCommand<string>(NavigateManpowerStatistics);
         }
 
-       
+
 
         private readonly IRegionManager regionManager;
         private readonly IDialogService dialogService;
@@ -60,6 +62,9 @@ namespace RDProject.ViewModels
         public DelegateCommand<string> NavigateTrialFormCommand { get; private set; }
         public DelegateCommand<string> NavigateMyFormCommand { get; private set; }
         public DelegateCommand<string> NavigateTrialStatisticsCommand { get; private set; }
+        public DelegateCommand<string> NavigateManpowerFormCommand { get; private set; }
+        public DelegateCommand<string> NavigateManpowerStatisticsCommand { get;private set; }
+
 
         private void OpenLoginDialog(string obj)
         {
@@ -136,5 +141,25 @@ namespace RDProject.ViewModels
                 regionManager.Regions["MainControl"].RequestNavigate(obj);
             }
         }
+
+        private void NavigateManpowerForm(string obj)
+        {
+            if (User != null && !string.IsNullOrEmpty(User.Name))
+            {
+                var keys = new NavigationParameters();
+                keys.Add("User", User);
+                keys.Add("FHeadID", (long)-1);
+                regionManager.Regions["MainControl"].RequestNavigate(obj, keys);
+            }
+        }
+
+        private void NavigateManpowerStatistics(string obj)
+        {
+            if (User != null && !string.IsNullOrEmpty(User.Name))
+            {
+                regionManager.Regions["MainControl"].RequestNavigate(obj);
+            }
+        }
+
     }
 }

@@ -1,0 +1,97 @@
+﻿<UserControl xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"  
+             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" 
+             xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:RDProject.Views"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" 
+             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" 
+             x:Class="RDProject.Views.ManpowerForm"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <ScrollViewer>
+            <dxlc:LayoutControl MaxHeight="2000">
+                <dxlc:LayoutGroup Header="研发人员工时表" View="GroupBox" Orientation="Vertical">
+
+                    <dxlc:LayoutGroup Orientation="Horizontal">
+                        <dxlc:LayoutItem>
+                            <dxb:BarContainerControl>
+                                <dxb:ToolBarControl>
+
+                                    <dxb:BarButtonItem Content="新增明细" IsEnabled="{Binding EditButtonEnable}" Command="{Binding AddManpowerEntryCommand}" CommandParameter="ManpowerAddDialog" 
+                                                           Glyph="{dx:DXImage SvgImages/Icon Builder/Actions_AddCircled.svg}"/>
+                                    <dxb:BarButtonItem Content="删除明细" IsEnabled="{Binding EditButtonEnable}" Command="{Binding DeleteManpowerEntryCommand}" CommandParameter="{Binding ElementName=GridControl_ManpowerEntry,Path=SelectedItem}"
+                                                           Glyph="{dx:DXImage SvgImages/Icon Builder/Actions_DeleteCircled.svg}"/>
+                                </dxb:ToolBarControl>
+                                <dxb:ToolBarControl>
+                                    <dxb:BarButtonItem Content="新建表单" IsEnabled="{Binding NewButtonEnable}" Command="{Binding AddManpowerCommand}"
+                                                           Glyph="{dx:DXImage SvgImages/Outlook Inspired/NewProduct.svg}"/>
+                                    <dxb:BarButtonItem Content="保存表单" IsEnabled="{Binding SaveButtonEnable}" Command="{Binding SaveCommand}"
+                                                           Glyph="{dx:DXImage SvgImages/XAF/Action_SaveScript.svg}"></dxb:BarButtonItem>
+                                    <dxb:BarButtonItem Content="发起流程" IsEnabled="{Binding SendButtonEnable}" Command="{Binding SendCommand}"
+                                                           Glyph="{dx:DXImage SvgImages/Spreadsheet/FillUp.svg}"></dxb:BarButtonItem>
+                                    <dxb:BarButtonItem Content="审批" Command="{Binding CheckCommand}"
+                                                       Glyph="{dx:DXImage SvgImages/Dashboards/RenameDataSource.svg}"></dxb:BarButtonItem>
+                                </dxb:ToolBarControl>
+                            </dxb:BarContainerControl>
+                        </dxlc:LayoutItem>
+                    </dxlc:LayoutGroup>
+                    <dxlc:LayoutGroup Orientation="Horizontal">
+
+                        <dxlc:LayoutGroup>
+                            <dxlc:LayoutItem Label="单位">
+                                <dxe:ComboBoxEdit IsReadOnly="{Binding Readonly_Head}" EditValue="{Binding Manpower.FCompany}">
+                                    <dxe:ComboBoxEditItem Content="广东紫文星电子科技有限公司" IsSelected="True"/>
+                                    <dxe:ComboBoxEditItem Content="广东智芯光电科技股份有限公司"/>
+                                </dxe:ComboBoxEdit>
+                            </dxlc:LayoutItem>
+                        </dxlc:LayoutGroup>
+
+                        <dxlc:LayoutItem Label="日期">
+                            <dxe:DateEdit Text="{Binding Manpower.FDate}">
+                                <dxe:TextEdit.StyleSettings>
+                                    <dxe:DateEditCalendarStyleSettings/>
+                                </dxe:TextEdit.StyleSettings>
+                            </dxe:DateEdit>
+                        </dxlc:LayoutItem>
+                    </dxlc:LayoutGroup>
+
+                    <dxlc:LayoutGroup>
+                        <dxg:GridControl x:Name="GridControl_ManpowerEntry" ItemsSource="{Binding ManpowerEntries}">
+                            <dxg:GridControl.View>
+                                <dxg:TableView AutoWidth="True" BestFitModeOnSourceChange="Smart" ShowGroupPanel="False" ShowFixedTotalSummary="True"/>
+                            </dxg:GridControl.View>
+
+                            <dxg:GridColumn Header="FEntryId" FieldName="FEntryId" IsSmart="True" ReadOnly="True" Visible="{Binding ColumnVisibility}"/>
+                            <dxg:GridColumn Header="FHeadId" FieldName="FHeadId" IsSmart="True" ReadOnly="True" Visible="{Binding ColumnVisibility}"/>
+                            <dxg:GridColumn Header="FCreateDate" FieldName="FCreateDate" IsSmart="True" ReadOnly="True" Visible="{Binding ColumnVisibility}"/>
+
+                            <dxg:GridColumn Header="工号" FieldName="FEmpId" IsSmart="True" ReadOnly="{Binding Readonly_Entry}" />
+                            <dxg:GridColumn Header="部门" FieldName="FEmpName" IsSmart="True" ReadOnly="{Binding Readonly_Entry}" />
+                            <dxg:GridColumn Header="员工姓名" FieldName="FDeptName" IsSmart="True" ReadOnly="{Binding Readonly_Entry}" />
+                            <dxg:GridColumn Header="出勤工时" FieldName="FAttendanceHours" IsSmart="True" ReadOnly="{Binding Readonly_Entry}" />
+                            <dxg:GridColumn Header="平时加班" FieldName="FNormalOvertimeHours" IsSmart="True" ReadOnly="{Binding Readonly_Entry}" />
+                            <dxg:GridColumn Header="休息加班" FieldName="FWeekendOvertimeHours" IsSmart="True" ReadOnly="{Binding Readonly_Entry}" />
+                            <dxg:GridColumn Header="法定加班" FieldName="FHolidayOvertimeHours" IsSmart="True" ReadOnly="{Binding Readonly_Entry}" />
+                            <dxg:GridColumn Header="总工时" FieldName="FTotalHours" IsSmart="True" ReadOnly="{Binding Readonly_Entry}" />
+                            <dxg:GridColumn Header="RD28工时" FieldName="FRD28Hours" IsSmart="True" ReadOnly="{Binding Readonly_Entry}" />
+                            <dxg:GridColumn Header="RD30工时" FieldName="FRD30Hours" IsSmart="True" ReadOnly="{Binding Readonly_Entry}" />
+                            <dxg:GridColumn Header="RD31工时" FieldName="FRD31Hours" IsSmart="True" ReadOnly="{Binding Readonly_Entry}" />
+                            <dxg:GridColumn Header="RD32工时" FieldName="FRD32Hours" IsSmart="True" ReadOnly="{Binding Readonly_Entry}" />
+                            <dxg:GridColumn Header="RD33工时" FieldName="FRD33Hours" IsSmart="True" ReadOnly="{Binding Readonly_Entry}" />
+                            <dxg:GridColumn Header="RD34工时" FieldName="FRD34Hours" IsSmart="True" ReadOnly="{Binding Readonly_Entry}" />
+                            <dxg:GridColumn Header="工时差异" FieldName="FVarianceHours" IsSmart="True" ReadOnly="{Binding Readonly_Entry}" />
+
+                        </dxg:GridControl>
+                    </dxlc:LayoutGroup>
+
+                </dxlc:LayoutGroup>
+                
+            </dxlc:LayoutControl>
+        </ScrollViewer>
+
+    </Grid>
+</UserControl>

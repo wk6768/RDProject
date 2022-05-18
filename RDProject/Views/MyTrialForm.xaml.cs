@@ -18,9 +18,9 @@ namespace RDProject.Views
     /// <summary>
     /// MyForm.xaml 的交互逻辑
     /// </summary>
-    public partial class MyForm : UserControl
+    public partial class MyTrialForm : UserControl
     {
-        public MyForm()
+        public MyTrialForm()
         {
             InitializeComponent();
         }

@@ -46,6 +46,8 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Activities\RDManpower\提交申请.cs" />
+    <Compile Include="Activities\RDManpower\研发部负责人.cs" />
     <Compile Include="Activities\RDTrial\CNC工序NPI.cs" />
     <Compile Include="Activities\RDTrial\品保部负责人.cs" />
     <Compile Include="Activities\RDTrial\喷涂工序NPI.cs" />
@@ -61,7 +63,12 @@
     <Compile Include="Activities\RDTrial\项目确认.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <XamlAppDef Include="Activities\RDManpower\研发人员工时统计表.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </XamlAppDef>
+  </ItemGroup>
   <ItemGroup>
     <XamlAppDef Include="Activities\RDTrial\研发项目试产记录表.xaml">
       <Generator>MSBuild:Compile</Generator>

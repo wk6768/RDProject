@@ -32,9 +32,16 @@
                     <dxr:RibbonPageGroup  Caption="研发项目试产记录表">
                         <dxb:BarButtonItem Content="新建" Command="{Binding NavigateTrialFormCommand}" CommandParameter="TrialForm" 
                                            Glyph="{dx:DXImage SvgImages/Outlook Inspired/AddFile.svg}" RibbonStyle="Large"></dxb:BarButtonItem>
-                        <dxb:BarButtonItem Content="浏览" Command="{Binding NavigateMyFormCommand}" CommandParameter="MyForm" 
+                        <dxb:BarButtonItem Content="浏览" Command="{Binding NavigateMyFormCommand}" CommandParameter="MyTrialForm" 
                                            Glyph="{dx:DXImage SvgImages/Outlook Inspired/DataPanel.svg}" RibbonStyle="Large"></dxb:BarButtonItem>
                         <dxb:BarButtonItem Content="汇总" Command="{Binding NavigateTrialStatisticsCommand}" CommandParameter="TrialStatistics" 
+                                           Glyph="{dx:DXImage SvgImages/Outlook Inspired/EmployeeTaskList.svg}" RibbonStyle="Large"></dxb:BarButtonItem>
+                    </dxr:RibbonPageGroup>
+
+                    <dxr:RibbonPageGroup  Caption="研发人员工时统计表">
+                        <dxb:BarButtonItem Content="新建" Command="{Binding NavigateManpowerFormCommand}" CommandParameter="ManpowerForm" 
+                                           Glyph="{dx:DXImage SvgImages/Outlook Inspired/AddFile.svg}" RibbonStyle="Large"></dxb:BarButtonItem>
+                        <dxb:BarButtonItem Content="汇总" Command="{Binding NavigateManpowerStatisticsCommand}" CommandParameter="ManpowerStatistics" 
                                            Glyph="{dx:DXImage SvgImages/Outlook Inspired/EmployeeTaskList.svg}" RibbonStyle="Large"></dxb:BarButtonItem>
                     </dxr:RibbonPageGroup>
                 </dxr:RibbonPage>

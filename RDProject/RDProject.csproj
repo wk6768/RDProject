@@ -258,7 +258,19 @@
     <Compile Include="Migrations\20220516015211_add_TrialEntry_Field_FStation2.designer.cs">
       <DependentUpon>20220516015211_add_TrialEntry_Field_FStation2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20220517015042_change_Employee_field_name_DeptName.cs" />
+    <Compile Include="Migrations\20220517015042_change_Employee_field_name_DeptName.designer.cs">
+      <DependentUpon>20220517015042_change_Employee_field_name_DeptName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20220517030042_add_Manpower.cs" />
+    <Compile Include="Migrations\20220517030042_add_Manpower.designer.cs">
+      <DependentUpon>20220517030042_add_Manpower.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\MyDbContextModelSnapshot.cs" />
+    <Compile Include="Models\Manpower.cs" />
+    <Compile Include="Models\ManpowerConfig.cs" />
+    <Compile Include="Models\ManpowerEntry.cs" />
+    <Compile Include="Models\ManpowerEntryConfig.cs" />
     <Compile Include="Models\SerialNumber.cs" />
     <Compile Include="Models\SerialNumberConfig.cs" />
     <Compile Include="Models\VO\TrialReport.cs" />
@@ -267,15 +279,19 @@
     <Compile Include="Models\WFInstanceConfig.cs" />
     <Compile Include="Models\WFStep.cs" />
     <Compile Include="Models\WFStepConfig.cs" />
+    <Compile Include="Services\Interface\IManpowerService.cs" />
     <Compile Include="Services\Interface\ISerialNumberService.cs" />
     <Compile Include="Services\Interface\ITrialService.cs" />
     <Compile Include="Services\Interface\IWFService.cs" />
+    <Compile Include="Services\ManpowerService.cs" />
     <Compile Include="Services\SerialNumberService.cs" />
     <Compile Include="Services\TrialService.cs" />
     <Compile Include="Services\WFService.cs" />
     <Compile Include="ViewModels\CheckDialogViewModel.cs" />
     <Compile Include="ViewModels\EmptyPageViewModel.cs" />
-    <Compile Include="ViewModels\MyFormViewModel.cs" />
+    <Compile Include="ViewModels\ManpowerAddDialogViewModel.cs" />
+    <Compile Include="ViewModels\ManpowerFormViewModel.cs" />
+    <Compile Include="ViewModels\MyTrialFormViewModel.cs" />
     <Compile Include="ViewModels\TrialAddDialogViewModel.cs" />
     <Compile Include="ViewModels\TrialStatisticsViewModel.cs" />
     <Compile Include="ViewModels\WelcomePageViewModel.cs" />
@@ -285,8 +301,14 @@
     <Compile Include="Views\EmptyPage.xaml.cs">
       <DependentUpon>EmptyPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MyForm.xaml.cs">
-      <DependentUpon>MyForm.xaml</DependentUpon>
+    <Compile Include="Views\ManpowerAddDialog.xaml.cs">
+      <DependentUpon>ManpowerAddDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ManpowerForm.xaml.cs">
+      <DependentUpon>ManpowerForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MyTrialForm.xaml.cs">
+      <DependentUpon>MyTrialForm.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TrialAddDialog.xaml.cs">
       <DependentUpon>TrialAddDialog.xaml</DependentUpon>
@@ -309,7 +331,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\MyForm.xaml">
+    <Page Include="Views\ManpowerAddDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ManpowerForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MyTrialForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

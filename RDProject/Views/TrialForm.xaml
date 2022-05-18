@@ -16,36 +16,36 @@
         <ScrollViewer>
             <dxlc:LayoutControl MaxHeight="2000">
                 <dxlc:LayoutGroup Orientation="Vertical">
-                    
-                    <dxlc:LayoutGroup Orientation="Horizontal">
-                        <dxlc:LayoutItem>
-                            <dxb:BarContainerControl>
-                                <dxb:ToolBarControl>
-                                    
-                                    <dxb:BarButtonItem Content="新增明细" IsEnabled="{Binding EditButtonEnable}" Command="{Binding AddTrialEntryCommand}" CommandParameter="TrialAddDialog" 
-                                                           Glyph="{dx:DXImage SvgImages/Icon Builder/Actions_AddCircled.svg}"/>
-                                    <dxb:BarButtonItem Content="删除明细" IsEnabled="{Binding EditButtonEnable}" Command="{Binding DeleteTrialEntryCommand}" CommandParameter="{Binding ElementName=GridControl_TrialEntry,Path=SelectedItem}"
-                                                           Glyph="{dx:DXImage SvgImages/Icon Builder/Actions_DeleteCircled.svg}"/>
-                                </dxb:ToolBarControl>
-                                <dxb:ToolBarControl>
-                                    <dxb:BarButtonItem Content="新建表单" IsEnabled="{Binding NewButtonEnable}" Command="{Binding AddTrialCommand}"
-                                                           Glyph="{dx:DXImage SvgImages/Outlook Inspired/NewProduct.svg}"/>
-                                    <dxb:BarButtonItem Content="保存表单" IsEnabled="{Binding SaveButtonEnable}" Command="{Binding SaveCommand}"
-                                                           Glyph="{dx:DXImage SvgImages/XAF/Action_SaveScript.svg}"></dxb:BarButtonItem>
-                                    <dxb:BarButtonItem Content="发起流程" IsEnabled="{Binding SendButtonEnable}" Command="{Binding SendCommand}"
-                                                           Glyph="{dx:DXImage SvgImages/Spreadsheet/FillUp.svg}"></dxb:BarButtonItem>
-                                    <dxb:BarButtonItem Content="审批" Command="{Binding CheckCommand}"
-                                                       Glyph="{dx:DXImage SvgImages/Dashboards/RenameDataSource.svg}"></dxb:BarButtonItem>
-                                </dxb:ToolBarControl>
-                            </dxb:BarContainerControl>
-                        </dxlc:LayoutItem>
-                    </dxlc:LayoutGroup>
+                    <dxlc:LayoutGroup Orientation="Vertical" Header="研发项目试产记录表" View="GroupBox">
 
-                    <dxlc:LayoutGroup Header="研发项目试产记录表" View="GroupBox">
+                        <dxlc:LayoutGroup Orientation="Horizontal">
+                            <dxlc:LayoutItem>
+                                <dxb:BarContainerControl>
+                                    <dxb:ToolBarControl>
+
+                                        <dxb:BarButtonItem Content="新增明细" IsEnabled="{Binding EditButtonEnable}" Command="{Binding AddTrialEntryCommand}" CommandParameter="TrialAddDialog" 
+                                                           Glyph="{dx:DXImage SvgImages/Icon Builder/Actions_AddCircled.svg}"/>
+                                        <dxb:BarButtonItem Content="删除明细" IsEnabled="{Binding EditButtonEnable}" Command="{Binding DeleteTrialEntryCommand}" CommandParameter="{Binding ElementName=GridControl_TrialEntry,Path=SelectedItem}"
+                                                           Glyph="{dx:DXImage SvgImages/Icon Builder/Actions_DeleteCircled.svg}"/>
+                                    </dxb:ToolBarControl>
+                                    <dxb:ToolBarControl>
+                                        <dxb:BarButtonItem Content="新建表单" IsEnabled="{Binding NewButtonEnable}" Command="{Binding AddTrialCommand}"
+                                                           Glyph="{dx:DXImage SvgImages/Outlook Inspired/NewProduct.svg}"/>
+                                        <dxb:BarButtonItem Content="保存表单" IsEnabled="{Binding SaveButtonEnable}" Command="{Binding SaveCommand}"
+                                                           Glyph="{dx:DXImage SvgImages/XAF/Action_SaveScript.svg}"></dxb:BarButtonItem>
+                                        <dxb:BarButtonItem Content="发起流程" IsEnabled="{Binding SendButtonEnable}" Command="{Binding SendCommand}"
+                                                           Glyph="{dx:DXImage SvgImages/Spreadsheet/FillUp.svg}"></dxb:BarButtonItem>
+                                        <dxb:BarButtonItem Content="审批" Command="{Binding CheckCommand}"
+                                                       Glyph="{dx:DXImage SvgImages/Dashboards/RenameDataSource.svg}"></dxb:BarButtonItem>
+                                    </dxb:ToolBarControl>
+                                </dxb:BarContainerControl>
+                            </dxlc:LayoutItem>
+                        </dxlc:LayoutGroup>
+
                         <dxlc:LayoutGroup Orientation="Vertical">
                             <dxlc:LayoutGroup Orientation="Horizontal">
                                 <dxlc:LayoutItem Label="标题">
-                                    <dxe:TextEdit IsReadOnly="{Binding Readonly_Trial}" Text="{Binding Trial.FTitle}"/>
+                                    <dxe:TextEdit IsReadOnly="{Binding Readonly_Head}" Text="{Binding Trial.FTitle}"/>
                                 </dxlc:LayoutItem>
                                 <dxlc:LayoutItem Label="ID">
                                     <dxe:TextEdit IsReadOnly="True" Text="{Binding Trial.FHeadId}"/>
@@ -56,7 +56,7 @@
                                     <dxe:TextEdit IsReadOnly="True" Text="{Binding Trial.FBillNo}"/>
                                 </dxlc:LayoutItem>
                                 <dxlc:LayoutItem Label="公司">
-                                    <dxe:ComboBoxEdit IsReadOnly="{Binding Readonly_Trial}" EditValue="{Binding Trial.FCompany}">
+                                    <dxe:ComboBoxEdit IsReadOnly="{Binding Readonly_Head}" EditValue="{Binding Trial.FCompany}">
                                         <dxe:ComboBoxEditItem Content="广东紫文星电子科技有限公司" IsSelected="True"/>
                                         <dxe:ComboBoxEditItem Content="广东智芯光电科技股份有限公司"/>
                                     </dxe:ComboBoxEdit>
@@ -64,34 +64,34 @@
                             </dxlc:LayoutGroup>
                             <dxlc:LayoutGroup >
                                 <dxlc:LayoutItem Label="厂别">
-                                    <dxe:ComboBoxEdit IsReadOnly="{Binding Readonly_Trial}" EditValue="{Binding Trial.FAssemblyFactory}">
+                                    <dxe:ComboBoxEdit IsReadOnly="{Binding Readonly_Head}" EditValue="{Binding Trial.FAssemblyFactory}">
                                         <dxe:ComboBoxEditItem Content="一车间"/>
                                         <dxe:ComboBoxEditItem Content="二车间"/>
                                     </dxe:ComboBoxEdit>
                                 </dxlc:LayoutItem>
                                 <dxlc:LayoutItem Label="日期">
-                                    <dxe:DateEdit IsReadOnly="{Binding Readonly_Trial}" Text="{Binding Trial.FDate, StringFormat=yyyy/MM/dd HH:mm}">
+                                    <dxe:DateEdit IsReadOnly="{Binding Readonly_Head}" Text="{Binding Trial.FDate, StringFormat=yyyy/MM/dd HH:mm}">
                                         <dxe:DateEdit.StyleSettings>
-                                            <dxe:DateEditNavigatorWithTimePickerStyleSettings/>
+                                            <dxe:DateEditCalendarStyleSettings/>
                                         </dxe:DateEdit.StyleSettings>
                                     </dxe:DateEdit>
                                 </dxlc:LayoutItem>
                                 <dxlc:LayoutItem Label="研发项目编号">
-                                    <dxe:TextEdit IsReadOnly="{Binding Readonly_Trial}" Text="{Binding Trial.FRDNo}"/>
+                                    <dxe:TextEdit IsReadOnly="{Binding Readonly_Head}" Text="{Binding Trial.FRDNo}"/>
                                 </dxlc:LayoutItem>
                                 <dxlc:LayoutItem Label="产品名称">
-                                    <dxe:TextEdit IsReadOnly="{Binding Readonly_Trial}" Text="{Binding Trial.FProductName}"/>
+                                    <dxe:TextEdit IsReadOnly="{Binding Readonly_Head}" Text="{Binding Trial.FProductName}"/>
                                 </dxlc:LayoutItem>
                             </dxlc:LayoutGroup>
                             <dxlc:LayoutItem Label="工单信息">
-                                <dxe:TextEdit IsReadOnly="{Binding Readonly_Trial}" Text="{Binding Trial.FWorkerOrderDescription}"/>
+                                <dxe:TextEdit IsReadOnly="{Binding Readonly_Head}" Text="{Binding Trial.FWorkerOrderDescription}"/>
                             </dxlc:LayoutItem>
                             <dxlc:LayoutGroup Orientation="Horizontal">
                                 <dxlc:LayoutItem Label="CNC">
-                                    <dxe:CheckEdit IsReadOnly="{Binding Readonly_Trial}" IsChecked="{Binding Trial.FHasCNC}"/>
+                                    <dxe:CheckEdit IsReadOnly="{Binding Readonly_Head}" IsChecked="{Binding Trial.FHasCNC}"/>
                                 </dxlc:LayoutItem>
                                 <dxlc:LayoutItem Label="CNC工序NPI">
-                                    <dxe:AutoSuggestEdit x:Name="CNC" ItemsSource="{Binding Employees}" TextMember="Name" IsReadOnly="{Binding Readonly_Trial}" Text="{Binding Trial.FCNCNPI}" IsEnabled="{Binding Trial.FHasCNC}">
+                                    <dxe:AutoSuggestEdit x:Name="CNC" ItemsSource="{Binding Employees}" TextMember="Name" IsReadOnly="{Binding Readonly_Head}" Text="{Binding Trial.FCNCNPI}" IsEnabled="{Binding Trial.FHasCNC}">
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="QuerySubmitted">
                                                 <i:InvokeCommandAction Command="{Binding QuerySubmittedCommand}" CommandParameter="{Binding ElementName=CNC}"/>
@@ -108,10 +108,10 @@
                                     </dxe:AutoSuggestEdit>
                                 </dxlc:LayoutItem>
                                 <dxlc:LayoutItem Label="喷涂">
-                                    <dxe:CheckEdit IsReadOnly="{Binding Readonly_Trial}" IsChecked="{Binding Trial.FHasCoating}"/>
+                                    <dxe:CheckEdit IsReadOnly="{Binding Readonly_Head}" IsChecked="{Binding Trial.FHasCoating}"/>
                                 </dxlc:LayoutItem>
                                 <dxlc:LayoutItem Label="喷涂工序NPI">
-                                    <dxe:AutoSuggestEdit x:Name="Coating" ItemsSource="{Binding Employees}" TextMember="Name" IsReadOnly="{Binding Readonly_Trial}" Text="{Binding Trial.FCoatingNPI}" IsEnabled="{Binding Trial.FHasCoating}">
+                                    <dxe:AutoSuggestEdit x:Name="Coating" ItemsSource="{Binding Employees}" TextMember="Name" IsReadOnly="{Binding Readonly_Head}" Text="{Binding Trial.FCoatingNPI}" IsEnabled="{Binding Trial.FHasCoating}">
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="QuerySubmitted">
                                                 <i:InvokeCommandAction Command="{Binding QuerySubmittedCommand}" CommandParameter="{Binding ElementName=Coating}"/>
@@ -130,10 +130,10 @@
                             </dxlc:LayoutGroup>
                             <dxlc:LayoutGroup Orientation="Horizontal">
                                 <dxlc:LayoutItem Label="激光切割">
-                                    <dxe:CheckEdit IsReadOnly="{Binding Readonly_Trial}" IsChecked="{Binding Trial.FHasLaser}"/>
+                                    <dxe:CheckEdit IsReadOnly="{Binding Readonly_Head}" IsChecked="{Binding Trial.FHasLaser}"/>
                                 </dxlc:LayoutItem>
                                 <dxlc:LayoutItem Label="激光切割工序NPI">
-                                    <dxe:AutoSuggestEdit x:Name="Laser" ItemsSource="{Binding Employees}" TextMember="Name" IsReadOnly="{Binding Readonly_Trial}" Text="{Binding Trial.FLaserNPI}" IsEnabled="{Binding Trial.FHasLaser}">
+                                    <dxe:AutoSuggestEdit x:Name="Laser" ItemsSource="{Binding Employees}" TextMember="Name" IsReadOnly="{Binding Readonly_Head}" Text="{Binding Trial.FLaserNPI}" IsEnabled="{Binding Trial.FHasLaser}">
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="QuerySubmitted">
                                                 <i:InvokeCommandAction Command="{Binding QuerySubmittedCommand}" CommandParameter="{Binding ElementName=Laser}"/>
@@ -151,11 +151,11 @@
                                 </dxlc:LayoutItem>
                                 <dxlc:LayoutGroup Orientation="Vertical">
                                     <dxlc:LayoutItem Label="组装">
-                                        <dxe:CheckEdit IsReadOnly="{Binding Readonly_Trial}" IsChecked="{Binding Trial.FHasAssembly}"/>
+                                        <dxe:CheckEdit IsReadOnly="{Binding Readonly_Head}" IsChecked="{Binding Trial.FHasAssembly}"/>
                                     </dxlc:LayoutItem>
                                 </dxlc:LayoutGroup>
                                 <dxlc:LayoutItem Label="组装工序NPI">
-                                    <dxe:AutoSuggestEdit x:Name="Assembly" ItemsSource="{Binding Employees}" TextMember="Name" IsReadOnly="{Binding Readonly_Trial}" Text="{Binding Trial.FAssemblyNPI}" IsEnabled="{Binding Trial.FHasAssembly}">
+                                    <dxe:AutoSuggestEdit x:Name="Assembly" ItemsSource="{Binding Employees}" TextMember="Name" IsReadOnly="{Binding Readonly_Head}" Text="{Binding Trial.FAssemblyNPI}" IsEnabled="{Binding Trial.FHasAssembly}">
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="QuerySubmitted">
                                                 <i:InvokeCommandAction Command="{Binding QuerySubmittedCommand}" CommandParameter="{Binding ElementName=Assembly}"/>
@@ -173,10 +173,10 @@
                                 </dxlc:LayoutItem>
                             </dxlc:LayoutGroup>
                             <dxlc:LayoutItem Label="基本信息">
-                                <dxe:TextEdit IsReadOnly="{Binding Readonly_Trial}" Text="{Binding Trial.FInformation}"/>
+                                <dxe:TextEdit IsReadOnly="{Binding Readonly_Head}" Text="{Binding Trial.FInformation}"/>
                             </dxlc:LayoutItem>
                             <dxlc:LayoutItem Label="制作要求">
-                                <dxe:TextEdit IsReadOnly="{Binding Readonly_Trial}" Text="{Binding Trial.FRequire}"/>
+                                <dxe:TextEdit IsReadOnly="{Binding Readonly_Head}" Text="{Binding Trial.FRequire}"/>
                             </dxlc:LayoutItem>
                         </dxlc:LayoutGroup>
                     </dxlc:LayoutGroup>
@@ -200,22 +200,22 @@
 
                                     <dxg:GridColumn FieldName="FEntryId" IsSmart="True" ReadOnly="True" Visible="{Binding ColumnVisibility}"/>
                                     <dxg:GridColumn FieldName="FHeadId" IsSmart="True" ReadOnly="True" Visible="{Binding ColumnVisibility}"/>
-                                    <dxg:GridColumn Header="工单号" FieldName="FWorkOrder" ReadOnly="{Binding Readonly_TrialEntry}" IsSmart="True" />
-                                    <dxg:GridColumn Header="工站" FieldName="FStation" ReadOnly="{Binding Readonly_TrialEntry}" IsSmart="True" />
-                                    <dxg:GridColumn Header="工序" FieldName="FProcessName" ReadOnly="{Binding Readonly_TrialEntry}" IsSmart="True" />
-                                    <dxg:GridColumn Header="投入时间" FieldName="FBeginDate" ReadOnly="{Binding Readonly_TrialEntry}" IsSmart="True">
+                                    <dxg:GridColumn Header="工单号" FieldName="FWorkOrder" ReadOnly="{Binding Readonly_Entry}" IsSmart="True" />
+                                    <dxg:GridColumn Header="工站" FieldName="FStation" ReadOnly="{Binding Readonly_Entry}" IsSmart="True" />
+                                    <dxg:GridColumn Header="工序" FieldName="FProcessName" ReadOnly="{Binding Readonly_Entry}" IsSmart="True" />
+                                    <dxg:GridColumn Header="投入时间" FieldName="FBeginDate" ReadOnly="{Binding Readonly_Entry}" IsSmart="True">
                                         <dxg:GridColumn.EditSettings>
                                             <dxe:DateEditSettings Mask="G" MaskUseAsDisplayFormat="True"/>
                                         </dxg:GridColumn.EditSettings>
                                     </dxg:GridColumn>
-                                    <dxg:GridColumn Header="结束时间" FieldName="FEndDate" ReadOnly="{Binding Readonly_TrialEntry}" IsSmart="True">
+                                    <dxg:GridColumn Header="结束时间" FieldName="FEndDate" ReadOnly="{Binding Readonly_Entry}" IsSmart="True">
                                         <dxg:GridColumn.EditSettings>
                                             <dxe:DateEditSettings Mask="G" MaskUseAsDisplayFormat="True"/>
                                         </dxg:GridColumn.EditSettings>
                                     </dxg:GridColumn>
-                                    <dxg:GridColumn Header="投入数量" FieldName="FAmount" ReadOnly="{Binding Readonly_TrialEntry}" IsSmart="True" UnboundType="Bound" />
-                                    <dxg:GridColumn Header="投入人力" FieldName="FManPower" ReadOnly="{Binding Readonly_TrialEntry}" IsSmart="True" />
-                                    <dxg:GridColumn Header="投入工时" FieldName="FManHours" ReadOnly="{Binding Readonly_TrialEntry}" IsSmart="True" />
+                                    <dxg:GridColumn Header="投入数量" FieldName="FAmount" ReadOnly="{Binding Readonly_Entry}" IsSmart="True" UnboundType="Bound" />
+                                    <dxg:GridColumn Header="投入人力" FieldName="FManPower" ReadOnly="{Binding Readonly_Entry}" IsSmart="True" />
+                                    <dxg:GridColumn Header="投入工时" FieldName="FManHours" ReadOnly="{Binding Readonly_Entry}" IsSmart="True" />
 
                                     <dxg:GridControl.TotalSummary>
                                         <dxg:GridSummaryItem Alignment="Right" DisplayFormat="总工时:{0}" FieldName="FManHours" SummaryType="Sum" />

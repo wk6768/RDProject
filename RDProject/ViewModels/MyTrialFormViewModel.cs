@@ -18,7 +18,7 @@ using System.Windows;
 
 namespace RDProject.ViewModels
 {
-    public class MyFormViewModel : BindableBase, INavigationAware
+    public class MyTrialFormViewModel : BindableBase, INavigationAware
     {
 
         public async void OnNavigatedTo(NavigationContext navigationContext)
@@ -53,7 +53,7 @@ namespace RDProject.ViewModels
             TrialTitles2 = new ObservableCollection<TrialTitle>(list2);
         }
 
-        public MyFormViewModel(IRegionManager regionManager, ITrialService trialService, IWFService wfService, IEventAggregator aggregator)
+        public MyTrialFormViewModel(IRegionManager regionManager, ITrialService trialService, IWFService wfService, IEventAggregator aggregator)
         {
             this.regionManager = regionManager;
             this.trialService = trialService;

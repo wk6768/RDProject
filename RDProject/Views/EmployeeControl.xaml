@@ -24,7 +24,7 @@
                         <dxe:PasswordBoxEdit Text="{Binding Employee.Pwd}"/>
                     </dxlc:LayoutItem>
                     <dxlc:LayoutItem Label="部门">
-                        <dxe:TextEdit Text="{Binding Employee.EmpName}"/>
+                        <dxe:TextEdit Text="{Binding Employee.DeptName}"/>
                     </dxlc:LayoutItem>
                     <dxlc:LayoutItem Label="组别">
                         <dxe:TextEdit Text="{Binding Employee.UserGroup}"/>
@@ -48,7 +48,7 @@
                         </dxg:GridControl.View>
                         <dxg:GridColumn FieldName="Id" IsSmart="True" />
                         <dxg:GridColumn FieldName="Name" IsSmart="True" />
-                        <dxg:GridColumn FieldName="EmpName" IsSmart="True" />
+                        <dxg:GridColumn FieldName="DeptName" IsSmart="True" />
                         <dxg:GridColumn FieldName="Pwd" IsSmart="True" />
                         <dxg:GridColumn FieldName="UserGroup" IsSmart="True" />
                     </dxg:GridControl>
