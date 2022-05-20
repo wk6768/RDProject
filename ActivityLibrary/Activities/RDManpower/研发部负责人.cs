@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Activities;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
@@ -8,15 +9,27 @@ namespace ActivityLibrary.Activities.RDManpower
 {
     public sealed class 研发部负责人 : NativeActivity
     {
-        // 定义一个字符串类型的活动输入参数
-        public InArgument<string> Text { get; set; }
+        public OutArgument<bool> Answer_研发部负责人 { get; set; }
+        public OutArgument<string> BookMarkName { get; set; }
 
-        // 如果活动返回值，则从 CodeActivity<TResult>
-        // 并从 Execute 方法返回该值。
         protected override void Execute(NativeActivityContext context)
         {
-            // 获取 Text 输入参数的运行时值
-            string text = context.GetValue(this.Text);
+            Debug.WriteLine("流入:研发部负责人");
+            Bookmark bookmark = context.CreateBookmark("研发部负责人", DoSome);
         }
+
+        private void DoSome(NativeActivityContext context, Bookmark bookmark, object value)
+        {
+            Debug.WriteLine("执行:研发部负责人");
+
+            Dictionary<string, object> keys = (Dictionary<string, object>)value;
+            keys.TryGetValue("IsPass", out object b);
+            keys.TryGetValue("BookMarkName", out object m);
+
+            context.SetValue(Answer_研发部负责人, Convert.ToBoolean(b));
+            context.SetValue(BookMarkName, Convert.ToString(m));
+        }
+
+        protected override bool CanInduceIdle => true;
     }
 }

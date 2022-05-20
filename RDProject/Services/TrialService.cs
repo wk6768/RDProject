@@ -144,22 +144,22 @@ namespace RDProject.Services
             return ctx.Trials.Where(t => t.FTitle.Contains(title)).ToList();
         }
 
-        public List<TrialTitle> GetTrialTitleByCreateUser(string createUser)
+        public List<MyTitle> GetMyTitleByCreateUser(string createUser)
         {
             return ctx.Trials.Where(t => t.FCreateUser == createUser).
-                Select(t => new TrialTitle() { FHeadId = t.FHeadId, FTitle = t.FTitle}).ToList();
+                Select(t => new MyTitle() { FHeadId = t.FHeadId, FTitle = t.FTitle}).ToList();
         }
 
-        public List<TrialTitle> GetTrialTitleByTitle(string title)
+        public List<MyTitle> GetMyTitleByTitle(string title)
         {
             return ctx.Trials.Where(t => t.FTitle.Contains(title)).
-                Select(t => new TrialTitle() { FHeadId = t.FHeadId, FTitle = t.FTitle, FStatus = t.FStatus }).ToList();
+                Select(t => new MyTitle() { FHeadId = t.FHeadId, FTitle = t.FTitle, FStatus = t.FStatus }).ToList();
         }
 
-        public List<TrialTitle> GetTrialTitleByTitleAndStatus(string title, int status)
+        public List<MyTitle> GetMyTitleByTitleAndStatus(string title, int status)
         {
             return ctx.Trials.Where(t => t.FStatus == status && t.FTitle.Contains(title)).
-                Select(t => new TrialTitle() { FHeadId = t.FHeadId, FTitle = t.FTitle, FStatus = t.FStatus }).ToList();
+                Select(t => new MyTitle() { FHeadId = t.FHeadId, FTitle = t.FTitle, FStatus = t.FStatus }).ToList();
         }
 
         public int UpdateTrialEntry(TrialEntry trialEntry)

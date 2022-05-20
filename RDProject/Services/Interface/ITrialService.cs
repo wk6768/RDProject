@@ -68,21 +68,21 @@ namespace RDProject.Services.Interface
         /// </summary>
         /// <param name="createUser"></param>
         /// <returns></returns>
-        List<TrialTitle> GetTrialTitleByCreateUser(string createUser);
+        List<MyTitle> GetMyTitleByCreateUser(string createUser);
 
         /// <summary>
         /// 通过标题获取所有复符合条件的表单的ID和标题
         /// </summary>
         /// <param name="title"></param>
         /// <returns></returns>
-        List<TrialTitle> GetTrialTitleByTitle(string title);
+        List<MyTitle> GetMyTitleByTitle(string title);
 
         /// <summary>
         /// 通过标题和表单状态获取所有复符合条件的表单的ID和标题
         /// </summary>
         /// <param name="title"></param>
         /// <returns></returns>
-        List<TrialTitle> GetTrialTitleByTitleAndStatus(string title, int status);
+        List<MyTitle> GetMyTitleByTitleAndStatus(string title, int status);
 
         /// <summary>
         /// 更新一条明细

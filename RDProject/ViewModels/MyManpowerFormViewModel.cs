@@ -18,12 +18,12 @@ using System.Windows;
 
 namespace RDProject.ViewModels
 {
-    public class MyTrialFormViewModel : BindableBase, INavigationAware
+    public class MyManpowerFormViewModel : BindableBase, INavigationAware
     {
 
         public async void OnNavigatedTo(NavigationContext navigationContext)
         {
-            regionManager.Regions["FormShowControl"].RequestNavigate("EmptyPage");
+            regionManager.Regions["FormShowControl2"].RequestNavigate("EmptyPage");
             User = navigationContext.Parameters["User"] as Employee;
             await GetData1();
             await GetData2();
@@ -43,17 +43,17 @@ namespace RDProject.ViewModels
         async Task GetData1()
         {
             //var list = trialService.GetTrialTitleByCreateUser(User.Name);
-            var list1 = await wfService.GetMyTitleByUserNameAsync(User.Name, 1, "Trial");
+            var list1 = await wfService.GetMyTitleByUserNameAsync(User.Name, 1, "Manpower");
             TrialTitles1 = new ObservableCollection<MyTitle>(list1);
         }
         //获取所有与当前用户有关的表单
         async Task GetData2()
         {
-            var list2 = await wfService.GetMyTitleByUserNameAsync(User.Name, "Trial");
+            var list2 = await wfService.GetMyTitleByUserNameAsync(User.Name, "Manpower");
             TrialTitles2 = new ObservableCollection<MyTitle>(list2);
         }
 
-        public MyTrialFormViewModel(IRegionManager regionManager, ITrialService trialService, IWFService wfService, IEventAggregator aggregator)
+        public MyManpowerFormViewModel(IRegionManager regionManager, ITrialService trialService, IWFService wfService, IEventAggregator aggregator)
         {
             this.regionManager = regionManager;
             this.trialService = trialService;
@@ -129,7 +129,7 @@ namespace RDProject.ViewModels
             var keys = new NavigationParameters();
             keys.Add("User", User);
             keys.Add("FHeadID", trialTitle.FHeadId);
-            regionManager.Regions["FormShowControl"].RequestNavigate("TrialForm", keys);
+            regionManager.Regions["FormShowControl2"].RequestNavigate("ManpowerForm", keys);
         }
 
         /// <summary>

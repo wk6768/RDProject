@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RDProject.Event
 {
-    public class RefreshTrialTitleListEvent : PubSubEvent
+    public class RefreshMyTitleListEvent : PubSubEvent
     {
     }
 }

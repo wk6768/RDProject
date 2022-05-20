@@ -25,5 +25,12 @@ namespace RDProject.Services.Interface
         /// <param name="manpowerEntries"></param>
         /// <returns></returns>
         (Manpower, ObservableCollection<ManpowerEntry>) UpdateManpowerPageAndReturnFullData(Manpower manpower, ObservableCollection<ManpowerEntry> manpowerEntries);
+
+        /// <summary>
+        /// 通过Manpower的表头ID获取该表单完整内容
+        /// </summary>
+        /// <param name="fHeadId"></param>
+        /// <returns></returns>
+        (Manpower, List<ManpowerEntry>) GetManpowerFullData(long fHeadId);
     }
 }

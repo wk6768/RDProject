@@ -45,14 +45,14 @@ namespace RDProject.Services.Interface
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        Task<List<TrialTitle>> GetTrialTitleByUserNameAsync(string userName, int status);
+        Task<List<MyTitle>> GetMyTitleByUserNameAsync(string userName, int status, string tableName);
 
         /// <summary>
         /// 根据姓名获取与该用户相关的所有审批列表
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        Task<List<TrialTitle>> GetTrialTitleByUserNameAsync(string userName);
+        Task<List<MyTitle>> GetMyTitleByUserNameAsync(string userName, string tableName);
         
     }
 }

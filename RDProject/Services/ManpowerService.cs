@@ -19,24 +19,40 @@ namespace RDProject.Services
             this.ctx = ctx;
         }
 
+        public (Manpower, List<ManpowerEntry>) GetManpowerFullData(long fHeadId)
+        {
+            var manpower = ctx.Manpowers.Where(t => t.FHeadId == fHeadId).FirstOrDefault();
+            var manpowerEnties = ctx.manpowerEntries.Where(t => t.FHeadId == fHeadId).ToList();
+            return (manpower, manpowerEnties);
+        }
+
         public (Manpower, ObservableCollection<ManpowerEntry>) SaveManpowerPageAndReturnFullData(Manpower manpower, ObservableCollection<ManpowerEntry> manpowerEntries)
         {
             using(var tran = ctx.Database.BeginTransaction())
             {
-                ctx.Manpowers.Add(manpower);
-                ctx.SaveChanges();
-                
-                foreach(var entry in manpowerEntries)
+                try
                 {
-                    entry.FHeadId = manpower.FHeadId;
+                    ctx.Manpowers.Add(manpower);
+                    ctx.SaveChanges();
+
+                    foreach (var entry in manpowerEntries)
+                    {
+                        entry.FHeadId = manpower.FHeadId;
+                    }
+
+                    ctx.manpowerEntries.AddRange(manpowerEntries);
+                    ctx.SaveChanges();
+
+                    tran.Commit();
+
+                    return (manpower, manpowerEntries);
                 }
-
-                ctx.manpowerEntries.AddRange(manpowerEntries);
-                ctx.SaveChanges();
-
-                tran.Commit();
-
-                return (manpower, manpowerEntries);
+                catch
+                {
+                    tran.Rollback();
+                    return (null, null);
+                }
+                
             }
         }
 
@@ -44,14 +60,31 @@ namespace RDProject.Services
         {
             using(var tran = ctx.Database.BeginTransaction())
             {
-                ctx.Manpowers.Update(manpower);
-                ctx.manpowerEntries.UpdateRange(manpowerEntries);
+                try
+                {
+                    ctx.Manpowers.Update(manpower);
+                    ctx.SaveChanges();
 
-                ctx.SaveChanges();
+                    if (manpowerEntries != null)
+                    {
+                        foreach (ManpowerEntry manpowerEntry in manpowerEntries)
+                        {
+                            manpowerEntry.FHeadId = manpower.FHeadId;
+                        }
+                        ctx.manpowerEntries.UpdateRange(manpowerEntries);
+                        ctx.SaveChanges();
+                    }
 
-                tran.Commit();
+                    tran.Commit();
 
-                return (manpower, manpowerEntries);
+                    return (manpower, manpowerEntries);
+                }
+                catch
+                {
+                    tran.Rollback();
+                    return (null, null);
+                }
+                
             }
         }
     }

@@ -503,6 +503,19 @@ namespace RDProject.ViewModels
             //保存
             (instance, Steps) = wfService.SaveInstance(instance, Steps);
 
+
+            //更新工作流
+            _ = Task.Run(async () =>
+            {
+                await Task.Delay(5000);
+                WFHelper.Resume(
+                    activity,
+                    guid,
+                    "提交申请",
+                    null
+                );
+            });
+
             //发送邮件
         }
 
@@ -616,16 +629,21 @@ namespace RDProject.ViewModels
                 Dictionary<string, object> keys2 = new Dictionary<string, object>();
                 keys2.Add("IsPass", false);
                 keys2.Add("BookMarkName", Bookmark);
-                
 
-                WFHelper.Resume(
+                try
+                {
+                    WFHelper.Resume(
                         new 研发项目试产记录表(),
                         Instance.InstanceGuid,
                         step.BookMark,
                         keys2
                     );
+                }
+                catch
+                {
+                    return;
+                }
 
-                
                 //更新审批和审批步骤
                 step.Status = 2; //2表示在此节点驳回
                 step.SubTime = DateTime.Now;
@@ -640,6 +658,8 @@ namespace RDProject.ViewModels
                 {
                     item.Status = 0;
                 }
+
+                Instance.NextName = rejectStep.SubBy;
                 //更新
                 (Instance, Steps) = wfService.UpdateInstance(Instance, Steps);
                 

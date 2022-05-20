@@ -89,23 +89,53 @@ namespace RDProject.Services
             return ctx.SaveChanges();
         }
 
-        public async Task<List<TrialTitle>> GetTrialTitleByUserNameAsync(string userName, int status)
+        public async Task<List<MyTitle>> GetMyTitleByUserNameAsync(string userName, int status, string tableName)
         {
             //获取某人，某状态的流程
-            return await ctx.WFInstances.Join(ctx.Trials, i => i.HeadId, t => t.FHeadId, (i, t) => new { Status = i.Status, NextName = i.NextName, FHeadId = t.FHeadId, FTitle = t.FTitle })
-                .Where(b => b.Status == status && b.NextName == userName)
-                .Select(t => new TrialTitle { FHeadId = t.FHeadId, FTitle = t.FTitle + "-" + t.FHeadId, FStatus = t.Status})
-                .ToListAsync();
+            switch (tableName)
+            {
+                case "Trial":
+                    return await ctx.WFInstances.Join(ctx.Trials, i => i.HeadId, t => t.FHeadId, (i, t) => new { TableName = i.TableName, Status = i.Status, NextName = i.NextName, FHeadId = t.FHeadId, FTitle = t.FTitle })
+                    .Where(b => b.TableName == tableName && b.Status == status && b.NextName == userName)
+                    .Select(t => new MyTitle { FHeadId = t.FHeadId, FTitle = t.FTitle + "-" + t.FHeadId, FStatus = t.Status })
+                    .ToListAsync();
+                case "Manpower":
+                    return await ctx.WFInstances.Join(ctx.Manpowers, i => i.HeadId, t => t.FHeadId, (i, t) => new { TableName = i.TableName, Status = i.Status, NextName = i.NextName, FHeadId = t.FHeadId, FTitle = t.FTitle })
+                    .Where(b => b.TableName == tableName && b.Status == status && b.NextName == userName)
+                    .Select(t => new MyTitle { FHeadId = t.FHeadId, FTitle = t.FTitle + "-" + t.FHeadId, FStatus = t.Status })
+                    .ToListAsync();
+                default:
+                    return null;
+
+            }
         }
 
-        public async Task<List<TrialTitle>> GetTrialTitleByUserNameAsync(string userName)
+        public async Task<List<MyTitle>> GetMyTitleByUserNameAsync(string userName, string tableName)
         {
             //获取与某人相关的所有流程
-            var InstanceIds = await ctx.WFSteps.Where(s => s.SubBy == userName).Select( s => s.InstanceId ).Distinct().ToListAsync();
-            return await ctx.WFInstances.Join(ctx.Trials, i => i.HeadId, t => t.FHeadId, (i, t) => new { InstanceId = i.InstanceId, Status = i.Status, FHeadId = t.FHeadId, FTitle = t.FTitle })
-                .Where(i => InstanceIds.Contains(i.InstanceId))
-                .Select(t => new TrialTitle { FHeadId = t.FHeadId, FTitle = t.FTitle + "-" + t.FHeadId, FStatus = t.Status })
-                .ToListAsync();
+            //var InstanceIds = await ctx.WFSteps.Where(s => s.SubBy == userName).Select( s => s.InstanceId ).Distinct().ToListAsync();
+            //return await ctx.WFInstances.Join(ctx.Trials, i => i.HeadId, t => t.FHeadId, (i, t) => new { TableName = i.TableName, InstanceId = i.InstanceId, Status = i.Status, FHeadId = t.FHeadId, FTitle = t.FTitle })
+            //    .Where(b => b.TableName == tableName  && InstanceIds.Contains(b.InstanceId))
+            //    .Select(t => new MyTitle { FHeadId = t.FHeadId, FTitle = t.FTitle + "-" + t.FHeadId, FStatus = t.Status })
+            //    .ToListAsync();
+
+            var InstanceIds = await ctx.WFSteps.Where(s => s.SubBy == userName).Select(s => s.InstanceId).Distinct().ToListAsync();
+            switch (tableName)
+            {
+                case "Trial":
+                    return await ctx.WFInstances.Join(ctx.Trials, i => i.HeadId, t => t.FHeadId, (i, t) => new { TableName = i.TableName, InstanceId = i.InstanceId, Status = i.Status, FHeadId = t.FHeadId, FTitle = t.FTitle })
+                        .Where(b => b.TableName == tableName && InstanceIds.Contains(b.InstanceId))
+                        .Select(t => new MyTitle { FHeadId = t.FHeadId, FTitle = t.FTitle + "-" + t.FHeadId, FStatus = t.Status })
+                        .ToListAsync();
+                case "Manpower":
+                    return await ctx.WFInstances.Join(ctx.Manpowers, i => i.HeadId, t => t.FHeadId, (i, t) => new { TableName = i.TableName, InstanceId = i.InstanceId, Status = i.Status, FHeadId = t.FHeadId, FTitle = t.FTitle })
+                        .Where(b => b.TableName == tableName && InstanceIds.Contains(b.InstanceId))
+                        .Select(t => new MyTitle { FHeadId = t.FHeadId, FTitle = t.FTitle + "-" + t.FHeadId, FStatus = t.Status })
+                        .ToListAsync();
+                default:
+                    return null;
+
+            }
         }
     }
 }

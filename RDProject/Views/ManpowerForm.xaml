@@ -6,6 +6,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RDProject.Views"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" 
              xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" 
              x:Class="RDProject.Views.ManpowerForm"
@@ -85,6 +86,35 @@
                             <dxg:GridColumn Header="RD34工时" FieldName="FRD34Hours" IsSmart="True" ReadOnly="{Binding Readonly_Entry}" />
                             <dxg:GridColumn Header="工时差异" FieldName="FVarianceHours" IsSmart="True" ReadOnly="{Binding Readonly_Entry}" />
 
+                        </dxg:GridControl>
+                    </dxlc:LayoutGroup>
+
+                    <dxlc:LayoutGroup Header="审批步骤" View="GroupBox" MinHeight="200">
+                        <dxg:GridControl ItemsSource="{Binding Steps}" x:Name="GridControl_WFStep">
+                            <dxg:GridControl.View>
+                                <dxg:TableView AutoWidth="True" BestFitModeOnSourceChange="Smart" ShowGroupPanel="False"
+                                               ShowUpdateRowButtons="OnCellValueChange">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="ValidateRow">
+                                            <i:InvokeCommandAction Command="{Binding UpdateStepCommand}" 
+                                                                   CommandParameter="{Binding ElementName=GridControl_WFStep, Path=SelectedItem}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </dxg:TableView>
+                            </dxg:GridControl.View>
+
+                            <dxg:GridColumn FieldName="StepId" IsSmart="True" ReadOnly="True" Visible="{Binding ColumnVisibility}"></dxg:GridColumn>
+                            <dxg:GridColumn FieldName="InstanceId" IsSmart="True" ReadOnly="True" Visible="{Binding ColumnVisibility}"></dxg:GridColumn>
+                            <dxg:GridColumn Header="序号" FieldName="StepNo" IsSmart="True" ReadOnly="{Binding Readonly_WFStep}"></dxg:GridColumn>
+                            <dxg:GridColumn Header="节点名称" FieldName="BookMark" IsSmart="True" ReadOnly="{Binding Readonly_WFStep}"></dxg:GridColumn>
+                            <dxg:GridColumn Header="审批意见" FieldName="Remark" IsSmart="True" ReadOnly="{Binding Readonly_WFStep}"></dxg:GridColumn>
+                            <dxg:GridColumn Header="审批人" FieldName="SubBy" IsSmart="True" ReadOnly="{Binding Readonly_WFStep}"></dxg:GridColumn>
+                            <dxg:GridColumn Header="审批时间" FieldName="SubTime" IsSmart="True" ReadOnly="{Binding Readonly_WFStep}">
+                                <dxg:GridColumn.EditSettings>
+                                    <dxe:DateEditSettings Mask="G" MaskUseAsDisplayFormat="True"/>
+                                </dxg:GridColumn.EditSettings>
+                            </dxg:GridColumn>
+                            <dxg:GridColumn Header="状态码" FieldName="Status" IsSmart="True" ReadOnly="{Binding Readonly_WFStep}"></dxg:GridColumn>
                         </dxg:GridControl>
                     </dxlc:LayoutGroup>
 

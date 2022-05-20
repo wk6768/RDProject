@@ -7,7 +7,7 @@ using Prism.Mvvm;
 
 namespace RDProject.Models.VO 
 {
-    public class TrialTitle : BindableBase
+    public class MyTitle : BindableBase
     {
         private long fHeadId;
         private string fTitle;

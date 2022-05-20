@@ -44,6 +44,7 @@ namespace RDProject
             containerRegistry.RegisterForNavigation<MyTrialForm, MyTrialFormViewModel>();
             containerRegistry.RegisterForNavigation<TrialStatistics, TrialStatisticsViewModel>();
             containerRegistry.RegisterForNavigation<ManpowerForm, ManpowerFormViewModel>();
+            containerRegistry.RegisterForNavigation<MyManpowerForm, MyManpowerFormViewModel>();
 
             containerRegistry.RegisterForNavigation<WelcomePage, WelcomePageViewModel>();
             containerRegistry.RegisterForNavigation<EmptyPage, EmptyPageViewModel>();

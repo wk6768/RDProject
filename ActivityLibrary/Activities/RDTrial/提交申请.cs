@@ -35,6 +35,14 @@ namespace ActivityLibrary.Activities.RDTrial
 
             Debug.WriteLine("提交申请");
             Debug.WriteLine(v1 + " " + v2 + " " + v3 + " " + v4);
+            Bookmark bookmark = context.CreateBookmark("提交申请", DoSome);
         }
+
+        private void DoSome(NativeActivityContext context, Bookmark bookmark, object value)
+        {
+            Debug.WriteLine("执行:提交申请");
+        }
+
+        protected override bool CanInduceIdle => true;
     }
 }

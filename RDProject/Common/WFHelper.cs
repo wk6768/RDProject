@@ -4,6 +4,7 @@ using System.Activities.DurableInstancing;
 using System.Collections.Generic;
 using System.Runtime.DurableInstancing;
 using System.Text;
+using System.Windows;
 
 namespace RDProject.Common
 {
@@ -61,16 +62,22 @@ namespace RDProject.Common
         /// <param name="value"></param>
         public static void Resume(Activity activity, string guid, string bookmarkName, object value)
         {
-            WorkflowApplication app = new WorkflowApplication(activity);
+            try
+            {
+                WorkflowApplication app = new WorkflowApplication(activity);
 
-            app.PersistableIdle= a => PersistableIdleAction.Unload;
+                app.PersistableIdle = a => PersistableIdleAction.Unload;
 
-            InstanceStore store = new SqlWorkflowInstanceStore(ConnString());
-            app.InstanceStore = store;
+                InstanceStore store = new SqlWorkflowInstanceStore(ConnString());
+                app.InstanceStore = store;
 
-            app.Load(Guid.Parse(guid));
+                app.Load(Guid.Parse(guid));
 
-            app.ResumeBookmark(bookmarkName, value);
+                app.ResumeBookmark(bookmarkName, value);
+            }catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
         }
     }
 }

@@ -1,22 +1,26 @@
 ﻿using System;
 using System.Activities;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
 namespace ActivityLibrary.Activities.RDManpower
 {
-    public sealed class 提交申请 : CodeActivity
+    public sealed class 提交申请 : NativeActivity
     {
-        // 定义一个字符串类型的活动输入参数
-        public InArgument<string> Text { get; set; }
-
-        // 如果活动返回值，则从 CodeActivity<TResult>
-        // 并从 Execute 方法返回该值。
-        protected override void Execute(CodeActivityContext context)
+ 
+        protected override void Execute(NativeActivityContext context)
         {
-            // 获取 Text 输入参数的运行时值
-            string text = context.GetValue(this.Text);
+            Debug.WriteLine("提交申请");
+            Bookmark bookmark = context.CreateBookmark("提交申请", DoSome);
         }
+
+        private void DoSome(NativeActivityContext context, Bookmark bookmark, object value)
+        {
+            Debug.WriteLine("执行:提交申请");
+        }
+
+        protected override bool CanInduceIdle => true;
     }
 }

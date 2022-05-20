@@ -274,7 +274,7 @@
     <Compile Include="Models\SerialNumber.cs" />
     <Compile Include="Models\SerialNumberConfig.cs" />
     <Compile Include="Models\VO\TrialReport.cs" />
-    <Compile Include="Models\VO\TrialTitle.cs" />
+    <Compile Include="Models\VO\MyTitle.cs" />
     <Compile Include="Models\WFInstance.cs" />
     <Compile Include="Models\WFInstanceConfig.cs" />
     <Compile Include="Models\WFStep.cs" />
@@ -291,6 +291,7 @@
     <Compile Include="ViewModels\EmptyPageViewModel.cs" />
     <Compile Include="ViewModels\ManpowerAddDialogViewModel.cs" />
     <Compile Include="ViewModels\ManpowerFormViewModel.cs" />
+    <Compile Include="ViewModels\MyManpowerFormViewModel.cs" />
     <Compile Include="ViewModels\MyTrialFormViewModel.cs" />
     <Compile Include="ViewModels\TrialAddDialogViewModel.cs" />
     <Compile Include="ViewModels\TrialStatisticsViewModel.cs" />
@@ -306,6 +307,9 @@
     </Compile>
     <Compile Include="Views\ManpowerForm.xaml.cs">
       <DependentUpon>ManpowerForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MyManpowerForm.xaml.cs">
+      <DependentUpon>MyManpowerForm.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MyTrialForm.xaml.cs">
       <DependentUpon>MyTrialForm.xaml</DependentUpon>
@@ -338,6 +342,10 @@
     <Page Include="Views\ManpowerForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MyManpowerForm.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\MyTrialForm.xaml">
       <SubType>Designer</SubType>
