@@ -19,7 +19,8 @@ namespace RDProject.Common
         public DbSet<SerialNumber> SerialNumbers { get; set; }
         public DbSet<TrialReport> TrialReports { get; set; }
         public DbSet<Manpower> Manpowers { get; set; }
-        public DbSet<ManpowerEntry> manpowerEntries { get; set; }
+        public DbSet<ManpowerEntry> ManpowerEntries { get; set; }
+        public DbSet<ManpowerReport> ManpowerReports { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -79,6 +80,8 @@ namespace RDProject.Common
 
             modelBuilder.Entity<ManpowerEntry>().HasKey(b => b.FEntryId);
             modelBuilder.Entity<ManpowerEntry>().HasIndex(b => b.FHeadId);
+
+            modelBuilder.Entity<ManpowerReport>().HasNoKey();
 
             modelBuilder.ApplyConfigurationsFromAssembly(this.GetType().Assembly);
 

@@ -3,21 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Prism.Mvvm;
 using Prism.Commands;
-using Prism.Navigation;
+using Prism.Mvvm;
 using RDProject.Services.Interface;
 using RDProject.Models.VO;
 
 namespace RDProject.ViewModels
 {
-    public class TrialStatisticsViewModel : BindableBase
+    public class ManpowerStatisticsViewModel : BindableBase
     {
-        private readonly ITrialService trialService;
-
-        public TrialStatisticsViewModel(ITrialService trialService)
+        public ManpowerStatisticsViewModel(IManpowerService manpowerService)
         {
-            this.trialService = trialService;
+            this.manpowerService = manpowerService;
             SearchCommand = new DelegateCommand(Search);
             ExportCommand = new DelegateCommand<object>(Export);
 
@@ -25,6 +22,11 @@ namespace RDProject.ViewModels
             BeginDate = BeginDate.AddYears(now.Year - 1).AddMonths(now.Month - 1).AddDays(0);
             EndDate = EndDate.AddYears(now.Year - 1).AddMonths(now.Month).AddDays(0);
         }
+
+       
+
+        private readonly IManpowerService manpowerService;
+
 
         private DateTime beginDate;
 
@@ -42,9 +44,26 @@ namespace RDProject.ViewModels
             set { endDate = value; RaisePropertyChanged(); }
         }
 
-        private List<TrialReport> reports;
+        private string empId;
 
-        public List<TrialReport> Reports
+        public string EmpId
+        {
+            get { return empId; }
+            set { empId = value; RaisePropertyChanged(); }
+        }
+
+        private string empName;
+
+        public string EmpName
+        {
+            get { return empName; }
+            set { empName = value; RaisePropertyChanged(); }
+        }
+
+
+        private List<ManpowerReport> reports;
+        
+        public List<ManpowerReport> Reports
         {
             get { return reports; }
             set { reports = value; RaisePropertyChanged(); }
@@ -56,7 +75,7 @@ namespace RDProject.ViewModels
 
         private void Search()
         {
-            Reports = trialService.GetTrialReports(BeginDate, EndDate);
+            Reports = manpowerService.GetManpowerReports(BeginDate, EndDate, EmpId, EmpName);
         }
 
         private void Export(object obj)

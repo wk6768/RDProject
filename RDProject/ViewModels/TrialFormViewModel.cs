@@ -666,7 +666,7 @@ namespace RDProject.ViewModels
             }
 
             //发布消息，刷新右侧列表
-            aggregator.GetEvent<RefreshTrialTitleListEvent>().Publish();
+            aggregator.GetEvent<RefreshMyTitleListEvent>().Publish();
         }
 
 

@@ -71,8 +71,8 @@
                             <dxg:GridColumn Header="FCreateDate" FieldName="FCreateDate" IsSmart="True" ReadOnly="True" Visible="{Binding ColumnVisibility}"/>
 
                             <dxg:GridColumn Header="工号" FieldName="FEmpId" IsSmart="True" ReadOnly="{Binding Readonly_Entry}" />
-                            <dxg:GridColumn Header="部门" FieldName="FEmpName" IsSmart="True" ReadOnly="{Binding Readonly_Entry}" />
-                            <dxg:GridColumn Header="员工姓名" FieldName="FDeptName" IsSmart="True" ReadOnly="{Binding Readonly_Entry}" />
+                            <dxg:GridColumn Header="部门" FieldName="FDeptName" IsSmart="True" ReadOnly="{Binding Readonly_Entry}" />
+                            <dxg:GridColumn Header="员工姓名" FieldName="FEmpName" IsSmart="True" ReadOnly="{Binding Readonly_Entry}" />
                             <dxg:GridColumn Header="出勤工时" FieldName="FAttendanceHours" IsSmart="True" ReadOnly="{Binding Readonly_Entry}" />
                             <dxg:GridColumn Header="平时加班" FieldName="FNormalOvertimeHours" IsSmart="True" ReadOnly="{Binding Readonly_Entry}" />
                             <dxg:GridColumn Header="休息加班" FieldName="FWeekendOvertimeHours" IsSmart="True" ReadOnly="{Binding Readonly_Entry}" />

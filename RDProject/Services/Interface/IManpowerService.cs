@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RDProject.Models;
+using RDProject.Models.VO;
 
 namespace RDProject.Services.Interface
 {
@@ -32,5 +33,16 @@ namespace RDProject.Services.Interface
         /// <param name="fHeadId"></param>
         /// <returns></returns>
         (Manpower, List<ManpowerEntry>) GetManpowerFullData(long fHeadId);
+
+
+        /// <summary>
+        /// 获取制定日期范围内某人的人力工时统计表
+        /// </summary>
+        /// <param name="beginDate"></param>
+        /// <param name="endDate"></param>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        List<ManpowerReport> GetManpowerReports(DateTime beginDate, DateTime endDate, string empId, string empName);
+
     }
 }

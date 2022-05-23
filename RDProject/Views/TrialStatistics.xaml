@@ -30,13 +30,16 @@
                             </dxe:DateEdit>
                         </dxlc:LayoutItem>
                         <dxlc:LayoutItem>
-                            <dx:SimpleButton Width="75" Height="22" Content="查询" HorizontalAlignment="Left" Command="{Binding SearchCommand}" />
+                            <StackPanel Orientation="Horizontal">
+                                <dx:SimpleButton Width="75" Height="22" Content="查询" HorizontalAlignment="Left" Margin="10,0" Command="{Binding SearchCommand}" />
+                                <dx:SimpleButton Width="75" Height="22" Content="导出" HorizontalAlignment="Left" Command="{Binding ExportCommand}" CommandParameter="{Binding ElementName=Report}" />
+                            </StackPanel>
                         </dxlc:LayoutItem>
 
                     </dxlc:LayoutGroup>
 
                     <dxlc:LayoutGroup View="Group">
-                        <dxg:GridControl ItemsSource="{Binding Reports}">
+                        <dxg:GridControl x:Name="Report" ItemsSource="{Binding Reports}">
                             <dxg:GridControl.View>
                                 <dxg:TableView AutoWidth="True" BestFitModeOnSourceChange="Smart" ShowGroupPanel="False" ShowFixedTotalSummary="True"/>
                             </dxg:GridControl.View>

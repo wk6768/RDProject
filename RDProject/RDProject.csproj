@@ -273,6 +273,7 @@
     <Compile Include="Models\ManpowerEntryConfig.cs" />
     <Compile Include="Models\SerialNumber.cs" />
     <Compile Include="Models\SerialNumberConfig.cs" />
+    <Compile Include="Models\VO\ManpowerReport.cs" />
     <Compile Include="Models\VO\TrialReport.cs" />
     <Compile Include="Models\VO\MyTitle.cs" />
     <Compile Include="Models\WFInstance.cs" />
@@ -291,6 +292,7 @@
     <Compile Include="ViewModels\EmptyPageViewModel.cs" />
     <Compile Include="ViewModels\ManpowerAddDialogViewModel.cs" />
     <Compile Include="ViewModels\ManpowerFormViewModel.cs" />
+    <Compile Include="ViewModels\ManpowerStatisticsViewModel.cs" />
     <Compile Include="ViewModels\MyManpowerFormViewModel.cs" />
     <Compile Include="ViewModels\MyTrialFormViewModel.cs" />
     <Compile Include="ViewModels\TrialAddDialogViewModel.cs" />
@@ -307,6 +309,9 @@
     </Compile>
     <Compile Include="Views\ManpowerForm.xaml.cs">
       <DependentUpon>ManpowerForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ManpowerStatistics.xaml.cs">
+      <DependentUpon>ManpowerStatistics.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MyManpowerForm.xaml.cs">
       <DependentUpon>MyManpowerForm.xaml</DependentUpon>
@@ -340,6 +345,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ManpowerForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ManpowerStatistics.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
