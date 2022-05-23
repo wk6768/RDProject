@@ -52,7 +52,7 @@
                         </dxlc:LayoutGroup>
 
                         <dxlc:LayoutItem Label="日期">
-                            <dxe:DateEdit Text="{Binding Manpower.FDate}">
+                            <dxe:DateEdit Text="{Binding Manpower.FDate, StringFormat=yyyy/MM/dd}">
                                 <dxe:TextEdit.StyleSettings>
                                     <dxe:DateEditCalendarStyleSettings/>
                                 </dxe:TextEdit.StyleSettings>
@@ -63,7 +63,15 @@
                     <dxlc:LayoutGroup>
                         <dxg:GridControl x:Name="GridControl_ManpowerEntry" ItemsSource="{Binding ManpowerEntries}">
                             <dxg:GridControl.View>
-                                <dxg:TableView AutoWidth="True" BestFitModeOnSourceChange="Smart" ShowGroupPanel="False" ShowFixedTotalSummary="True"/>
+                                <dxg:TableView AutoWidth="True" BestFitModeOnSourceChange="Smart" ShowGroupPanel="False" ShowFixedTotalSummary="True"
+                                               ShowUpdateRowButtons="OnCellValueChange">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="ValidateRow">
+                                            <i:InvokeCommandAction Command="{Binding UpdateManpowerEntryCommand}" 
+                                                                           CommandParameter="{Binding ElementName=GridControl_ManpowerEntry, Path=SelectedItem}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </dxg:TableView>
                             </dxg:GridControl.View>
 
                             <dxg:GridColumn Header="FEntryId" FieldName="FEntryId" IsSmart="True" ReadOnly="True" Visible="{Binding ColumnVisibility}"/>
@@ -77,14 +85,14 @@
                             <dxg:GridColumn Header="平时加班" FieldName="FNormalOvertimeHours" IsSmart="True" ReadOnly="{Binding Readonly_Entry}" />
                             <dxg:GridColumn Header="休息加班" FieldName="FWeekendOvertimeHours" IsSmart="True" ReadOnly="{Binding Readonly_Entry}" />
                             <dxg:GridColumn Header="法定加班" FieldName="FHolidayOvertimeHours" IsSmart="True" ReadOnly="{Binding Readonly_Entry}" />
-                            <dxg:GridColumn Header="总工时" FieldName="FTotalHours" IsSmart="True" ReadOnly="{Binding Readonly_Entry}" />
+                            <dxg:GridColumn Header="总工时" FieldName="FTotalHours" IsSmart="True" ReadOnly="True" />
                             <dxg:GridColumn Header="RD28工时" FieldName="FRD28Hours" IsSmart="True" ReadOnly="{Binding Readonly_Entry}" />
                             <dxg:GridColumn Header="RD30工时" FieldName="FRD30Hours" IsSmart="True" ReadOnly="{Binding Readonly_Entry}" />
                             <dxg:GridColumn Header="RD31工时" FieldName="FRD31Hours" IsSmart="True" ReadOnly="{Binding Readonly_Entry}" />
                             <dxg:GridColumn Header="RD32工时" FieldName="FRD32Hours" IsSmart="True" ReadOnly="{Binding Readonly_Entry}" />
                             <dxg:GridColumn Header="RD33工时" FieldName="FRD33Hours" IsSmart="True" ReadOnly="{Binding Readonly_Entry}" />
                             <dxg:GridColumn Header="RD34工时" FieldName="FRD34Hours" IsSmart="True" ReadOnly="{Binding Readonly_Entry}" />
-                            <dxg:GridColumn Header="工时差异" FieldName="FVarianceHours" IsSmart="True" ReadOnly="{Binding Readonly_Entry}" />
+                            <dxg:GridColumn Header="工时差异" FieldName="FVarianceHours" IsSmart="True" ReadOnly="True" />
 
                         </dxg:GridControl>
                     </dxlc:LayoutGroup>

@@ -166,13 +166,14 @@ namespace RDProject.ViewModels
             SendCommand = new DelegateCommand(Send);
             CheckCommand = new DelegateCommand(Check);
             UpdateStepCommand = new DelegateCommand<WFStep>(UpdateStep);
+            UpdateManpowerEntryCommand = new DelegateCommand<ManpowerEntry>(UpdateManpowerEntry);
             this.dialogService = dialogService;
             this.manpowerService = manpowerService;
             this.wfService = wfService;
             this.aggregator = aggregator;
         }
 
-     
+
 
 
         /// <summary>
@@ -327,6 +328,7 @@ namespace RDProject.ViewModels
         public DelegateCommand SendCommand { get; private set; }
         public DelegateCommand CheckCommand { get; private set; }
         public DelegateCommand<WFStep> UpdateStepCommand { get; private set; }
+        public DelegateCommand<ManpowerEntry> UpdateManpowerEntryCommand { get;private set; }
 
         private void AddManpower()
         {
@@ -590,6 +592,15 @@ namespace RDProject.ViewModels
             wfService.UpdateStep(obj);
         }
 
+
+        private void UpdateManpowerEntry(ManpowerEntry obj)
+        {
+            obj.FTotalHours = obj.FAttendanceHours + obj.FNormalOvertimeHours
+                + obj.FWeekendOvertimeHours + obj.FHolidayOvertimeHours;
+            obj.FVarianceHours = obj.FTotalHours - obj.FRD28Hours - obj.FRD30Hours
+                - obj.FRD31Hours - obj.FRD32Hours - obj.FRD33Hours - obj.FRD34Hours;
+            manpowerService.UpdateManpowerEntry(obj);
+        }
 
     }
 }

@@ -44,5 +44,11 @@ namespace RDProject.Services.Interface
         /// <returns></returns>
         List<ManpowerReport> GetManpowerReports(DateTime beginDate, DateTime endDate, string empId, string empName);
 
+        /// <summary>
+        /// 更新一条明细
+        /// </summary>
+        /// <param name="manpowerEntry"></param>
+        /// <returns></returns>
+        int UpdateManpowerEntry(ManpowerEntry manpowerEntry);
     }
 }

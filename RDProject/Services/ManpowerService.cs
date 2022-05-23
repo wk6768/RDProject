@@ -120,5 +120,11 @@ c group by FDate,FEmpId,FEmpName,FDeptName";
             var result = ctx.ManpowerReports.FromSqlRaw(sql, begin, end, id, name).ToList();
             return result;
         }
+
+        public int UpdateManpowerEntry(ManpowerEntry manpowerEntry)
+        {
+            ctx.ManpowerEntries.Update(manpowerEntry);
+            return ctx.SaveChanges();
+        }
     }
 }
