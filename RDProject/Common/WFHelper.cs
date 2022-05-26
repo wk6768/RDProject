@@ -60,24 +60,36 @@ namespace RDProject.Common
         /// <param name="guid"></param>
         /// <param name="bookmarkName"></param>
         /// <param name="value"></param>
-        public static void Resume(Activity activity, string guid, string bookmarkName, object value)
+        public static bool Resume(Activity activity, string guid, string bookmarkName, object value)
         {
+            WorkflowApplication app = new WorkflowApplication(activity);
+
+            app.PersistableIdle = a => PersistableIdleAction.Unload;
+
+            InstanceStore store = new SqlWorkflowInstanceStore(ConnString());
+            app.InstanceStore = store;
+
             try
             {
-                WorkflowApplication app = new WorkflowApplication(activity);
-
-                app.PersistableIdle = a => PersistableIdleAction.Unload;
-
-                InstanceStore store = new SqlWorkflowInstanceStore(ConnString());
-                app.InstanceStore = store;
-
                 app.Load(Guid.Parse(guid));
-
-                app.ResumeBookmark(bookmarkName, value);
-            }catch (Exception e)
-            {
-                MessageBox.Show(e.Message);
             }
+            catch (Exception e)
+            {
+                MessageBox.Show("加载流程失败：" + e.Message);
+                return false;
+            }
+
+            try
+            {
+                app.ResumeBookmark(bookmarkName, value);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("执行流程失败：" + e.Message);
+                return false;
+            }
+
+            return true;
         }
     }
 }

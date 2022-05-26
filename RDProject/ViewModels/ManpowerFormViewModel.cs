@@ -340,10 +340,13 @@ namespace RDProject.ViewModels
         {
             dialogService.ShowDialog(obj, callback =>
             {
-                if (callback.Parameters.ContainsKey("ManpowerEntries"))
+                if (callback.Result == ButtonResult.OK)
                 {
-                    var result = callback.Parameters.GetValue<List<ManpowerEntry>>("ManpowerEntries");
-                    ManpowerEntries.AddRange(result);
+                    if (callback.Parameters.ContainsKey("ManpowerEntries"))
+                    {
+                        var result = callback.Parameters.GetValue<List<ManpowerEntry>>("ManpowerEntries");
+                        ManpowerEntries.AddRange(result);
+                    }
                 }
             });
         }

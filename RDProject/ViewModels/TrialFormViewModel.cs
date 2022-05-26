@@ -42,11 +42,14 @@ namespace RDProject.ViewModels
                     Readonly_Head = false;     //表单头是否只读
                     Readonly_Entry = false;//表单明细是否只读
                     Readonly_WFStep = false;    //步骤是否只读
+                    WonoInfoEdit = false;       //工单信息是否只读
 
                     SaveButtonEnable = true;    //保存表单内容的按钮
                     SendButtonEnable = true;    //发起流程的按钮
                     EditButtonEnable = true;    //新建、删除明细的按钮
                     NewButtonEnable = true;     //新建表单的按钮
+
+                    
                 }
                 else
                 {
@@ -54,11 +57,14 @@ namespace RDProject.ViewModels
                     Readonly_Head = false;
                     Readonly_Entry = false;
                     Readonly_WFStep = true;
+                    WonoInfoEdit = false;
 
                     SaveButtonEnable = true;
                     SendButtonEnable = true;
                     EditButtonEnable = true;
                     NewButtonEnable = true;
+
+                   
                 }
                 #endregion
 
@@ -75,11 +81,13 @@ namespace RDProject.ViewModels
                     Readonly_Head = false;
                     Readonly_Entry = false;
                     Readonly_WFStep = false;
+                    WonoInfoEdit = false;
 
                     SaveButtonEnable = true;
                     SendButtonEnable = true;
                     EditButtonEnable = true;
                     NewButtonEnable = false;
+
                 }
                 else if (User.UserGroup.Equals("NPI"))
                 {
@@ -87,6 +95,7 @@ namespace RDProject.ViewModels
                     Readonly_Head = true;
                     Readonly_Entry = false;
                     Readonly_WFStep = true;
+                    WonoInfoEdit = true;
 
                     SaveButtonEnable = true;
                     SendButtonEnable = false;
@@ -104,6 +113,16 @@ namespace RDProject.ViewModels
                     SendButtonEnable = false;
                     EditButtonEnable = false;
                     NewButtonEnable = false;
+
+                    if (User.Id.Equals("14120"))
+                    {
+                        SaveButtonEnable = true;
+                        WonoInfoEdit = false;
+                    }
+                    else
+                    {
+                        WonoInfoEdit = true;
+                    }
                 }
                 #endregion
             }
@@ -354,6 +373,13 @@ namespace RDProject.ViewModels
             set { newButtonEnable = value; RaisePropertyChanged(); }
         }
 
+        private bool wonoInfoEdit;
+
+        public bool WonoInfoEdit
+        {
+            get { return wonoInfoEdit; }
+            set { wonoInfoEdit = value; RaisePropertyChanged(); }
+        }
 
 
 
@@ -379,8 +405,11 @@ namespace RDProject.ViewModels
             {
                 if(callback.Result == ButtonResult.OK)
                 {
-                    var result = callback.Parameters.GetValue<List<TrialEntry>>("TrialEntries");
-                    TrialEntries.AddRange(result);
+                    if (callback.Parameters.ContainsKey("TrialEntries"))
+                    {
+                        var result = callback.Parameters.GetValue<List<TrialEntry>>("TrialEntries");
+                        TrialEntries.AddRange(result);
+                    }
                 }
             });
         }
@@ -411,29 +440,34 @@ namespace RDProject.ViewModels
         {
             #region 检查必填项
             //先检查必填项是否填了
-            if (string.IsNullOrWhiteSpace(Trial.FRDNo) || string.IsNullOrWhiteSpace(Trial.FProductName) || string.IsNullOrWhiteSpace(Trial.FCompany) || string.IsNullOrWhiteSpace(Trial.FAssemblyFactory))
+            if (string.IsNullOrWhiteSpace(Trial.FRDNo) || string.IsNullOrWhiteSpace(Trial.FProductName) || string.IsNullOrWhiteSpace(Trial.FCompany) )
             {
-                WinUIMessageBox.Show("研发项目编号，产品名称，厂别，公司 为必填项", "提示",  MessageBoxButton.OK, MessageBoxImage.Warning,MessageBoxResult.None, MessageBoxOptions.None);
+                WinUIMessageBox.Show("研发项目编号，产品名称，公司 为必填项", "提示",  MessageBoxButton.OK, MessageBoxImage.Warning,MessageBoxResult.None, MessageBoxOptions.None);
                 return;
             }
-            if (Trial.FHasCNC == true && string.IsNullOrWhiteSpace(Trial.FCNCNPI))
+            if (Trial.FHasCNC && string.IsNullOrWhiteSpace(Trial.FCNCNPI))
             {
                 WinUIMessageBox.Show("CNC工序NPI为 必填项", "提示", MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.None, MessageBoxOptions.None);
                 return;
             }
-            if (Trial.FHasCoating == true && string.IsNullOrWhiteSpace(Trial.FCoatingNPI))
+            if (Trial.FHasCoating && string.IsNullOrWhiteSpace(Trial.FCoatingNPI))
             {
                 WinUIMessageBox.Show("喷涂工序NPI 为必填项", "提示", MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.None, MessageBoxOptions.None);
                 return;
             }
-            if (Trial.FHasLaser == true && string.IsNullOrWhiteSpace(Trial.FLaserNPI))
+            if (Trial.FHasLaser && string.IsNullOrWhiteSpace(Trial.FLaserNPI))
             {
                 WinUIMessageBox.Show("激光切割工序NPI 为必填项", "提示", MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.None, MessageBoxOptions.None);
                 return;
             }
-            if (Trial.FHasAssembly == true && string.IsNullOrWhiteSpace(Trial.FAssemblyNPI))
+            if (Trial.FHasAssembly && string.IsNullOrWhiteSpace(Trial.FAssemblyNPI))
             {
                 WinUIMessageBox.Show("组装工序NPI 为必填项", "提示", MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.None, MessageBoxOptions.None);
+                return;
+            }
+            if (Trial.FHasAssembly && string.IsNullOrWhiteSpace(Trial.FAssemblyFactory))
+            {
+                WinUIMessageBox.Show("组装车间 为必填项", "提示", MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.None, MessageBoxOptions.None);
                 return;
             }
             #endregion
@@ -477,6 +511,31 @@ namespace RDProject.ViewModels
             keys.Add("ParamHasLaser", Trial.FHasLaser);
             keys.Add("ParamHasAssembly", Trial.FHasAssembly);
 
+            //如果有组装工序
+            if (Trial.FHasAssembly)
+            {
+                keys.Add("ParamHasFactoryOne", Trial.FAssemblyFactory.Equals("一车间"));
+                keys.Add("ParamHasFactoryTwo", Trial.FAssemblyFactory.Equals("二车间"));
+            }
+            else
+            {
+                keys.Add("ParamHasFactoryOne", false);
+                keys.Add("ParamHasFactoryTwo", false);
+            }
+
+            //如果有喷涂，则有二车间
+            if (keys.ContainsKey("ParamHasFactoryTwo"))
+            {
+                keys["ParamHasFactoryTwo"] = Trial.FHasCoating;
+            }
+            else
+            {
+                keys.Add("ParamHasFactoryTwo", Trial.FHasCoating);
+            }
+            
+
+
+
             //开启一个工作流，获取工作流ID
             var guid = WFHelper.Run(activity, keys);
             Debug.WriteLine(guid);
@@ -508,7 +567,7 @@ namespace RDProject.ViewModels
             _ = Task.Run(async () =>
             {
                 await Task.Delay(5000);
-                WFHelper.Resume(
+                _ = WFHelper.Resume(
                     activity,
                     guid,
                     "提交申请",
@@ -560,6 +619,21 @@ namespace RDProject.ViewModels
             //如果审批通过
             if (CheckResultPass == true)
             {
+                //执行工作流
+                Dictionary<string, object> keys2 = new Dictionary<string, object>();
+                keys2.Add("IsPass", true);
+                keys2.Add("BookMarkName", step.BookMark);
+                var result = WFHelper.Resume(
+                        new 研发项目试产记录表(),
+                        Instance.InstanceGuid,
+                        step.BookMark,
+                        keys2
+                    );
+                if(result == false)
+                {
+                    return;
+                }
+
                 //审批步骤和更新审批
                 //审批步骤
                 step.Status = 1;
@@ -605,15 +679,15 @@ namespace RDProject.ViewModels
 
 
                 //执行工作流
-                Dictionary<string, object> keys2 = new Dictionary<string, object>();
-                keys2.Add("IsPass", true);
-                keys2.Add("BookMarkName", step.BookMark);
-                WFHelper.Resume(
-                        new 研发项目试产记录表(),
-                        Instance.InstanceGuid,
-                        step.BookMark,
-                        keys2
-                    );
+                //Dictionary<string, object> keys2 = new Dictionary<string, object>();
+                //keys2.Add("IsPass", true);
+                //keys2.Add("BookMarkName", step.BookMark);
+                //WFHelper.Resume(
+                //        new 研发项目试产记录表(),
+                //        Instance.InstanceGuid,
+                //        step.BookMark,
+                //        keys2
+                //    );
             }
             //驳回
             if(CheckResultReject == true)
@@ -630,19 +704,17 @@ namespace RDProject.ViewModels
                 keys2.Add("IsPass", false);
                 keys2.Add("BookMarkName", Bookmark);
 
-                try
-                {
-                    WFHelper.Resume(
-                        new 研发项目试产记录表(),
-                        Instance.InstanceGuid,
-                        step.BookMark,
-                        keys2
-                    );
-                }
-                catch
+                var result = WFHelper.Resume(
+                    new 研发项目试产记录表(),
+                    Instance.InstanceGuid,
+                    step.BookMark,
+                    keys2
+                );
+                if (result == false)
                 {
                     return;
                 }
+
 
                 //更新审批和审批步骤
                 step.Status = 2; //2表示在此节点驳回
@@ -681,16 +753,39 @@ namespace RDProject.ViewModels
             steps.Add(new WFStep() { BookMark = "附件上传", SubBy = "陆冬夏", StepNo = stepNo++ });
             steps.Add(new WFStep() { BookMark = "抄送节点", SubBy = "赵鹏", StepNo = stepNo++ });
 
-            if (Convert.ToBoolean(Trial.FHasCNC) == true)
+            if (Trial.FHasCNC)
+            {
                 steps.Add(new WFStep() { BookMark = "CNC工序NPI", SubBy = Trial.FCNCNPI, StepNo = stepNo++ });
-            if (Convert.ToBoolean(Trial.FHasCoating) == true)
+            }
+
+            if (Trial.FHasCoating)
+            {
                 steps.Add(new WFStep() { BookMark = "喷涂工序NPI", SubBy = Trial.FCoatingNPI, StepNo = stepNo++ });
-            if (Convert.ToBoolean(Trial.FHasLaser) == true)
+            }
+
+            if (Trial.FHasLaser)
+            {
                 steps.Add(new WFStep() { BookMark = "激光切割工序NPI", SubBy = Trial.FLaserNPI, StepNo = stepNo++ });
-            if (Convert.ToBoolean(Trial.FHasAssembly) == true)
+            }
+
+            if (Trial.FHasAssembly)
+            {
                 steps.Add(new WFStep() { BookMark = "组装工序NPI", SubBy = Trial.FAssemblyNPI, StepNo = stepNo++ });
-            
-            steps.Add(new WFStep() { BookMark = "生产部负责人", SubBy = "刘乐", StepNo = stepNo++ });
+                if (Trial.FAssemblyFactory.Equals("一车间"))
+                {
+                    steps.Add(new WFStep() { BookMark = "生产部负责人", SubBy = "刘乐", StepNo = stepNo++ });
+                }
+                if (Trial.FAssemblyFactory.Equals("二车间"))
+                {
+                    steps.Add(new WFStep() { BookMark = "二厂生产部负责人", SubBy = "李上波", StepNo = stepNo++ });
+                }
+            }
+
+            if (Trial.FHasCoating)
+            {
+                steps.Add(new WFStep() { BookMark = "二厂生产部负责人", SubBy = "李上波", StepNo = stepNo++ });
+            }
+
             steps.Add(new WFStep() { BookMark = "品保部负责人", SubBy = "胡顺林", StepNo = stepNo++ });
             steps.Add(new WFStep() { BookMark = "项目确认", SubBy = User.Name, StepNo = stepNo++ });
             steps.Add(new WFStep() { BookMark = "审批节点", SubBy = "赵鹏", StepNo = stepNo++ });

@@ -8,6 +8,7 @@ using Prism.Commands;
 using Prism.Navigation;
 using RDProject.Services.Interface;
 using RDProject.Models.VO;
+using Microsoft.Win32;
 
 namespace RDProject.ViewModels
 {
@@ -61,8 +62,15 @@ namespace RDProject.ViewModels
 
         private void Export(object obj)
         {
-            var gridControl = obj as DevExpress.Xpf.Grid.GridControl;
-            gridControl.View.ShowRibbonPrintPreview(gridControl);
+            //var gridControl = obj as DevExpress.Xpf.Grid.GridControl;
+            //gridControl.View.ShowPrintPreview(gridControl);
+            //gridControl.View.ExportToXlsx(@"D:\123.xlsx");
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "xlsx(*.xlsx)|*.xlsx";
+            if(saveFileDialog.ShowDialog() == true)
+            {
+                var path = saveFileDialog.FileName;
+            }
         }
     }
 }

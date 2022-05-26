@@ -37,10 +37,12 @@ namespace RDProject.ViewModels
             ManpowerEntries = new List<ManpowerEntry>();
             AddCommand = new DelegateCommand(Add);
             BackCommand = new DelegateCommand(Back);
+            CancelCommand = new DelegateCommand(Cancel);
         }
 
         public DelegateCommand AddCommand { get; private set; }
         public DelegateCommand BackCommand { get; private set; }
+        public DelegateCommand CancelCommand { get; private set; }
 
         private ManpowerEntry manpowerEntry;
 
@@ -74,6 +76,11 @@ namespace RDProject.ViewModels
             var keys = new DialogParameters();
             keys.Add("ManpowerEntries", ManpowerEntries);
             RequestClose?.Invoke(new DialogResult(ButtonResult.OK, keys));
+        }
+
+        private void Cancel()
+        {
+            RequestClose?.Invoke(new DialogResult(ButtonResult.Cancel));
         }
     }
 }

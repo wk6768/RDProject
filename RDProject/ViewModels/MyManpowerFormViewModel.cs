@@ -53,10 +53,10 @@ namespace RDProject.ViewModels
             TrialTitles2 = new ObservableCollection<MyTitle>(list2);
         }
 
-        public MyManpowerFormViewModel(IRegionManager regionManager, ITrialService trialService, IWFService wfService, IEventAggregator aggregator)
+        public MyManpowerFormViewModel(IRegionManager regionManager, IManpowerService manpowerService, IWFService wfService, IEventAggregator aggregator)
         {
             this.regionManager = regionManager;
-            this.trialService = trialService;
+            this.manpowerService = manpowerService;
             this.wfService = wfService;
             this.aggregator = aggregator;
             SelectIndexCommand = new DelegateCommand<object>(SelectIndex);
@@ -70,7 +70,7 @@ namespace RDProject.ViewModels
         }
 
         private readonly IRegionManager regionManager;
-        private readonly ITrialService trialService;
+        private readonly IManpowerService manpowerService;
         private readonly IWFService wfService;
         private readonly IEventAggregator aggregator;
 
@@ -158,18 +158,18 @@ namespace RDProject.ViewModels
             {
                 case "草稿":
                     status = 0;
-                    list = trialService.GetMyTitleByTitleAndStatus(title, status);
+                    list = manpowerService.GetMyTitleByTitleAndStatus(title, status);
                     break;
                 case "已发起":
                     status = 1;
-                    list = trialService.GetMyTitleByTitleAndStatus(title, status);
+                    list = manpowerService.GetMyTitleByTitleAndStatus(title, status);
                     break;
                 case "已结束":
                     status = 3;
-                    list = trialService.GetMyTitleByTitleAndStatus(title, status);
+                    list = manpowerService.GetMyTitleByTitleAndStatus(title, status);
                     break;
                 default:
-                    list = trialService.GetMyTitleByTitle(title);
+                    list = manpowerService.GetMyTitleByTitle(title);
                     break;
 
             }

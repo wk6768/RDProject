@@ -30,7 +30,7 @@ namespace RDProject.Views
             Window win = ((UserControl)sender).Parent as Window;
             if (win != null)
             {
-                //win.WindowStyle = WindowStyle.None;
+                win.WindowStyle = WindowStyle.None;
                 win.ResizeMode = ResizeMode.NoResize;
             }
         }

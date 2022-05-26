@@ -126,5 +126,17 @@ c group by FDate,FEmpId,FEmpName,FDeptName";
             ctx.ManpowerEntries.Update(manpowerEntry);
             return ctx.SaveChanges();
         }
+
+        public List<MyTitle> GetMyTitleByTitle(string title)
+        {
+            return ctx.Manpowers.Where(t => t.FTitle.Contains(title)).
+                Select(t => new MyTitle() { FHeadId = t.FHeadId, FTitle = t.FTitle, FStatus = t.FStatus }).ToList();
+        }
+
+        public List<MyTitle> GetMyTitleByTitleAndStatus(string title, int status)
+        {
+            return ctx.Manpowers.Where(t => t.FStatus == status && t.FTitle.Contains(title)).
+                Select(t => new MyTitle() { FHeadId = t.FHeadId, FTitle = t.FTitle, FStatus = t.FStatus }).ToList();
+        }
     }
 }

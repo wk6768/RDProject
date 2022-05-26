@@ -8,6 +8,7 @@ using Prism.Services.Dialogs;
 using Prism.Commands;
 using RDProject.Models;
 using System.Windows;
+using DevExpress.Xpf.WindowsUI;
 
 namespace RDProject.ViewModels
 {
@@ -24,7 +25,7 @@ namespace RDProject.ViewModels
 
         public void OnDialogClosed()
         {
-            
+
         }
 
         public void OnDialogOpened(IDialogParameters parameters)
@@ -38,6 +39,7 @@ namespace RDProject.ViewModels
             TrialEntries = new List<TrialEntry>();
             AddCommand = new DelegateCommand(Add);
             BackCommand = new DelegateCommand(Back);
+            CancelCommand = new DelegateCommand(Cancel);
         }
 
 
@@ -61,6 +63,7 @@ namespace RDProject.ViewModels
 
         public DelegateCommand AddCommand { get; private set; }
         public DelegateCommand BackCommand { get; private set; }
+        public DelegateCommand CancelCommand { get; private set; }
 
         private void Add()
         {
@@ -83,6 +86,11 @@ namespace RDProject.ViewModels
             var keys = new DialogParameters();
             keys.Add("TrialEntries", TrialEntries);
             RequestClose?.Invoke(new DialogResult(ButtonResult.OK, keys));
+        }
+
+        private void Cancel()
+        {
+            RequestClose?.Invoke(new DialogResult(ButtonResult.Cancel));
         }
     }
 }

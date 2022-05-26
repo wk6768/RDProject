@@ -50,5 +50,19 @@ namespace RDProject.Services.Interface
         /// <param name="manpowerEntry"></param>
         /// <returns></returns>
         int UpdateManpowerEntry(ManpowerEntry manpowerEntry);
+
+        /// <summary>
+        /// 通过标题获取所有复符合条件的表单的ID和标题
+        /// </summary>
+        /// <param name="title"></param>
+        /// <returns></returns>
+        List<MyTitle> GetMyTitleByTitle(string title);
+
+        /// <summary>
+        /// 通过标题和表单状态获取所有复符合条件的表单的ID和标题
+        /// </summary>
+        /// <param name="title"></param>
+        /// <returns></returns>
+        List<MyTitle> GetMyTitleByTitleAndStatus(string title, int status);
     }
 }

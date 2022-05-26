@@ -49,6 +49,7 @@
     <Compile Include="Activities\RDManpower\提交申请.cs" />
     <Compile Include="Activities\RDManpower\研发部负责人.cs" />
     <Compile Include="Activities\RDTrial\CNC工序NPI.cs" />
+    <Compile Include="Activities\RDTrial\二厂生产部负责人.cs" />
     <Compile Include="Activities\RDTrial\品保部负责人.cs" />
     <Compile Include="Activities\RDTrial\喷涂工序NPI.cs" />
     <Compile Include="Activities\RDTrial\审批节点.cs" />

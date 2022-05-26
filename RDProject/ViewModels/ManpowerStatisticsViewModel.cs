@@ -7,6 +7,8 @@ using Prism.Commands;
 using Prism.Mvvm;
 using RDProject.Services.Interface;
 using RDProject.Models.VO;
+using DevExpress.Xpf.Grid;
+using System.Diagnostics;
 
 namespace RDProject.ViewModels
 {
@@ -80,8 +82,16 @@ namespace RDProject.ViewModels
 
         private void Export(object obj)
         {
-            var gridControl = obj as DevExpress.Xpf.Grid.GridControl;
-            gridControl.View.ShowRibbonPrintPreview(gridControl);
+            var gridControl = obj as GridControl;
+            try
+            {
+                gridControl.View.ShowRibbonPrintPreview(gridControl);
+            }
+            catch(Exception e)
+            {
+                Debug.WriteLine(e);
+            }
+            
         }
     }
 }

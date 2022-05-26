@@ -63,7 +63,7 @@
                                 </dxlc:LayoutItem>
                             </dxlc:LayoutGroup>
                             <dxlc:LayoutGroup >
-                                <dxlc:LayoutItem Label="厂别">
+                                <dxlc:LayoutItem Label="组装车间">
                                     <dxe:ComboBoxEdit IsReadOnly="{Binding Readonly_Head}" EditValue="{Binding Trial.FAssemblyFactory}">
                                         <dxe:ComboBoxEditItem Content="一车间"/>
                                         <dxe:ComboBoxEditItem Content="二车间"/>
@@ -84,7 +84,7 @@
                                 </dxlc:LayoutItem>
                             </dxlc:LayoutGroup>
                             <dxlc:LayoutItem Label="工单信息">
-                                <dxe:TextEdit IsReadOnly="{Binding Readonly_Head}" Text="{Binding Trial.FWorkerOrderDescription}"/>
+                                <dxe:TextEdit IsReadOnly="{Binding WonoInfoEdit}" Text="{Binding Trial.FWorkerOrderDescription}"/>
                             </dxlc:LayoutItem>
                             <dxlc:LayoutGroup Orientation="Horizontal">
                                 <dxlc:LayoutItem Label="CNC">

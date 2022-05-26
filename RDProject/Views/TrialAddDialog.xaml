@@ -7,7 +7,7 @@
              xmlns:local="clr-namespace:RDProject.ViewModels"
              xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"  x:Class="RDProject.Views.TrialAddDialog"
              mc:Ignorable="d" 
-             d:DesignHeight="200" d:DesignWidth="600" MinHeight="170" MinWidth="600" Loaded="UserControl_Loaded">
+             d:DesignHeight="200" d:DesignWidth="600" MinHeight="170" MinWidth="600" Background="LightGray" Loaded="UserControl_Loaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -67,9 +67,11 @@
         </dxlc:LayoutControl>
 
         <DockPanel Grid.Row="1" LastChildFill="False">
-            <dx:SimpleButton Content="返回" Height="25" Width="75" Margin="0,0,20,0" VerticalAlignment="Top" DockPanel.Dock="Right" 
+            <dx:SimpleButton Content="放弃" Height="25" Width="75" Margin="0,0,20,0" VerticalAlignment="Top" DockPanel.Dock="Right" 
+                             Glyph="{dx:DXImage SvgImages/DiagramIcons/del.svg}" Command="{Binding CancelCommand}" />
+            <dx:SimpleButton Content="保存并返回" Height="25" Width="110" Margin="0,0,20,0" VerticalAlignment="Top" DockPanel.Dock="Right" 
                              Glyph="{dx:DXImage SvgImages/Icon Builder/Actions_Rollback.svg}" Command="{Binding BackCommand}"/>
-            <dx:SimpleButton Content="保存" Height="25" Width="75" Margin="0,0,20,0" VerticalAlignment="Top" DockPanel.Dock="Right" 
+            <dx:SimpleButton Content="添加" Height="25" Width="75" Margin="0,0,20,0" VerticalAlignment="Top" DockPanel.Dock="Right" 
                              Glyph="{dx:DXImage SvgImages/Business Objects/BO_Validation.svg}" Command="{Binding AddCommand}"/>
         </DockPanel>
     </Grid>
