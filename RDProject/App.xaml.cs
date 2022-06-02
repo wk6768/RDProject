@@ -11,6 +11,7 @@ using RDProject.ViewModels;
 using RDProject.Services;
 using RDProject.Services.Interface;
 using RDProject.Common;
+using DevExpress.Mvvm;
 
 namespace RDProject
 {

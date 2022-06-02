@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 using Prism.Mvvm;
 using Prism.Commands;
 using Prism.Navigation;
+using Prism.Services.Dialogs;
 using RDProject.Services.Interface;
 using RDProject.Models.VO;
 using Microsoft.Win32;
+using DevExpress.Xpf.Grid;
+using ImTools;
 
 namespace RDProject.ViewModels
 {
@@ -16,8 +19,9 @@ namespace RDProject.ViewModels
     {
         private readonly ITrialService trialService;
 
-        public TrialStatisticsViewModel(ITrialService trialService)
+        public TrialStatisticsViewModel(IDialogService dialogService,ITrialService trialService)
         {
+            DialogService = dialogService;
             this.trialService = trialService;
             SearchCommand = new DelegateCommand(Search);
             ExportCommand = new DelegateCommand<object>(Export);
@@ -54,6 +58,7 @@ namespace RDProject.ViewModels
 
         public DelegateCommand SearchCommand { get; private set; }
         public DelegateCommand<object> ExportCommand { get; private set; }
+        public IDialogService DialogService { get; }
 
         private void Search()
         {
@@ -62,14 +67,15 @@ namespace RDProject.ViewModels
 
         private void Export(object obj)
         {
-            //var gridControl = obj as DevExpress.Xpf.Grid.GridControl;
+            var gridControl = obj as GridControl;
             //gridControl.View.ShowPrintPreview(gridControl);
             //gridControl.View.ExportToXlsx(@"D:\123.xlsx");
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "xlsx(*.xlsx)|*.xlsx";
-            if(saveFileDialog.ShowDialog() == true)
+            if (saveFileDialog.ShowDialog() == true)
             {
                 var path = saveFileDialog.FileName;
+                gridControl.View.ExportToXlsx(path);
             }
         }
     }

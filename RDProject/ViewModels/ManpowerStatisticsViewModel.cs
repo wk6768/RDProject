@@ -9,6 +9,7 @@ using RDProject.Services.Interface;
 using RDProject.Models.VO;
 using DevExpress.Xpf.Grid;
 using System.Diagnostics;
+using Microsoft.Win32;
 
 namespace RDProject.ViewModels
 {
@@ -82,16 +83,23 @@ namespace RDProject.ViewModels
 
         private void Export(object obj)
         {
+            //var gridControl = obj as GridControl;
+            //try
+            //{
+            //    gridControl.View.ShowRibbonPrintPreview(gridControl);
+            //}
+            //catch(Exception e)
+            //{
+            //    Debug.WriteLine(e);
+            //}
             var gridControl = obj as GridControl;
-            try
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "xlsx(*.xlsx)|*.xlsx";
+            if (saveFileDialog.ShowDialog() == true)
             {
-                gridControl.View.ShowRibbonPrintPreview(gridControl);
+                var path = saveFileDialog.FileName;
+                gridControl.View.ExportToXlsx(path);
             }
-            catch(Exception e)
-            {
-                Debug.WriteLine(e);
-            }
-            
         }
     }
 }

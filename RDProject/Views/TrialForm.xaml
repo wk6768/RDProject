@@ -38,6 +38,10 @@
                                         <dxb:BarButtonItem Content="审批" Command="{Binding CheckCommand}"
                                                        Glyph="{dx:DXImage SvgImages/Dashboards/RenameDataSource.svg}"></dxb:BarButtonItem>
                                     </dxb:ToolBarControl>
+                                    <dxb:ToolBarControl>
+                                        <dxb:BarButtonItem Content="导出为xlsx" IsEnabled="{Binding SendButtonEnable}" Command="{Binding ExportCommand}"
+                                                           Glyph="{dx:DXImage SvgImages/Export/ExportToXLSX.svg}"></dxb:BarButtonItem>
+                                    </dxb:ToolBarControl>
                                 </dxb:BarContainerControl>
                             </dxlc:LayoutItem>
                         </dxlc:LayoutGroup>

@@ -83,14 +83,22 @@ namespace RDProject.ViewModels
 
         private void Back()
         {
-            var keys = new DialogParameters();
-            keys.Add("TrialEntries", TrialEntries);
-            RequestClose?.Invoke(new DialogResult(ButtonResult.OK, keys));
+            var result = WinUIMessageBox.Show("是否保存已添加的内容并返回（未添加内容会舍弃）", "提示", MessageBoxButton.OKCancel, MessageBoxImage.Warning, MessageBoxResult.None, MessageBoxOptions.None);
+            if (result == MessageBoxResult.OK)
+            {
+                var keys = new DialogParameters();
+                keys.Add("TrialEntries", TrialEntries);
+                RequestClose?.Invoke(new DialogResult(ButtonResult.OK, keys));
+            }
         }
 
         private void Cancel()
         {
-            RequestClose?.Invoke(new DialogResult(ButtonResult.Cancel));
+            var result = WinUIMessageBox.Show("是否放弃保存", "提示", MessageBoxButton.OKCancel, MessageBoxImage.Warning, MessageBoxResult.None, MessageBoxOptions.None);
+            if (result == MessageBoxResult.OK)
+            {
+                RequestClose?.Invoke(new DialogResult(ButtonResult.Cancel));
+            }
         }
     }
 }

@@ -18,6 +18,7 @@ using ActivityLibrary.Activities.RDManpower;
 using RDProject.Common;
 using Prism.Events;
 using RDProject.Event;
+using Microsoft.Win32;
 
 namespace RDProject.ViewModels
 {
@@ -167,6 +168,7 @@ namespace RDProject.ViewModels
             CheckCommand = new DelegateCommand(Check);
             UpdateStepCommand = new DelegateCommand<WFStep>(UpdateStep);
             UpdateManpowerEntryCommand = new DelegateCommand<ManpowerEntry>(UpdateManpowerEntry);
+            ExportCommand = new DelegateCommand(Export);
             this.dialogService = dialogService;
             this.manpowerService = manpowerService;
             this.wfService = wfService;
@@ -329,7 +331,8 @@ namespace RDProject.ViewModels
         public DelegateCommand CheckCommand { get; private set; }
         public DelegateCommand<WFStep> UpdateStepCommand { get; private set; }
         public DelegateCommand<ManpowerEntry> UpdateManpowerEntryCommand { get;private set; }
-
+        public DelegateCommand ExportCommand { get; private set; }
+        
         private void AddManpower()
         {
             //初始化一个空表单
@@ -476,6 +479,22 @@ namespace RDProject.ViewModels
             if (CheckResultPass == true)
             {
                 //审批步骤和更新审批
+
+                //执行工作流
+                Dictionary<string, object> keys2 = new Dictionary<string, object>();
+                keys2.Add("IsPass", true);
+                keys2.Add("BookMarkName", step.BookMark);
+                var result = WFHelper.Resume(
+                        new 研发人员工时统计表(),
+                        Instance.InstanceGuid,
+                        step.BookMark,
+                        keys2
+                    );
+                if (result == false)
+                {
+                    return;
+                }
+
                 //审批步骤
                 step.Status = 1;
                 step.SubTime = DateTime.Now;
@@ -517,18 +536,6 @@ namespace RDProject.ViewModels
 
                 //更新审批表和步骤表
                 (Instance, Steps) = wfService.UpdateInstance(Instance, Steps);
-
-
-                //执行工作流
-                Dictionary<string, object> keys2 = new Dictionary<string, object>();
-                keys2.Add("IsPass", true);
-                keys2.Add("BookMarkName", step.BookMark);
-                WFHelper.Resume(
-                        new 研发人员工时统计表(),
-                        Instance.InstanceGuid,
-                        step.BookMark,
-                        keys2
-                    );
             }
             //驳回
             if (CheckResultReject == true)
@@ -546,13 +553,16 @@ namespace RDProject.ViewModels
                 keys2.Add("BookMarkName", Bookmark);
 
 
-                WFHelper.Resume(
+                var result = WFHelper.Resume(
                         new 研发人员工时统计表(),
                         Instance.InstanceGuid,
                         step.BookMark,
                         keys2
                     );
-
+                if (result == false)
+                {
+                    return;
+                }
 
                 //更新审批和审批步骤
                 step.Status = 2; //2表示在此节点驳回
@@ -603,6 +613,21 @@ namespace RDProject.ViewModels
             obj.FVarianceHours = obj.FTotalHours - obj.FRD28Hours - obj.FRD30Hours
                 - obj.FRD31Hours - obj.FRD32Hours - obj.FRD33Hours - obj.FRD34Hours;
             manpowerService.UpdateManpowerEntry(obj);
+        }
+
+        private void Export()
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "xlsx(*.xlsx)|*.xlsx";
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                var path = saveFileDialog.FileName;
+                List<Object> list = new List<object>();
+                list.Add(Manpower);
+                list.Add(ManpowerEntries);
+                ExcelExport.Do(ExcelExport.ExportType.ManpowerAndEntry, list, path);
+            }
+
         }
 
     }

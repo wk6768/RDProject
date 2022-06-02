@@ -7,7 +7,7 @@
              xmlns:local="clr-namespace:RDProject.ViewModels"
              xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"  x:Class="RDProject.Views.TrialAddDialog"
              mc:Ignorable="d" 
-             d:DesignHeight="200" d:DesignWidth="600" MinHeight="170" MinWidth="600" Background="LightGray" Loaded="UserControl_Loaded">
+             d:DesignHeight="200" d:DesignWidth="600" MinHeight="170" MinWidth="600" Background="DarkGray" Loaded="UserControl_Loaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>

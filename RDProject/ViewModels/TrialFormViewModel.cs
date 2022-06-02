@@ -19,6 +19,7 @@ using ActivityLibrary.Activities.RDTrial;
 using DevExpress.Xpf.Core;
 using DevExpress.Xpf.WindowsUI;
 using System.Windows;
+using Microsoft.Win32;
 
 namespace RDProject.ViewModels
 {
@@ -163,6 +164,7 @@ namespace RDProject.ViewModels
             CheckCommand = new DelegateCommand(Check);
             UpdateTrialEntryCommand = new DelegateCommand<TrialEntry>(UpdateTrialEntry);
             UpdateStepCommand = new DelegateCommand<WFStep>(UpdateStep);
+            ExportCommand = new DelegateCommand(Export);
         }
 
 
@@ -392,6 +394,7 @@ namespace RDProject.ViewModels
         public DelegateCommand CheckCommand { get; private set; }
         public DelegateCommand<TrialEntry> UpdateTrialEntryCommand { get; private set; }
         public DelegateCommand<WFStep> UpdateStepCommand { get; private set; }
+        public DelegateCommand ExportCommand { get; private set; }
 
         private void AddTrial()
         {
@@ -800,6 +803,22 @@ namespace RDProject.ViewModels
         {
             wfService.UpdateStep(obj);
         }
+
+        private void Export()
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "xlsx(*.xlsx)|*.xlsx";
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                var path = saveFileDialog.FileName;
+                List<Object> list = new List<object>();
+                list.Add(Trial);
+                list.Add(TrialEntries);
+                ExcelExport.Do(ExcelExport.ExportType.TrialAndEntry, list, path);
+            }
+           
+        }
+
 
         /// <summary>
         /// 发送邮件

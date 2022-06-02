@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using DevExpress.Xpf.WindowsUI;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
@@ -73,14 +75,22 @@ namespace RDProject.ViewModels
 
         private void Back()
         {
-            var keys = new DialogParameters();
-            keys.Add("ManpowerEntries", ManpowerEntries);
-            RequestClose?.Invoke(new DialogResult(ButtonResult.OK, keys));
+            var result = WinUIMessageBox.Show("是否保存已添加的内容并返回（未添加内容会舍弃）", "提示", MessageBoxButton.OKCancel, MessageBoxImage.Warning, MessageBoxResult.None, MessageBoxOptions.None);
+            if (result == MessageBoxResult.OK)
+            {
+                var keys = new DialogParameters();
+                keys.Add("ManpowerEntries", ManpowerEntries);
+                RequestClose?.Invoke(new DialogResult(ButtonResult.OK, keys));
+            }
         }
 
         private void Cancel()
         {
-            RequestClose?.Invoke(new DialogResult(ButtonResult.Cancel));
+            var result = WinUIMessageBox.Show("是否放弃保存", "提示", MessageBoxButton.OKCancel, MessageBoxImage.Warning, MessageBoxResult.None, MessageBoxOptions.None);
+            if(result == MessageBoxResult.OK)
+            {
+                RequestClose?.Invoke(new DialogResult(ButtonResult.Cancel));
+            }
         }
     }
 }
